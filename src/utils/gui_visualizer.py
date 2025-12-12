@@ -16,8 +16,9 @@ from pathlib import Path
 
 if TYPE_CHECKING:
     from src.simulator.battle import BattleState, BattleUnit, Action, ActionResult
-    from src.simulator.models import Position, Ability
+    from src.simulator.models import Ability
 
+from src.simulator.models import Position
 from src.utils.localization import LocalizationManager
 from src.utils.icon_manager import IconManager
 
@@ -310,38 +311,30 @@ class BattleGUIVisualizer:
                 cell_x = self.padding + x_offset + col * self.cell_size
                 cell_y = y_offset + display_row * self.cell_size
 
-                # Check if this cell should be blocked (back row corners)
-                is_back_row = row == (self.battle.layout.height - 1)
-                is_corner = col == 0 or col == (self.battle.layout.width - 1)
-                is_blocked = is_back_row and is_corner
-
                 pos = (col, row)
                 unit = unit_at.get(pos)
 
                 # Determine cell color
-                if is_blocked:
-                    cell_color = COLORS['blocked_cell']
-                else:
-                    cell_color = COLORS['empty_cell']
+                cell_color = COLORS['empty_cell']
 
-                    # Check if this cell is part of selection/targeting
-                    if self.selected_unit_idx is not None and self.selected_is_player == is_player:
-                        selected_unit = units[self.selected_unit_idx]
-                        if selected_unit.position.x == col and selected_unit.position.y == row:
-                            cell_color = COLORS['selected_unit']
+                # Check if this cell is part of selection/targeting
+                if self.selected_unit_idx is not None and self.selected_is_player == is_player:
+                    selected_unit = units[self.selected_unit_idx]
+                    if selected_unit.position.x == col and selected_unit.position.y == row:
+                        cell_color = COLORS['selected_unit']
 
-                    # Check if valid target
-                    if any(t.x == col and t.y == row for t in self.valid_targets):
-                        if not is_player if self.selected_is_player else is_player:
-                            cell_color = COLORS['valid_target']
+                # Check if valid target
+                if any(t.x == col and t.y == row for t in self.valid_targets):
+                    if not is_player if self.selected_is_player else is_player:
+                        cell_color = COLORS['valid_target']
 
-                    # Check AOE pattern
-                    if pos in self.aoe_pattern:
-                        damage_pct = self.aoe_pattern[pos]
-                        if damage_pct >= 80:
-                            cell_color = COLORS['aoe_primary']
-                        else:
-                            cell_color = COLORS['aoe_secondary']
+                # Check AOE pattern
+                if pos in self.aoe_pattern:
+                    damage_pct = self.aoe_pattern[pos]
+                    if damage_pct >= 80:
+                        cell_color = COLORS['aoe_primary']
+                    else:
+                        cell_color = COLORS['aoe_secondary']
 
                 # Draw cell background
                 self.canvas.create_rectangle(
@@ -353,58 +346,34 @@ class BattleGUIVisualizer:
                     tags=f'cell_{col}_{display_row}_{"player" if is_player else "enemy"}'
                 )
 
-                # Draw blocked marker for blocked cells
-                if is_blocked:
-                    # Draw X
-                    margin = 15
-                    self.canvas.create_line(
-                        cell_x + margin, cell_y + margin,
-                        cell_x + self.cell_size - margin, cell_y + self.cell_size - margin,
-                        fill='white', width=3
-                    )
-                    self.canvas.create_line(
-                        cell_x + self.cell_size - margin, cell_y + margin,
-                        cell_x + margin, cell_y + self.cell_size - margin,
-                        fill='white', width=3
-                    )
-
                 # Draw unit if present
-                elif unit and unit.is_alive:
+                if unit and unit.is_alive:
                     self._draw_unit(cell_x, cell_y, unit, is_player)
 
     def _draw_unit(self, x: int, y: int, unit: "BattleUnit", is_player: bool):
         """Draw a unit in a cell."""
-        # Unit background
-        unit_color = COLORS['player_unit'] if is_player else COLORS['enemy_unit']
         margin = 10
-
-        self.canvas.create_rectangle(
-            x + margin, y + margin,
-            x + self.cell_size - margin, y + self.cell_size - margin,
-            fill=unit_color,
-            outline='white',
-            width=2
-        )
 
         # Try to load and display unit icon
         icon_displayed = False
         if self.icons:
-            # Extract unit name from template name (remove _name suffix if present)
-            unit_name = unit.template.name.replace("_name", "")
-            # Determine facing based on side
-            facing = "front" if is_player else "back"
+            # Use back_icon for player units, icon for enemy units
+            icon_name = unit.template.back_icon if is_player else unit.template.icon
+            # Determine facing based on side (enemy=front, player=back)
+            facing = "back" if is_player else "front"
             icon_size = (self.cell_size - margin * 2 - 20, self.cell_size - margin * 2 - 20)
 
-            icon = self.icons.get_unit_tk_icon(unit_name, facing, icon_size)
-            if icon:
-                icon_x = x + self.cell_size // 2
-                icon_y = y + margin + (self.cell_size - margin * 2 - 20) // 2
-                self.canvas.create_image(icon_x, icon_y, image=icon)
-                # Keep reference to avoid garbage collection
-                if not hasattr(self, '_icon_refs'):
-                    self._icon_refs = []
-                self._icon_refs.append(icon)
-                icon_displayed = True
+            if icon_name:  # Only try to load if icon name exists
+                icon = self.icons.get_unit_tk_icon(icon_name, facing, icon_size)
+                if icon:
+                    icon_x = x + self.cell_size // 2
+                    icon_y = y + margin + (self.cell_size - margin * 2 - 20) // 2
+                    self.canvas.create_image(icon_x, icon_y, image=icon)
+                    # Keep reference to avoid garbage collection
+                    if not hasattr(self, '_icon_refs'):
+                        self._icon_refs = []
+                    self._icon_refs.append(icon)
+                    icon_displayed = True
 
         # Fallback to text if no icon
         if not icon_displayed:

@@ -39,6 +39,38 @@ class IconManager:
         # Check if PIL is available
         self.pil_available = PIL_AVAILABLE
 
+    def _find_icon_file(self, directory: Path, prefix: str) -> Optional[Path]:
+        """
+        Find an icon file by prefix in a directory.
+        Files may have suffixes like _#4916.png after the prefix.
+
+        Args:
+            directory: Directory to search in
+            prefix: File name prefix (without .png extension)
+
+        Returns:
+            Path to the found file or None
+        """
+        if not directory.exists():
+            return None
+
+        # Try exact match first
+        exact_path = directory / f"{prefix}.png"
+        if exact_path.exists():
+            return exact_path
+
+        # Try prefix match (e.g., "icon_name_#4916.png")
+        try:
+            for file_path in directory.iterdir():
+                if file_path.is_file() and file_path.suffix == '.png':
+                    # Check if filename starts with the prefix
+                    if file_path.stem.startswith(prefix):
+                        return file_path
+        except Exception as e:
+            logging.warning(f"Error searching directory {directory}: {e}")
+
+        return None
+
     def _load_image(self, path: Path, size: tuple[int, int] = None) -> Optional[Image.Image]:
         """
         Load an image from path.
@@ -88,39 +120,58 @@ class IconManager:
         """
         cache_key = f"ability:{ability_name}:{size}"
 
-        # Try with _icon suffix
-        icon_path = self.abilities_dir / f"{ability_name}_icon.png"
-        img = self._get_cached_or_load(cache_key, icon_path, size)
-        if img:
-            return img
+        # Check cache first
+        if cache_key in self._icon_cache:
+            return self._icon_cache[cache_key]
+
+        # Try to find by prefix (with _icon suffix)
+        icon_path = self._find_icon_file(self.abilities_dir, f"{ability_name}_icon")
+        if icon_path:
+            img = self._load_image(icon_path, size)
+            if img:
+                self._icon_cache[cache_key] = img
+                return img
 
         # Try without _icon suffix in case name already has it
-        icon_path = self.abilities_dir / f"{ability_name}.png"
-        return self._get_cached_or_load(cache_key, icon_path, size)
+        icon_path = self._find_icon_file(self.abilities_dir, ability_name)
+        if icon_path:
+            img = self._load_image(icon_path, size)
+            if img:
+                self._icon_cache[cache_key] = img
+                return img
 
-    def get_unit_icon(self, unit_name: str, facing: str = "back", size: tuple[int, int] = None) -> Optional[Image.Image]:
+        return None
+
+    def get_unit_icon(self, unit_icon_name: str, facing: str = "back", size: tuple[int, int] = None) -> Optional[Image.Image]:
         """
-        Get unit icon by name.
+        Get unit icon by icon name from template.
 
         Args:
-            unit_name: Name like "veh_ancient_robot_player" (without _name suffix)
+            unit_icon_name: Icon name from template (e.g., "army_view_air_ancient_fragment" for back_icon,
+                           or "air_ancient_fragment_icon" for icon)
             facing: "back" or "front"
             size: Optional (width, height) to resize to
 
         Returns:
             PIL Image or None if not found
         """
-        cache_key = f"unit:{unit_name}:{facing}:{size}"
+        cache_key = f"unit:{unit_icon_name}:{facing}:{size}"
 
-        # Try with army_view_ prefix
-        icon_path = self.units_dir / facing / f"army_view_{unit_name}.png"
-        img = self._get_cached_or_load(cache_key, icon_path, size)
-        if img:
-            return img
+        # Check cache first
+        if cache_key in self._icon_cache:
+            return self._icon_cache[cache_key]
 
-        # Try without prefix
-        icon_path = self.units_dir / facing / f"{unit_name}.png"
-        return self._get_cached_or_load(cache_key, icon_path, size)
+        # Find the icon file by prefix in the appropriate facing directory
+        facing_dir = self.units_dir / facing
+        icon_path = self._find_icon_file(facing_dir, unit_icon_name)
+
+        if icon_path:
+            img = self._load_image(icon_path, size)
+            if img:
+                self._icon_cache[cache_key] = img
+                return img
+
+        return None
 
     def get_status_icon(self, status_name: str, size: tuple[int, int] = None) -> Optional[Image.Image]:
         """
