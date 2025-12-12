@@ -185,12 +185,32 @@ class UnitTemplate:
 
     # Stats (can vary by level)
     stats: UnitStats = field(default_factory=UnitStats)
+    all_rank_stats: list[UnitStats] = field(default_factory=list)  # All rank variations
 
     # Weapons
     weapons: dict[int, Weapon] = field(default_factory=dict)
 
     # Flags
     unimportant: bool = False  # For NPCs that don't count for win/loss
+
+    def get_stats_at_rank(self, rank: int) -> UnitStats:
+        """
+        Get unit stats at a specific rank.
+
+        Args:
+            rank: The rank number (1-based, where rank 1 is the first/lowest rank)
+
+        Returns:
+            UnitStats for the specified rank
+        """
+        if not self.all_rank_stats:
+            return self.stats
+        # Convert rank (1-based) to index (0-based)
+        # Rank 1 -> index 0, Rank 6 -> index 5, etc.
+        index = rank - 1
+        # Clamp index to available range
+        index = max(0, min(index, len(self.all_rank_stats) - 1))
+        return self.all_rank_stats[index]
 
 
 @dataclass
@@ -245,6 +265,7 @@ class EncounterUnit:
     """Unit placement in an encounter."""
     grid_id: int
     unit_id: int
+    rank: int = 1  # Unit rank (1-based: rank 1 is the first/lowest rank)
 
 
 @dataclass
@@ -284,6 +305,9 @@ class GameConfig:
 
     # Layouts
     layouts: dict[int, GridLayout] = field(default_factory=dict)
+
+    # Tag hierarchy (parent tag -> list of child tags)
+    tag_hierarchy: dict[int, list[int]] = field(default_factory=dict)
 
     # Thresholds for "good vs" / "weak vs" display
     good_vs_cutoff: float = 1.1
