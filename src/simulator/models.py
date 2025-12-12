@@ -179,6 +179,7 @@ class UnitTemplate:
     short_name: str = ""
     description: str = ""
     icon: str = ""
+    back_icon: str = ""
     class_type: UnitClass = UnitClass.SOLDIER
     side: Side = Side.HOSTILE
     tags: list[int] = field(default_factory=list)
