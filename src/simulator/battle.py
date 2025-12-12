@@ -296,10 +296,25 @@ class BattleState:
         """Check if attacker can target this unit with given ability stats."""
         # Check target tags
         if stats.targets:
-            has_valid_tag = any(tag in target.template.tags for tag in stats.targets)
+            has_valid_tag = False
+
+            # Check if target has any of the required tags (or child tags via hierarchy)
+            for ability_tag in stats.targets:
+                # Direct tag match
+                if ability_tag in target.template.tags:
+                    has_valid_tag = True
+                    break
+
+                # Check tag hierarchy - does this ability tag include any of the target's tags?
+                child_tags = self.data_loader.config.tag_hierarchy.get(ability_tag, [])
+                if any(target_tag in child_tags for target_tag in target.template.tags):
+                    has_valid_tag = True
+                    break
+
             # TARGETABLE_ALL (39) is a special tag that matches most units
             if TARGETABLE_ALL in stats.targets:
                 has_valid_tag = True
+
             if not has_valid_tag:
                 return False
 
@@ -666,10 +681,18 @@ class BattleSimulator:
         self.data_loader = GameDataLoader(data_dir)
         self.data_loader.load_all()
 
+    def _apply_rank_to_template(self, template: UnitTemplate, rank: int) -> UnitTemplate:
+        """Create a copy of the template with stats from the specified rank."""
+        from copy import deepcopy
+        template_copy = deepcopy(template)
+        template_copy.stats = template.get_stats_at_rank(rank)
+        return template_copy
+
     def create_battle_from_encounter(
         self,
         encounter_id: int,
-        player_unit_ids: list[int]
+        player_unit_ids: list[int],
+        player_ranks: Optional[list[int]] = None
     ) -> Optional[BattleState]:
         """Create a battle state from an encounter definition."""
         encounter = self.data_loader.get_encounter(encounter_id)
@@ -680,27 +703,35 @@ class BattleSimulator:
         if not layout:
             return None
 
+        # Default to rank 1 for all player units if not specified
+        if player_ranks is None:
+            player_ranks = [1] * len(player_unit_ids)
+
         # Create player units
         player_units = []
-        for i, unit_id in enumerate(player_unit_ids):
+        for i, (unit_id, rank) in enumerate(zip(player_unit_ids, player_ranks)):
             template = self.data_loader.get_unit(unit_id)
             if template:
+                # Apply rank to template stats
+                template_with_rank = self._apply_rank_to_template(template, rank)
                 # Place in grid (simple row-first placement)
                 pos = Position.from_grid_id(i, layout.width)
                 player_units.append(BattleUnit(
-                    template=template,
+                    template=template_with_rank,
                     position=pos,
                     battle_side=BattleSide.PLAYER_TEAM
                 ))
 
-        # Create enemy units
+        # Create enemy units with their ranks from encounter
         enemy_units = []
         for enc_unit in encounter.enemy_units:
             template = self.data_loader.get_unit(enc_unit.unit_id)
             if template:
+                # Apply rank from encounter
+                template_with_rank = self._apply_rank_to_template(template, enc_unit.rank)
                 pos = Position.from_grid_id(enc_unit.grid_id, layout.width)
                 enemy_units.append(BattleUnit(
-                    template=template,
+                    template=template_with_rank,
                     position=pos,
                     battle_side=BattleSide.ENEMY_TEAM
                 ))
@@ -719,33 +750,43 @@ class BattleSimulator:
         player_unit_ids: list[int],
         player_positions: list[int],
         enemy_unit_ids: list[int],
-        enemy_positions: list[int]
+        enemy_positions: list[int],
+        player_ranks: Optional[list[int]] = None,
+        enemy_ranks: Optional[list[int]] = None
     ) -> Optional[BattleState]:
         """Create a custom battle with specified units and positions."""
         layout = self.data_loader.get_layout(layout_id)
         if not layout:
             return None
 
+        # Default to rank 1 if not specified
+        if player_ranks is None:
+            player_ranks = [1] * len(player_unit_ids)
+        if enemy_ranks is None:
+            enemy_ranks = [1] * len(enemy_unit_ids)
+
         # Create player units
         player_units = []
-        for unit_id, grid_id in zip(player_unit_ids, player_positions):
+        for unit_id, grid_id, rank in zip(player_unit_ids, player_positions, player_ranks):
             template = self.data_loader.get_unit(unit_id)
             if template:
+                template_with_rank = self._apply_rank_to_template(template, rank)
                 pos = Position.from_grid_id(grid_id, layout.width)
                 player_units.append(BattleUnit(
-                    template=template,
+                    template=template_with_rank,
                     position=pos,
                     battle_side=BattleSide.PLAYER_TEAM
                 ))
 
         # Create enemy units
         enemy_units = []
-        for unit_id, grid_id in zip(enemy_unit_ids, enemy_positions):
+        for unit_id, grid_id, rank in zip(enemy_unit_ids, enemy_positions, enemy_ranks):
             template = self.data_loader.get_unit(unit_id)
             if template:
+                template_with_rank = self._apply_rank_to_template(template, rank)
                 pos = Position.from_grid_id(grid_id, layout.width)
                 enemy_units.append(BattleUnit(
-                    template=template,
+                    template=template_with_rank,
                     position=pos,
                     battle_side=BattleSide.ENEMY_TEAM
                 ))

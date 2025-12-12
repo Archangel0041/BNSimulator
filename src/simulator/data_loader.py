@@ -61,6 +61,11 @@ class GameDataLoader:
                 mods[int(target_class)] = float(mult)
             class_damage_mods[class_id] = mods
 
+        # Parse tag hierarchy
+        tag_hierarchy = {}
+        for parent_tag, child_tags in data.get("tag_hierarchy", {}).items():
+            tag_hierarchy[int(parent_tag)] = [int(t) for t in child_tags]
+
         # Parse layouts
         layouts = {}
         for layout_id, layout_data in data.get("layouts", {}).items():
@@ -84,6 +89,7 @@ class GameDataLoader:
         self.config = GameConfig(
             class_damage_mods=class_damage_mods,
             layouts=layouts,
+            tag_hierarchy=tag_hierarchy,
             good_vs_cutoff=class_configs.get("good_vs_cutoff", 1.1),
             weak_vs_cutoff=class_configs.get("weak_vs_cutoff", 0.85)
         )
@@ -246,13 +252,12 @@ class GameDataLoader:
             if not identity:
                 continue
 
-            # Parse stats (use first stat block - level 1)
-            unit_stats = UnitStats()
+            # Store all rank stats for this unit
+            all_rank_stats = []
             if stats_config:
                 stats_list = stats_config.get("stats", [])
-                if stats_list:
-                    s = stats_list[0]  # Level 1 stats
-                    unit_stats = UnitStats(
+                for rank_idx, s in enumerate(stats_list):
+                    rank_stats = UnitStats(
                         hp=s.get("hp", 100),
                         defense=s.get("defense", 0),
                         accuracy=s.get("accuracy", 0),
@@ -271,6 +276,10 @@ class GameDataLoader:
                         preferred_row=stats_config.get("preferred_row", 1),
                         pv=s.get("pv", 0)
                     )
+                    all_rank_stats.append(rank_stats)
+
+            # Default to rank 1 (index 0) if no stats specified
+            unit_stats = all_rank_stats[0] if all_rank_stats else UnitStats()
 
             # Parse weapons
             weapons = {}
@@ -302,6 +311,7 @@ class GameDataLoader:
                 side=Side(identity.get("side", 2)),
                 tags=identity.get("tags", []),
                 stats=unit_stats,
+                all_rank_stats=all_rank_stats,  # Store all rank stats
                 weapons=weapons,
                 unimportant=stats_config.get("unimportant", False) if stats_config else False
             )
@@ -319,7 +329,8 @@ class GameDataLoader:
             for unit_data in enc_data.get("units", []):
                 enemy_units.append(EncounterUnit(
                     grid_id=unit_data.get("grid_id", 0),
-                    unit_id=unit_data.get("unit_id", 0)
+                    unit_id=unit_data.get("unit_id", 0),
+                    rank=unit_data.get("rank", 1)  # Default to rank 1 if not specified
                 ))
 
             # Parse player units (for story battles)
@@ -327,7 +338,8 @@ class GameDataLoader:
             for unit_data in enc_data.get("player_units", []):
                 player_units.append(EncounterUnit(
                     grid_id=unit_data.get("grid_id", 0),
-                    unit_id=unit_data.get("unit_id", 0)
+                    unit_id=unit_data.get("unit_id", 0),
+                    rank=unit_data.get("rank", 1)  # Default to rank 1 if not specified
                 ))
 
             self.encounters[enc_id] = Encounter(
