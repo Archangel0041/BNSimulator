@@ -2,10 +2,13 @@
 from __future__ import annotations
 from typing import Optional, TYPE_CHECKING
 import sys
+from pathlib import Path
 
 if TYPE_CHECKING:
     from src.simulator.battle import BattleState, BattleUnit, Action
     from src.simulator.models import Position, Ability
+
+from src.utils.localization import LocalizationManager
 
 # ANSI color codes
 class Colors:
@@ -47,6 +50,16 @@ class BattleVisualizer:
         self.selected_weapon_idx: Optional[int] = None
         self.highlighted_targets: set[tuple[int, int]] = set()
         self.aoe_pattern: dict[tuple[int, int], float] = {}
+
+        # Initialize localization
+        self.loc = None
+        try:
+            loc_dir = Path("data") / "Assets" / "Localization"
+            if loc_dir.exists():
+                self.loc = LocalizationManager(loc_dir)
+                self.loc.load("GameText", "en")
+        except Exception as e:
+            print(f"Warning: Failed to load localization: {e}")
 
     def render_grid(
         self,
@@ -112,14 +125,20 @@ class BattleVisualizer:
             key = (unit.position.x, unit.position.y)
             unit_at[key] = unit
 
-        # Render rows (front to back for enemy, back to front for player display)
-        row_order = range(self.GRID_HEIGHT) if is_enemy else range(self.GRID_HEIGHT - 1, -1, -1)
+        # Render rows - both sides now show back to front (flipped) so front rows are at bottom
+        # This makes both sides face toward each other (enemy faces down, player faces up)
+        row_order = range(self.GRID_HEIGHT - 1, -1, -1)
         row_labels = ["Front", "Mid  ", "Back "]
 
         for y in row_order:
             row_str = f"{row_labels[y]} │"
 
             for x in range(self.GRID_WIDTH):
+                # Check if this cell should be blocked (back row corners)
+                is_back_row = (y == self.GRID_HEIGHT - 1)
+                is_corner = (x == 0 or x == self.GRID_WIDTH - 1)
+                is_blocked = is_back_row and is_corner
+
                 pos = (x, y)
                 unit = unit_at.get(pos)
 
@@ -140,7 +159,11 @@ class BattleVisualizer:
                     cell_bg = Colors.BG_CYAN
 
                 # Build cell content
-                if unit and unit.is_alive:
+                if is_blocked:
+                    # Show blocked cell
+                    cell = f"{Colors.BG_MAGENTA}    X    {Colors.RESET}"
+                    cell = cell.ljust(self.CELL_WIDTH + 10)
+                elif unit and unit.is_alive:
                     hp_pct = int(unit.current_hp / unit.template.stats.hp * 100)
                     class_short = unit.template.class_type.name[:3]
 
@@ -169,14 +192,27 @@ class BattleVisualizer:
 
         return lines
 
+    def _get_localized(self, key: str) -> str:
+        """Get localized text for a key, or return the key if localization unavailable."""
+        if self.loc:
+            return self.loc.get(key)
+        return key
+
     def show_unit_info(self, unit: "BattleUnit") -> str:
         """Show detailed info about a unit."""
         t = unit.template
         s = t.stats
 
+        # Get localized unit name
+        unit_name = self._get_localized(t.name)
+
+        # Check if unit has multiple ranks
+        num_ranks = len(t.all_rank_stats)
+        rank_info = f" (Rank {num_ranks} available)" if num_ranks > 1 else ""
+
         lines = [
             f"\n{Colors.BOLD}=== Unit Info ==={Colors.RESET}",
-            f"Name: {t.name}",
+            f"Name: {unit_name}{rank_info}",
             f"Class: {t.class_type.name}",
             f"Tags: {t.tags}",
             f"",
@@ -200,7 +236,10 @@ class BattleVisualizer:
             ammo_str = f"Ammo: {unit.ammo.get(wid, 0)}/{ws.ammo}" if ws.ammo >= 0 else "Ammo: ∞"
             cd_str = f"[CD: {cooldown}]" if cooldown > 0 else "[Ready]"
 
-            lines.append(f"  [{wid}] {weapon.name}")
+            # Get localized weapon name
+            weapon_name = self._get_localized(weapon.name)
+
+            lines.append(f"  [{wid}] {weapon_name}")
             lines.append(f"      Damage: {ws.base_damage_min}-{ws.base_damage_max}")
             lines.append(f"      {ammo_str} {cd_str}")
 
@@ -208,14 +247,18 @@ class BattleVisualizer:
             for aid in weapon.abilities:
                 ability = self.battle.data_loader.get_ability(aid)
                 if ability:
-                    lines.append(f"      → {ability.name}")
+                    # Get localized ability name
+                    ability_name = self._get_localized(ability.name)
+                    lines.append(f"      → {ability_name}")
                     lines.append(f"        Range: {ability.stats.min_range}-{ability.stats.max_range}")
                     lines.append(f"        Targets: {ability.stats.targets}")
 
         if unit.status_effects:
             lines.append(f"\nStatus Effects:")
             for status in unit.status_effects:
-                lines.append(f"  - {status.effect.family.name}: {status.remaining_turns} turns")
+                # Get localized status effect name
+                effect_name = self._get_localized(status.effect.name) if hasattr(status.effect, 'name') else status.effect.family.name
+                lines.append(f"  - {effect_name}: {status.remaining_turns} turns")
 
         return "\n".join(filter(None, lines))
 
@@ -291,7 +334,9 @@ class BattleVisualizer:
             for weapon_id, weapon_actions in by_weapon.items():
                 weapon = unit.template.weapons.get(weapon_id)
                 if weapon:
-                    lines.append(f"  Weapon {weapon_id}: {weapon.name}")
+                    # Get localized weapon name
+                    weapon_name = self._get_localized(weapon.name)
+                    lines.append(f"  Weapon {weapon_id}: {weapon_name}")
                     targets = [f"({a.target_position.x},{a.target_position.y})" for a in weapon_actions]
                     lines.append(f"    Targets: {', '.join(targets)}")
 
