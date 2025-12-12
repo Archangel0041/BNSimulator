@@ -7,7 +7,7 @@ import random
 import numpy as np
 
 from .enums import (
-    DamageType, UnitClass, Side, CellType, TargetType,
+    DamageType, UnitClass, Side, BattleSide, CellType, TargetType,
     LineOfFire, AttackDirection, StatusEffectType,
     DAMAGE_TYPE_NAMES, TARGETABLE_ALL
 )
@@ -39,7 +39,7 @@ class BattleUnit:
     """A unit instance in battle."""
     template: UnitTemplate
     position: Position
-    side: Side
+    battle_side: BattleSide  # Which team the unit fights for (not inherent faction)
 
     # Current state
     current_hp: int = 0
@@ -255,7 +255,7 @@ class BattleState:
     def get_unit_at_position(self, pos: Position, side: Optional[Side] = None) -> Optional[BattleUnit]:
         """Get unit at a specific position."""
         units = (self.player_units + self.enemy_units) if side is None else (
-            self.player_units if side == Side.ATTACKER else self.enemy_units
+            self.player_units if side == Side.PLAYER else self.enemy_units
         )
         for unit in units:
             if unit.is_alive and unit.position == pos:
@@ -570,7 +570,7 @@ class BattleState:
 
     def _get_unit_index(self, unit: BattleUnit) -> int:
         """Get the index of a unit in its team list."""
-        if unit.side == Side.ATTACKER:
+        if unit.battle_side == BattleSide.PLAYER_TEAM:
             return self.player_units.index(unit) if self.player_is_attacker else self.enemy_units.index(unit)
         else:
             return self.enemy_units.index(unit) if self.player_is_attacker else self.player_units.index(unit)
@@ -690,7 +690,7 @@ class BattleSimulator:
                 player_units.append(BattleUnit(
                     template=template,
                     position=pos,
-                    side=Side.ATTACKER if encounter.is_player_attacker else Side.DEFENDER
+                    battle_side=BattleSide.PLAYER_TEAM
                 ))
 
         # Create enemy units
@@ -702,7 +702,7 @@ class BattleSimulator:
                 enemy_units.append(BattleUnit(
                     template=template,
                     position=pos,
-                    side=Side.DEFENDER if encounter.is_player_attacker else Side.ATTACKER
+                    battle_side=BattleSide.ENEMY_TEAM
                 ))
 
         return BattleState(
@@ -735,7 +735,7 @@ class BattleSimulator:
                 player_units.append(BattleUnit(
                     template=template,
                     position=pos,
-                    side=Side.ATTACKER
+                    battle_side=BattleSide.PLAYER_TEAM
                 ))
 
         # Create enemy units
@@ -747,7 +747,7 @@ class BattleSimulator:
                 enemy_units.append(BattleUnit(
                     template=template,
                     position=pos,
-                    side=Side.DEFENDER
+                    battle_side=BattleSide.ENEMY_TEAM
                 ))
 
         return BattleState(

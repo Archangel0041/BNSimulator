@@ -177,27 +177,29 @@ class LineOfFire(IntEnum):
 
 
 class Side(IntEnum):
-    """Battle side identifiers (from Unity UnitSide enum)."""
+    """Unit side/faction identifiers (from Unity UnitSide enum).
+
+    This indicates the inherent faction/type of a unit, NOT which team
+    they're on during battle. Use BattleSide for battle team membership.
+    """
     NONE = 0
-    PLAYER = 1      # Was ATTACKER
-    HOSTILE = 2     # Was DEFENDER
-    NEUTRAL = 3
-    HERO = 4        # Was ALLY
-    VILLAIN = 5     # Was ENEMY_SPECIAL
-    TEST = 6        # Was NPC
+    PLAYER = 1      # Player-owned units
+    HOSTILE = 2     # Enemy units
+    NEUTRAL = 3     # Neutral NPCs
+    HERO = 4        # Main cast heroes
+    VILLAIN = 5     # Main cast villains
+    TEST = 6        # Test/debug units
 
-    # Aliases for backwards compatibility
-    @classmethod
-    def ATTACKER(cls):
-        return cls.PLAYER
 
-    @classmethod
-    def DEFENDER(cls):
-        return cls.HOSTILE
+class BattleSide(IntEnum):
+    """Battle team membership (which team a unit fights for).
 
-    @classmethod
-    def ALLY(cls):
-        return cls.HERO
+    During battle, units are assigned to either the PLAYER_TEAM or ENEMY_TEAM,
+    regardless of their inherent Side (faction). For example, a HOSTILE unit
+    could be on PLAYER_TEAM if recruited/captured.
+    """
+    PLAYER_TEAM = 1  # Fighting for the player
+    ENEMY_TEAM = 2   # Fighting against the player
 
 
 class UnitBlocking(IntEnum):

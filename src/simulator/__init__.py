@@ -2,7 +2,7 @@
 from .enums import (
     DamageType, UnitClass, UnitTag, UnitStatusEffect, UnitBlocking,
     StatusEffectType, StatusEffectFamily,
-    TargetType, AttackDirection, LineOfFire, Side, CellType, LayoutId,
+    TargetType, AttackDirection, LineOfFire, Side, BattleSide, CellType, LayoutId,
     DAMAGE_TYPE_NAMES, STATUS_EFFECT_NAMES, UNIT_TAG_NAMES, UNIT_CLASS_NAMES,
     TARGETABLE_ALL, TARGETABLE_GROUND, TARGETABLE_AIR, TARGETABLE_BUILDINGS
 )
@@ -26,7 +26,7 @@ __all__ = [
     # Enums
     "DamageType", "UnitClass", "UnitTag", "UnitStatusEffect", "UnitBlocking",
     "StatusEffectType", "StatusEffectFamily",
-    "TargetType", "AttackDirection", "LineOfFire", "Side", "CellType", "LayoutId",
+    "TargetType", "AttackDirection", "LineOfFire", "Side", "BattleSide", "CellType", "LayoutId",
     # Enum name mappings
     "DAMAGE_TYPE_NAMES", "STATUS_EFFECT_NAMES", "UNIT_TAG_NAMES", "UNIT_CLASS_NAMES",
     "TARGETABLE_ALL", "TARGETABLE_GROUND", "TARGETABLE_AIR", "TARGETABLE_BUILDINGS",

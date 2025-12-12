@@ -5,7 +5,7 @@ from typing import Optional, TYPE_CHECKING
 import random
 
 from .enums import (
-    DamageType, UnitClass, Side, TargetType, LineOfFire,
+    DamageType, UnitClass, BattleSide, TargetType, LineOfFire,
     StatusEffectType, DAMAGE_TYPE_NAMES
 )
 from .models import Position, Ability, Weapon, StatusEffect
@@ -93,7 +93,7 @@ class TargetingSystem:
         targets = []
 
         # Get opposing units
-        if attacker.side in (Side.PLAYER, Side.HERO):
+        if attacker.battle_side == BattleSide.PLAYER_TEAM:
             target_units = battle.enemy_units
         else:
             target_units = battle.player_units
@@ -148,7 +148,7 @@ class TargetingSystem:
             return True  # Different columns, no blocking
 
         # Check for blocking units in front of target
-        target_units = battle.enemy_units if attacker.side == Side.PLAYER else battle.player_units
+        target_units = battle.enemy_units if attacker.battle_side == BattleSide.PLAYER_TEAM else battle.player_units
 
         for unit in target_units:
             if unit == target or not unit.is_alive:

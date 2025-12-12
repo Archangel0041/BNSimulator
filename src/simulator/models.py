@@ -6,7 +6,7 @@ import numpy as np
 
 from .enums import (
     DamageType, UnitClass, StatusEffectType, StatusEffectFamily,
-    TargetType, AttackDirection, LineOfFire, Side, CellType
+    TargetType, AttackDirection, LineOfFire, Side, BattleSide, CellType
 )
 
 
@@ -180,7 +180,7 @@ class UnitTemplate:
     description: str = ""
     icon: str = ""
     class_type: UnitClass = UnitClass.SOLDIER
-    side: Side = Side.DEFENDER
+    side: Side = Side.HOSTILE
     tags: list[int] = field(default_factory=list)
 
     # Stats (can vary by level)
@@ -232,11 +232,11 @@ class GridLayout:
     def height(self) -> int:
         return self.attacker_grid.shape[0]
 
-    def is_valid_cell(self, side: Side, pos: Position) -> bool:
-        """Check if position is a valid cell for the given side."""
-        grid = self.attacker_grid if side == Side.ATTACKER else self.defender_grid
+    def is_valid_cell(self, battle_side: BattleSide, pos: Position) -> bool:
+        """Check if position is a valid cell for the given battle side."""
+        grid = self.attacker_grid if battle_side == BattleSide.PLAYER_TEAM else self.defender_grid
         if 0 <= pos.y < grid.shape[0] and 0 <= pos.x < grid.shape[1]:
-            return grid[pos.y, pos.x] == CellType.VALID
+            return grid[pos.y, pos.x] == CellType.AVAILABLE
         return False
 
 
