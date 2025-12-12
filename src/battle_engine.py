@@ -366,16 +366,24 @@ class BattleEngine:
         weapon,
         ability: Ability
     ) -> DamageResult:
-        """Calculate damage for an attack."""
+        """
+        Calculate damage for an attack.
+
+        Damage formula: random(base_damage_min, base_damage_max) * (1 + 2 * power / 100)
+        Defense, accuracy, offense are only used for dodge calculation.
+        """
         result = DamageResult(target_idx=-1, damage=0, is_crit=False, is_dodge=False)
 
-        # Check dodge
-        dodge_chance = target.stats.dodge - attacker.stats.accuracy
+        # Check dodge - uses defense, accuracy, dodge stats
+        # TODO: Verify exact dodge formula
+        dodge_chance = max(0, target.stats.dodge - attacker.stats.accuracy)
         if not self.config.deterministic and self.rng.random() * 100 < dodge_chance:
             result.is_dodge = True
             return result
 
-        # Base damage from weapon
+        # Base damage calculation: random(min, max) * (1 + 2 * power / 100)
+        power_multiplier = 1 + 2 * attacker.stats.power / 100
+
         if self.config.deterministic:
             base_damage = (weapon.stats.base_damage_min + weapon.stats.base_damage_max) / 2
         else:
@@ -384,15 +392,7 @@ class BattleEngine:
                 max(weapon.stats.base_damage_min, weapon.stats.base_damage_max)
             )
 
-        # Add power scaling
-        power_bonus = attacker.stats.power * ability.stats.attack_from_unit
-        attack_bonus = ability.stats.attack * ability.stats.attack_from_weapon
-
-        total_attack = base_damage + power_bonus + attack_bonus
-
-        # Apply defense reduction
-        defense_reduction = target.stats.defense / (target.stats.defense + 100)
-        damage_after_defense = total_attack * (1 - defense_reduction)
+        damage = base_damage * power_multiplier
 
         # Check critical hit
         crit_chance = (
@@ -408,28 +408,28 @@ class BattleEngine:
 
         if not self.config.deterministic and self.rng.random() * 100 < crit_chance:
             result.is_crit = True
-            damage_after_defense *= 1.5  # Critical multiplier
+            damage *= 1.5  # Critical multiplier (TODO: verify)
 
         # Apply damage type modifiers
         damage_type = ability.stats.damage_type
         damage_type_name = self._get_damage_type_name(damage_type)
 
         if damage_type_name in target.stats.damage_mods:
-            damage_after_defense *= target.stats.damage_mods[damage_type_name]
+            damage *= target.stats.damage_mods[damage_type_name]
 
         # Apply class damage modifiers
         attacker_class = self.game_data.get_class_config(attacker.template.class_id)
         if attacker_class and target.template.class_id in attacker_class.damage_mods:
-            damage_after_defense *= attacker_class.damage_mods[target.template.class_id]
+            damage *= attacker_class.damage_mods[target.template.class_id]
 
-        # Apply status effect damage modifiers
+        # Apply status effect damage modifiers (vulnerability effects)
         for effect in target.status_effects:
             if damage_type in effect.stun_damage_mods:
-                damage_after_defense *= effect.stun_damage_mods[damage_type]
+                damage *= effect.stun_damage_mods[damage_type]
 
         # Calculate armor and HP damage
         armor_piercing = ability.stats.armor_piercing_percent
-        total_damage = int(max(1, damage_after_defense))
+        total_damage = int(max(1, damage))
 
         if target.current_armor > 0:
             # Damage to armor (reduced by armor damage mods)
