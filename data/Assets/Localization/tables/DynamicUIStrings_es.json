@@ -1,0 +1,2418 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "DynamicUIStrings_es",
+  "m_LocaleId": {
+    "m_Code": "es"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 4082352208231633427
+  },
+  "m_Metadata": {
+    "m_Items": [
+      {
+        "rid": 2918897848747294853
+      }
+    ]
+  },
+  "m_TableData": [
+    {
+      "m_Id": 10341667659776,
+      "m_Localized": "Antes de poder investigar esto, necesitamos hacernos a los planes de {0:cstring(s)} del cuartel principal.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825600,
+      "m_Localized": "{0:cstring(s)} se encuentra en investigación. ¿Quieres terminar ahora la investigación?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825601,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825602,
+      "m_Localized": "Battle Nations es un creador de imperios épico. Ven a jugar conmigo, ¡mi nombre es {0:cstring(s)}! http://bit.ly/DownloadBN",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825603,
+      "m_Localized": "¡He obtenido el logro $achievement en Battle Nations! Mi nombre es {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825604,
+      "m_Localized": "No puedes enviar {0:cstring(s)} al campo de batalla porque no hay disponibles.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825605,
+      "m_Localized": "¡Para este tipo de ataque solo podrás utilizar {0:cstring(d)} unidades!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825606,
+      "m_Localized": "{0:cstring(+d)}% vs. {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825607,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825608,
+      "m_Localized": "En batalla con {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825609,
+      "m_Localized": "Derrotado por {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825610,
+      "m_Localized": "Sano y salvo después de luchar contra  {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825611,
+      "m_Localized": "Regresar en contra de {0:cstring(s)}.  Disponible en {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825612,
+      "m_Localized": "Recolección de impuestos de {0:cstring(s)}. Listo en {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825613,
+      "m_Localized": "Botín listo para cobrarle a {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825614,
+      "m_Localized": "Ocupados {0:cstring(s)}s puestos.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825615,
+      "m_Localized": "Retiro de las tierras de {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825616,
+      "m_Localized": "A {0:cstring(s)} le gustaría ayudarte",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825617,
+      "m_Localized": "Your Guild Rank: {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825618,
+      "m_Localized": "Points to Top {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825619,
+      "m_Localized": "Top {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825620,
+      "m_Localized": "{0:cstring(s)} es demasiado débil para que le ataques. Envíale un mensaje y dile que ascienda de nivel para que la lucha merezca la pena.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825621,
+      "m_Localized": "No puedes atacar a {0:cstring(s)} porque sois aliados. ¡Es mejor que ataques a otros jugadores!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825622,
+      "m_Localized": "Ahora no puedes atacar a {0:cstring(s)} porque no tiene izada su bandera imperial. ¡Envíale un mensaje para que salga a luchar!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825623,
+      "m_Localized": "No puedes atacar a{0:cstring(s)} en este momento, hay demasiados invasores. ¡Acaba con algunos de ellos y vuelve a intentarlo!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825624,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825625,
+      "m_Localized": "+  {0:cstring(s)} puntos de jefe",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825626,
+      "m_Localized": "¡Tu clan y tú habéis completado el nivel {0:cstring(d)} de {1:cstring(d)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825627,
+      "m_Localized": "¡Has completado el nivel {0:cstring(d)} de {1:cstring(d)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825628,
+      "m_Localized": "Nivel {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825629,
+      "m_Localized": "¡Premio nivel {0:cstring(d)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825630,
+      "m_Localized": "¡Ola terminada {0:cstring(d)}/{1:cstring(d)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825631,
+      "m_Localized": "Construye {0:cstring(s)} y recoge recurso.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825632,
+      "m_Localized": "Nivel {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825633,
+      "m_Localized": "{0:cstring(s)} Nivel {1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825634,
+      "m_Localized": "¡Primero debes terminar el entrenamiento de {0:cstring(s)}! ¿Quieres acelerar el entrenamiento?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825635,
+      "m_Localized": "El {0:cstring(s)} no puede con este tipo de unidades.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825636,
+      "m_Localized": "La unidad que quieres construir necesita que tu edificio esté mejorado al nivel {0:cstring(d)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825637,
+      "m_Localized": "Este almacén aporta {0:cstring(d)} de depósito para cada recurso.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825638,
+      "m_Localized": "Este almacén contiene {0:cstring(d)} de depósito para frascos químicos",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825639,
+      "m_Localized": "{0:cstring(d)} turno(s)",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825640,
+      "m_Localized": "¿Aceptas la invitación de \"{0:cstring(s)}\"? Rechazarás las demás invitaciones.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825641,
+      "m_Localized": "¿Aceptas la invitación de \"{0:cstring(s)}\"?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825642,
+      "m_Localized": "¿Quieres invitar a {0:cstring(s)} a tu Clan?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825643,
+      "m_Localized": "¿Rechazas la invitación de {0:cstring(s)}?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825644,
+      "m_Localized": "Construye {0:cstring(d)} edificios",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825645,
+      "m_Localized": "¡{0:cstring(s)} no puede usar esa arma por {1:cstring(d)} turnos!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825646,
+      "m_Localized": "¡{0:cstring(s)} no puede usar esa arma por {1:cstring(d)} turnos!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825647,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825648,
+      "m_Localized": "Crit% vs. {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825649,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825650,
+      "m_Localized": "{0:cstring(d)}d",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825651,
+      "m_Localized": "¡{0:cstring(s)} ha rechazado a {1:cstring(s)} por ti!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825652,
+      "m_Localized": "¿Quieres atacar este ejército para ayudar a {0:cstring(s)}?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825653,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)} Defensas",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825654,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019904,
+      "m_Localized": "Your donation of {0:cstring(d)} has been added to the guild bank.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019905,
+      "m_Localized": "Battle Nations es un creador de imperios épico. Ven a jugar conmigo, ¡mi nombre es {0:cstring(s)}! http://bit.ly/DownloadBN",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019906,
+      "m_Localized": "¡Acabo de ganar Prestigio en Battle Nations! Mi nombre es {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019907,
+      "m_Localized": "Has llegado al límite de población {0:cstring(d)}. Sube de nivel para construir más casas.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019908,
+      "m_Localized": "{0:cstring(s)} te ha invitado a luchar pero no estabas disponible.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019909,
+      "m_Localized": "¡{0:cstring(s)} quiere pelear!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019910,
+      "m_Localized": "{0:cstring(s)} no puede luchar ahora.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019911,
+      "m_Localized": "{0:cstring(s)} está jugando una versión actualizada del juego. ¡Actualiza la tuya ahora mismo para poder visitar su tierra!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019912,
+      "m_Localized": "No puedes visitar a {0:cstring(s)} en este momento porque no han actualizado su juego recientemente. ¡Envíales un mensaje y pídeles que lo actualicen!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019913,
+      "m_Localized": "Full in: {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019914,
+      "m_Localized": "{0:cstring(d)} donated",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019915,
+      "m_Localized": "{0:cstring(d)} more to Level {1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019916,
+      "m_Localized": "You have been promoted to {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019917,
+      "m_Localized": "Level {0:cstring(d)} required to Create",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019918,
+      "m_Localized": "¿Aceptar a {0:cstring(s)} en el Clan?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019919,
+      "m_Localized": "¿Quieres que {0:cstring(s)} sea líder del Clan? Se te degradará a Oficial.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019920,
+      "m_Localized": "{0:cstring(s)} Operationalist",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019921,
+      "m_Localized": "Rechazar la petición de {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019922,
+      "m_Localized": "{0:cstring(s)} Strategist",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019923,
+      "m_Localized": "¿Quieres degradar a {0:cstring(s)} a un miembro regular?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019924,
+      "m_Localized": "\"{0:cstring(s)}\" está lleno y no puede aceptar nuevos miembros.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019925,
+      "m_Localized": "¿Unirse a \"{0:cstring(s)}\"?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019926,
+      "m_Localized": "¿Unirse a \"{0:cstring(s)}\"? Tu petición de unirte a \"{1:cstring(s)}\" será anulada.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019927,
+      "m_Localized": "Envía tu solicitud a \"{0:cstring(s)}\". Puedes agregar un mensaje.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019928,
+      "m_Localized": "¿Crear un nuevo Clan? Tu petición para unirte a \"{0:cstring(s)}\" será anulada.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019929,
+      "m_Localized": "Has sido expulsado de \"{0:cstring(s)}\".",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019930,
+      "m_Localized": "Expulsar a {0:cstring(s)} del Clan. ¿Estás seguro?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019931,
+      "m_Localized": "¿Quieres promover a  {0:cstring(s)} a Oficial del Clan?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019932,
+      "m_Localized": "Collected {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019933,
+      "m_Localized": "use {0:cstring(s)} money from the guild bank to hurry building the defense?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019934,
+      "m_Localized": "Successfully hurried construction on {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019935,
+      "m_Localized": "Successfully started contructing {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019936,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019937,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019939,
+      "m_Localized": "{0:cstring(d)}h",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019940,
+      "m_Localized": "{0:cstring(d)} HP",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019941,
+      "m_Localized": "x{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019942,
+      "m_Localized": "Tier {0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019943,
+      "m_Localized": "You have {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019944,
+      "m_Localized": "¡Primero tenemos que celebrar la promoción de nuestro {0:cstring(s)} !",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019945,
+      "m_Localized": "{0:cstring(s)} ha terminado su promoción. ¿Quieres ir a por él?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019946,
+      "m_Localized": "{0:cstring(s)} se encuentra subiendo de rango. ¿Quieres completar su proceso ahora?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019947,
+      "m_Localized": "Necesitas estar en el nivel {0:cstring(d)} para desbloquear este objeto. Crea artículos para subir de nivel.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019948,
+      "m_Localized": "Battle Nations es un creador de imperios épico. Ven a jugar conmigo, ¡mi nombre es {0:cstring(s)}! http://bit.ly/DownloadBN",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019949,
+      "m_Localized": "¡Acabo de llegar al nivel $level in Battle Nations! ¡Mi nombre es {0:cstring(s)}! http://bit.ly/BattleNations",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019950,
+      "m_Localized": "Nivl. {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019951,
+      "m_Localized": "Buy {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019952,
+      "m_Localized": "Buy {0:cstring(s)} get 1 FREE",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019953,
+      "m_Localized": "Buy {0:cstring(s)} get {1:cstring(s)} FREE",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019954,
+      "m_Localized": "¡Debes tener al menos {0:cstring(d)} de unidades para iniciar esta batalla!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019955,
+      "m_Localized": "{0:cstring(d)}m",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019956,
+      "m_Localized": "¡He acabado {0:cstring(s)} en Battle Nations! Añádeme: {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019957,
+      "m_Localized": "¡He acabado {0:cstring(s)} en Battle Nations!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019958,
+      "m_Localized": "¡He acabado {0:cstring(s)} en Battle Nations! Añádeme: {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019959,
+      "m_Localized": "¡He acabado {0:cstring(s)} en Battle Nations!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019960,
+      "m_Localized": "¡Excelente idea Capitán! Nos será de gran ayuda usar estos {0:cstring(d)} Nanopods.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019963,
+      "m_Localized": "¡{0:cstring(s)} se retira en {1:cstring(s)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019964,
+      "m_Localized": "¡{0:cstring(s)} ha(n) invadido tu territorio!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019965,
+      "m_Localized": "¡El número de defensores de {0:cstring(s)} es superior a tu fuerza de ocupación! Este ataque no tendrá como resultado una ocupación.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019966,
+      "m_Localized": "¡{0:cstring(s)} ha invadido esta tierra!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019967,
+      "m_Localized": "{0:cstring(s)} invaded this land!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019968,
+      "m_Localized": "Tu ejército ocupa este lugar. Vuelve a por el botín en {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019969,
+      "m_Localized": "¡Han visto a {0:cstring(s)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019970,
+      "m_Localized": "{0:cstring(s)}% de descuento",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019971,
+      "m_Localized": "{0:cstring(+d)}/día",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019972,
+      "m_Localized": "{0:cstring(d)}/día",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019973,
+      "m_Localized": "{0:cstring(+d)}/hr",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019974,
+      "m_Localized": "{0:cstring(d)}/hr",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019975,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019976,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019977,
+      "m_Localized": "¡Tu ejército tiene una nueva unidad: {0:cstring(s)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019978,
+      "m_Localized": "¡Deberíamos conseguir {0:cstring(d)} unidades antes de salir a buscar peleas!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214208,
+      "m_Localized": "¡Deberíamos conseguir {0:cstring(d)} unidades antes de salir a buscar peleas!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214209,
+      "m_Localized": "PVP Energy: {0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214210,
+      "m_Localized": "{0:cstring(d)} ronda(s)",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214212,
+      "m_Localized": "¡Te han aceptado en \"{0:cstring(s)}\"!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214213,
+      "m_Localized": "\"{0:cstring(s)}\" ha rechazado tu petición.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214214,
+      "m_Localized": "{0:cstring(d)} {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214215,
+      "m_Localized": "Regresando de una batalla {0:cstring(s)}.  Disponible en {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214225,
+      "m_Localized": "+{0:cstring(s)}%!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214226,
+      "m_Localized": "{0:cstring(d)}s",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214227,
+      "m_Localized": "Solo puedes construir 1 {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214228,
+      "m_Localized": "{0:cstring(s)}:",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214229,
+      "m_Localized": "¿Dejar de ser amigo de {0:cstring(s)}?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214230,
+      "m_Localized": "¡{0:cstring(s)} está aturdido y no puede atacar!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214231,
+      "m_Localized": "Para el nivel {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214232,
+      "m_Localized": "Necesita rango {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214233,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)} Unidades",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214234,
+      "m_Localized": "Solo puedes usar {0:cstring(d)} de la unidad: {1:cstring(s)} por batalla.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214235,
+      "m_Localized": "Mejorar a nivel {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214236,
+      "m_Localized": "¡{0:cstring(s)} deben seguir avanzando antes de que los puedas visitar!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214237,
+      "m_Localized": "Ola {0:cstring(d)} de {1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214238,
+      "m_Localized": "Este ejército te ha atacado e intenta escapar {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214239,
+      "m_Localized": "Tu ejército se retira y estará de regreso en {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214240,
+      "m_Localized": "¡El ejército de {0:cstring(s)} se retira!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214241,
+      "m_Localized": "Necesitas {0:cstring(s)} para construir esto.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214242,
+      "m_Localized": "Lvl. {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214243,
+      "m_Localized": "Antes de poder investigar esto, necesitamos hacernos a los planes de {0:cstring(s)} del cuartel principal.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214250,
+      "m_Localized": "Modif. de base %",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330840219648,
+      "m_Localized": "¿{0:cstring(s)}  aún se está recuperando? ¡Toca \"Rápido\" y acelera el proceso!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939904,
+      "m_Localized": "Daños x {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939905,
+      "m_Localized": "{0:cstring(d)} heridos",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330903134208,
+      "m_Localized": "¡{0:cstring(s)} se está reparando! ¿Quieres acelerar el proceso?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328512,
+      "m_Localized": "{0:cstring(d)}% {1:cstring(s)} de bonus",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328513,
+      "m_Localized": "{0:cstring(d)} espacios",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328514,
+      "m_Localized": "Guarda {0:cstring(d)} {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328515,
+      "m_Localized": "{0:cstring(s)} Trabajos",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328516,
+      "m_Localized": "{0:cstring(+d)} Trabajadores",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328517,
+      "m_Localized": "{0:cstring(d)} {1:cstring(s)} / Día",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328518,
+      "m_Localized": "{0:cstring(d)} {1:cstring(s)} / Día",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328519,
+      "m_Localized": "Recolecta cada {0:cstring(d)} horas",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328520,
+      "m_Localized": "{0:cstring(+d)} Capacidad",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328521,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328522,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328523,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328524,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328525,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214249,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 154412938981888000,
+      "m_Localized": "Tu amigo aún no ha aceptado tu ayuda. Recuérdale que revise el mensaje. Tus ayudas se recargarán en {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 164152327517765632,
+      "m_Localized": "¡Buenas noticias, Comandante! Hay una nueva actualización disponible. Tu versión actual es {0:cstring(d)}. Descarga la actualización cuanto antes y vuelve al campo de batalla.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816328,
+      "m_Localized": "No puedes unirte a {0:cstring(s)} porque has sido baneado",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816329,
+      "m_Localized": "No puedes unirte a {0:cstring(s)} la guild está llena",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816330,
+      "m_Localized": "No puedes unirte a {0:cstring(s)} por favor sal de tu guild actual primero",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816331,
+      "m_Localized": "No se puede aceptar a {0:cstring(s)} en la guild la guild está llena Quita miembros o mejora tu guild para abrir más espacios",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816332,
+      "m_Localized": "No se puede aceptar a {0:cstring(s)} en la guild ya están en otra guild Deben salir de su guild actual para unirse",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816333,
+      "m_Localized": "¿Estás seguro de que quieres elegir a {0:cstring(s)} como nuevo líder",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067263459328,
+      "m_Localized": "Muy pronto inténtalo de nuevo en {0:cstring(s)} h {1:cstring(s)} min",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236544,
+      "m_Localized": "Invitado a unirte a {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236545,
+      "m_Localized": "Has sido invitado a unirte a {0:cstring(s)} por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236546,
+      "m_Localized": "Expulsado de {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236547,
+      "m_Localized": "Has sido expulsado de {0:cstring(s)} por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236548,
+      "m_Localized": "Baneado de {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236549,
+      "m_Localized": "Has sido baneado de {0:cstring(s)} por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236550,
+      "m_Localized": "Desbaneado de {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236551,
+      "m_Localized": "Has sido desbaneado de {0:cstring(s)} por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236552,
+      "m_Localized": "Recompensas de Boss Strike #{0:cstring(d)} Nivel {1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236553,
+      "m_Localized": "Felicidades Alcanzaste el nivel {0:cstring(d)} en Boss Strike #{1:cstring(d)}: {2:cstring(s)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236554,
+      "m_Localized": "Expira en {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236555,
+      "m_Localized": "Deseleccionar ({0:cstring(d)})",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236556,
+      "m_Localized": "Est. {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236557,
+      "m_Localized": "¿Banear a {0:cstring(s)}?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236558,
+      "m_Localized": "¿Salir de {0:cstring(s)} para unirte a {1:cstring(s)}?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236559,
+      "m_Localized": "Si aceptas, tu solicitud para unirte a {0:cstring(s)} hará que te expulsen de {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236562,
+      "m_Localized": "Solicitud enviada con éxito a {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236576,
+      "m_Localized": "Enviado hace {0:cstring(d)} días",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236560,
+      "m_Localized": "No pudiste unirte a {0:cstring(s)} porque estás baneado.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236561,
+      "m_Localized": "No se pudo unir a {0:cstring(s)}. Inténtalo de nuevo más tarde.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236563,
+      "m_Localized": "No se pudo solicitar unirte a {0:cstring(s)} porque estás baneado.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236564,
+      "m_Localized": "No se pudo enviar la solicitud para unirte a {0:cstring(s)}. Inténtalo de nuevo más tarde.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236565,
+      "m_Localized": "{0:cstring(s)} cambió {1:cstring(s)} a {2:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236566,
+      "m_Localized": "{0:cstring(s)} se unió al gremio y fue aceptado por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236567,
+      "m_Localized": "{0:cstring(s)} se unió al gremio y fue aceptado por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236568,
+      "m_Localized": "{0:cstring(s)} se unió al gremio",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236569,
+      "m_Localized": "{0:cstring(s)} dejó el gremio.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236570,
+      "m_Localized": "{0:cstring(s)} fue expulsado del gremio por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236571,
+      "m_Localized": "{0:cstring(s)} fue baneado del gremio por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236572,
+      "m_Localized": "{0:cstring(s)} fue desbaneado del gremio por {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236573,
+      "m_Localized": "El rol de {0:cstring(s)} fue actualizado a {1:cstring(s)} por {2:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236574,
+      "m_Localized": "{0:cstring(s)} compró {1:cstring(s)} (Nivel {2:cstring(d)})",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236575,
+      "m_Localized": "Enviado hace {0:cstring(d)} día",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294853
+          }
+        ]
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": [
+      {
+        "rid": 2918897848747294853,
+        "type": {
+          "class": "SmartFormatTag",
+          "ns": "UnityEngine.Localization.Metadata",
+          "asm": "Unity.Localization"
+        },
+        "data": {}
+      }
+    ]
+  }
+}

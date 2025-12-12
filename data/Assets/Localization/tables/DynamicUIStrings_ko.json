@@ -1,0 +1,2407 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "DynamicUIStrings_ko",
+  "m_LocaleId": {
+    "m_Code": "ko"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 4082352208231633427
+  },
+  "m_Metadata": {
+    "m_Items": [
+      {
+        "rid": 2918897848747294851
+      }
+    ]
+  },
+  "m_TableData": [
+    {
+      "m_Id": 10341667659776,
+      "m_Localized": "이것을 조사하기 전에, 본부에서  {0:cstring(s)}에 대한 계획을 세워야 합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825600,
+      "m_Localized": "{0:cstring(s)}을(를) 현재 조사 중입니다. 서둘러 끝내시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825601,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825602,
+      "m_Localized": "배틀 네이션스는 iPhone,iPad,iPod touch에서 지원되는 장대한 제국 건설 게임입니다. 제 아이디는 {0:cstring(s)}입니다! 친구로 추가해 주세요! http://bit.ly/BattleNations",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825603,
+      "m_Localized": "배틀 네이션스에서 $achievement을(를) 획득하였습니다! 제 아이디는 {0:cstring(s)}입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825604,
+      "m_Localized": "현재 전투에 추가할 수 있는 {0:cstring(s)}이(가) 없습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825605,
+      "m_Localized": "이번 전투에는 {0:cstring(d)}개의 유닛만 배치할 수 있습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825606,
+      "m_Localized": "{0:cstring(+d)}% VS {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825607,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825608,
+      "m_Localized": "현재 {0:cstring(s)}와(과) 전투 중 입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825609,
+      "m_Localized": "{0:cstring(s)}에게 패배하였습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825610,
+      "m_Localized": "{0:cstring(s)}와(과)의 전투로부터 안전하게 집으로 돌아왔습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825611,
+      "m_Localized": "{0:cstring(s)}으(로)부터 전리품을 수집하세요. {1:cstring(s)} 안에 준비됩니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825612,
+      "m_Localized": "{0:cstring(s)}으(로)부터 전리품을 수집하세요. {1:cstring(s)} 안에 준비됩니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825613,
+      "m_Localized": "{0:cstring(s)}으(로)부터 수집할 전리품이 준비되었습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825614,
+      "m_Localized": "{0:cstring(s)}의 전초기지를 점령하는 중입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825615,
+      "m_Localized": "{0:cstring(s)}의 영토에서 철수중입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825616,
+      "m_Localized": "{0:cstring(s)}이(가) 도움을 주고 싶어합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825617,
+      "m_Localized": "Your Guild Rank: {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825618,
+      "m_Localized": "Points to Top {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825619,
+      "m_Localized": "Top {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825620,
+      "m_Localized": "{0:cstring(s)}이(는) 공격당하기에는 너무 약합니다. 전쟁할 가치가 생길만큼 레벨업을 하라고 메시지를 보내 주세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825621,
+      "m_Localized": "동맹군이기 때문에 {0:cstring(s)}을(를) 공격할 수 없습니다. 다른 플레이어를 대신 공격하세요 - 그것이 훨씬 이익입니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825622,
+      "m_Localized": "전투 깃발을 올리지 않았기 때문에 지금은 {0:cstring(s)}을(를) 공격할 수 없습니다.  함께 싸우자고 메시지를 보내 보세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825623,
+      "m_Localized": "당신은 지금 {0:cstring(s)}을(를) 공격 할 수 없습니다 - 이미 너무 많은 침입자들이 있습니다. 침입자들을 몰아내고 다시 시도해 보세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825624,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825625,
+      "m_Localized": "보스 포인트를 {0:cstring(s)} 얻었습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825626,
+      "m_Localized": "길드원들과 함께 {0:cstring(d)}/{1:cstring(d)}단계 완료!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825627,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}단계 완료!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825628,
+      "m_Localized": "{0:cstring(d)}단계",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825629,
+      "m_Localized": "{0:cstring(d)}단계 포상!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825630,
+      "m_Localized": " {0:cstring(d)}/{1:cstring(d)}무리들 격퇴!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825631,
+      "m_Localized": "이 자원을 모으려면 여기에 {0:cstring(s)}을(를) 지으세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825632,
+      "m_Localized": "레벨 {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825633,
+      "m_Localized": "{0:cstring(s)} 레벨 {1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825634,
+      "m_Localized": "{0:cstring(s)}의 훈련을 먼저 끝내야합니다! 훈련을 더 빨리 시키고 싶으세요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825635,
+      "m_Localized": "{0:cstring(s)}은(는) 이런 타입의 유닛은 가질 수 없습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825636,
+      "m_Localized": "당신이 지으려는 유닛은 레벨 {0:cstring(d)}의 건물에서 지을 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825637,
+      "m_Localized": "이 창고에는 각 자원당 {0:cstring(d)}까지 저장할 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825638,
+      "m_Localized": "이 창고에는 화학성 유리병 {0:cstring(d)}개를 저장할 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825639,
+      "m_Localized": "{0:cstring(d)}턴",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825640,
+      "m_Localized": "{0:cstring(s)}의 초대를 수락하시겠습니까? 다른 초대들은 거절될 것입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825641,
+      "m_Localized": "{0:cstring(s)}의 초대를 수락하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825642,
+      "m_Localized": "당신의 길드로 {0:cstring(s)}을(를) 초대 하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825643,
+      "m_Localized": "{0:cstring(s)}의 초대를 거부 하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825644,
+      "m_Localized": "건물 {0:cstring(d)}개를 지으세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825645,
+      "m_Localized": "{0:cstring(s)}은(는) 무기를 {1:cstring(d)}턴 동안 사용할 수 없습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825646,
+      "m_Localized": "{0:cstring(s)}은(는) 무기를 {1:cstring(d)}턴 동안 사용할 수 없습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825647,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825648,
+      "m_Localized": "{0:cstring(s)} 치명타 %",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825649,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825650,
+      "m_Localized": "{0:cstring(d)}일",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825651,
+      "m_Localized": "{0:cstring(s)} 이(가) {1:cstring(s)}을(를) 물리쳐 주었습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825652,
+      "m_Localized": "공격해서 {0:cstring(s)}을(를) 도와주겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825653,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)} 방어",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825654,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019904,
+      "m_Localized": "{0:cstring(d)}을(를) 기부했습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019905,
+      "m_Localized": "배틀 네이션스는 iPhone,iPad,iPod touch에서 지원되는 장대한 제국 건설 게임입니다. 제 아이디는 {0:cstring(s)}입니다! 친구로 추가해 주세요! http://bit.ly/BattleNations",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019906,
+      "m_Localized": "배틀 네이션스에서 명성을 얻었습니다! 제 아이디는 {0:cstring(s)}입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019907,
+      "m_Localized": "인구제한 {0:cstring(d)}에 도달하였습니다. 집을 더 지으려면 레벨이 더 높아야 합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019908,
+      "m_Localized": "{0:cstring(s)}이(가) 초대했지만, 대위님께서 부재중이었습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019909,
+      "m_Localized": "{0:cstring(s)}이(가) 전투 신청을 했습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019910,
+      "m_Localized": "{0:cstring(s)}은(는) 지금 전투할 수 없습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019911,
+      "m_Localized": "{0:cstring(s)}은(는) 업데이트된 버전의 게임을 사용하고 있습니다. 지금 업데이트해서 영토를 방문하세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019912,
+      "m_Localized": "{0:cstring(s)}이(가) 게임 업데이트를 하지 않아서 방문할 수가 없습니다. 업데이트하라고 메시지를 보내세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019913,
+      "m_Localized": "Full in: {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019914,
+      "m_Localized": "기부된 금액: {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019915,
+      "m_Localized": "필요 금액: {0:cstring(d)} (레벨 {1:cstring(d)}까지)",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019916,
+      "m_Localized": "축하합니다, {0:cstring(s)}으(로) 진급하셨습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019917,
+      "m_Localized": "길드를 만들기 위해서는 최소 레벨 {0:cstring(d)}이(가) 되어야 합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019918,
+      "m_Localized": "{0:cstring(s)}의 가입을 수락하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019919,
+      "m_Localized": "정말로 {0:cstring(s)}을(를) 길드의 새로운 리더로 선임하고 장교로 내려가겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019920,
+      "m_Localized": "{0:cstring(s)} 수행요원",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019921,
+      "m_Localized": "{0:cstring(s)}으(로) 부터 길드 가입을 거절하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019922,
+      "m_Localized": "{0:cstring(s)} 전략요원",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019923,
+      "m_Localized": "{0:cstring(s)}을(를) 멤버로 강등시키겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019924,
+      "m_Localized": "\"{0:cstring(s)}\"은(는) 꽉 차서 새 멤버로 받아 드릴 수 없습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019925,
+      "m_Localized": "\"{0:cstring(s)}\"에 가입하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019926,
+      "m_Localized": "\"{0:cstring(s)}\"에 가입하시겠습니까? \"{1:cstring(s)}\" 가입 요청은 취소될 것입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019927,
+      "m_Localized": "\"{0:cstring(s)}\" 가입 신청. 밑에 추가 메시지를 포함 시킬 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019928,
+      "m_Localized": "새로운 길드를 만들겠습니까? \"{0:cstring(s)}\" 가입 요청은 취소 될 것입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019929,
+      "m_Localized": "당신은 \"{0:cstring(s)}\"으(로)부터 추방되었습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019930,
+      "m_Localized": "멤버 {0:cstring(s)}을(를) 추방하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019931,
+      "m_Localized": "{0:cstring(s)}을(를) 장교로 진급시키겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019932,
+      "m_Localized": "Collected {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019933,
+      "m_Localized": "use {0:cstring(s)} money from the guild bank to hurry building the defense?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019934,
+      "m_Localized": "Successfully hurried construction on {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019935,
+      "m_Localized": "Successfully started contructing {0:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019936,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019937,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019939,
+      "m_Localized": "{0:cstring(d)}시간",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019940,
+      "m_Localized": "{0:cstring(d)} HP",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019941,
+      "m_Localized": "x{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019942,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)} 단계",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019943,
+      "m_Localized": "{0:cstring(d)}개 보유중",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019944,
+      "m_Localized": "{0:cstring(s)}의 진급을 축하합니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019945,
+      "m_Localized": "{0:cstring(s)}의 진급이 완료되었습니다. 지금 수집하시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019946,
+      "m_Localized": "당신의 {0:cstring(s)}은(는) 진급 중입니다. 진급을 서두르고 싶으세요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019947,
+      "m_Localized": "잠금 해제를 하기 위해서는 레벨 {0:cstring(d)}이 되어야 합니다. 상품을 생산하여 레벨을 올리세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019948,
+      "m_Localized": "배틀 네이션스는 iPhone,iPad,iPod touch에서 지원되는 장대한 제국 건설 게임입니다. 저와 게임을 하시려면 제 아이디 {0:cstring(s)}을(를) 추가해 주세요! http://bit.ly/BattleNations",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019949,
+      "m_Localized": "지금 막 배틀 네이션스에서 레벨 $level이 되었습니다! 제 아이디는 {0:cstring(s)} 입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019950,
+      "m_Localized": "레벨 {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019951,
+      "m_Localized": "{0:cstring(s)}개를 구매!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019952,
+      "m_Localized": "{0:cstring(s)}개를 구매하고 1개 무료로 받기!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019953,
+      "m_Localized": "{0:cstring(s)}개를 구매하고 {1:cstring(s)}개 무료로 받기!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019954,
+      "m_Localized": "최소 {0:cstring(d)}명의 병사를 투입하셔야 전투를 할 수 있습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019955,
+      "m_Localized": "{0:cstring(d)}분",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019956,
+      "m_Localized": "배틀 네이션스의 {0:cstring(s)}을(를) 완료하였습니다! 친구 추가 해주세요: {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019957,
+      "m_Localized": "배틀 네이션스의 {0:cstring(s)}을(를) 완료하였습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019958,
+      "m_Localized": "배틀 네이션스의 {0:cstring(s)}을(를) 완료하였습니다! 친구 추가 해주세요: {1:cstring(s)}.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019959,
+      "m_Localized": "배틀 네이션스의 {0:cstring(s)}을(를) 완료하였습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019960,
+      "m_Localized": "나노팟 {0:cstring(d)}개를 사용하면 게임 진행에 큰 도움이 됩니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019963,
+      "m_Localized": "{0:cstring(s)}은(는) {1:cstring(s)}안에 철수합니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019964,
+      "m_Localized": "{0:cstring(s)}와(과) 전투!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019965,
+      "m_Localized": "{0:cstring(s)}의 수비대가 점령군의 힘을 초과합니다! 공격을 하더라도 점령할 수 없습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019966,
+      "m_Localized": "{0:cstring(s)}와(과) 전투!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019967,
+      "m_Localized": "{0:cstring(s)}와(과) 전투!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019968,
+      "m_Localized": "당신의 군대는 이 자리를 점령하고 있습니다. {0:cstring(s)}후에 전리품을 다시 가져오세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019969,
+      "m_Localized": "{0:cstring(s)} 이(가) 발견되었습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019970,
+      "m_Localized": "{0:cstring(s)}% 세일",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019971,
+      "m_Localized": "{0:cstring(+d)}/일",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019972,
+      "m_Localized": "{0:cstring(d)}/일",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019973,
+      "m_Localized": "{0:cstring(+d)}/시간",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019974,
+      "m_Localized": "{0:cstring(d)}/시간",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019975,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019976,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019977,
+      "m_Localized": "하나의 {0:cstring(s)}이(가) 당신의 군대에 합류했습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019978,
+      "m_Localized": "싸울 상대를 찾으러 가기 전에 유닛 {0:cstring(d)}이 더 필요합니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214208,
+      "m_Localized": "싸울 상대를 찾으러 가기 전에 유닛 {0:cstring(d)}이 더 필요합니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214209,
+      "m_Localized": "PVP Energy: {0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214210,
+      "m_Localized": "{0:cstring(d)}번",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214212,
+      "m_Localized": "\"{0:cstring(s)}\"(으)로 받아들여졌습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214213,
+      "m_Localized": "\"{0:cstring(s)}\"(이)가 당신의 지원을 거절하였습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214215,
+      "m_Localized": "전투에서 돌아오고 있습니다. {0:cstring(s)}후에 사용할 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214225,
+      "m_Localized": "+{0:cstring(s)}%!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214226,
+      "m_Localized": "{0:cstring(d)}초",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214227,
+      "m_Localized": "오직 하나의 {0:cstring(s)}만 지을 수 있습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214228,
+      "m_Localized": "{0:cstring(s)}:",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214229,
+      "m_Localized": "{0:cstring(s)}과(와) 친구를 끊으시겠습니까?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214230,
+      "m_Localized": "{0:cstring(s)}은(는) 스턴상태여서 공격할 수 없습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214231,
+      "m_Localized": "레벨 {0:cstring(d)}으(로)",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214232,
+      "m_Localized": "{0:cstring(d)} 계급이 필요합니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214233,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)} 유닛",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214234,
+      "m_Localized": "이 전투에서는 {0:cstring(d)}개의 {1:cstring(s)} 유닛만 사용 가능합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214235,
+      "m_Localized": "레벨 {0:cstring(d)}단계로 업그레이드하기",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214236,
+      "m_Localized": "{0:cstring(s)}은(는) 더 진행해야지만 당신이 방문할 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214237,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)} 무리들",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214238,
+      "m_Localized": "당신을 공격한 군대가 빠져나가기까지 {0:cstring(s)} 남았습니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214239,
+      "m_Localized": "당신의 군대는 철수하고 있으며 {0:cstring(s)}안에 돌아 올 것입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214240,
+      "m_Localized": "{0:cstring(s)} 이(의) 군대가 철수하고 있습니다!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214241,
+      "m_Localized": "짓기 위해서는 {0:cstring(s)}이(가) 필요합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214242,
+      "m_Localized": "레벨 {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214243,
+      "m_Localized": "이것을 조사하기 전에, 본부에서  {0:cstring(s)}에 대한 계획을 세워야 합니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330840219648,
+      "m_Localized": "{0:cstring(s)}은(는) 아직 치료중입니다! 더 빨리 치료하고 싶으세요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939904,
+      "m_Localized": "{0:cstring(d)} 손상됨",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939905,
+      "m_Localized": "{0:cstring(d)} 부상",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330903134208,
+      "m_Localized": "{0:cstring(s)}은(는) 아직 수리 중입니다! 더 빨리 수리하고 싶으세요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328512,
+      "m_Localized": "{0:cstring(d)}% {1:cstring(s)} 보너스",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328513,
+      "m_Localized": "{0:cstring(d)} 공간",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328515,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328516,
+      "m_Localized": "{0:cstring(+d)} 일꾼",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328519,
+      "m_Localized": "{0:cstring(d)}시간마다 수집",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328520,
+      "m_Localized": "{0:cstring(+d)} 용량",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328514,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328517,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328518,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328521,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328522,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328523,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328524,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328525,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214249,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214250,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 154412938981888000,
+      "m_Localized": "친구가 아직 당신의 도움을 받지 않았어요. 확인하라고 알려주세요! 당신의 지원은 {0:cstring(s)} 후에 다시 채워집니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 164152327517765632,
+      "m_Localized": "좋은 소식입니다, 사령관! 새로운 업데이트가 나왔습니다! 현재 버전은 {0:cstring(d)} 입니다. 지금 바로 업데이트를 받고 전장으로 복귀하세요!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816328,
+      "m_Localized": "당신은 {0:cstring(s)} 에 가입할 수 없어요 차단된 상태예요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816329,
+      "m_Localized": "{0:cstring(s)} 에 가입할 수 없어요 길드가 가득 찼어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816330,
+      "m_Localized": "{0:cstring(s)} 에 가입할 수 없어요 먼저 현재 길드를 탈퇴해 주세요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816331,
+      "m_Localized": "{0:cstring(s)} 를 길드에 받아들일 수 없어요 길드가 가득 찼어요 멤버를 내보내거나 길드를 업그레이드해서 자리를 늘려 주세요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816332,
+      "m_Localized": "{0:cstring(s)} 를 길드에 받아들일 수 없어요 이미 다른 길드에 소속되어 있어요 가입하려면 먼저 현재 길드를 떠나야 해요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816333,
+      "m_Localized": "정말 {0:cstring(s)} 를 새 리더로 선택할까요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067263459328,
+      "m_Localized": "아직은 너무 이르네요 {0:cstring(s)} 시간 {1:cstring(s)} 분 후에 다시 시도해 주세요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236544,
+      "m_Localized": "{0:cstring(s)} 에 가입하라는 초대를 받았어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236545,
+      "m_Localized": "{1:cstring(s)} 가 {0:cstring(s)} 에 초대했어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236546,
+      "m_Localized": "{0:cstring(s)} 에서 추방됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236547,
+      "m_Localized": "{1:cstring(s)} 가 당신을 {0:cstring(s)} 에서 추방했어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236548,
+      "m_Localized": "{0:cstring(s)} 에서 차단됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236549,
+      "m_Localized": "{1:cstring(s)} 가 당신을 {0:cstring(s)} 에서 차단했어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236550,
+      "m_Localized": "{0:cstring(s)}에서 차단이 해제되었습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236551,
+      "m_Localized": "당신은 {1:cstring(s)}에 의해 {0:cstring(s)}에서 차단이 해제되었습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236552,
+      "m_Localized": "Boss Strike #{0:cstring(d)} 티어 {1:cstring(d)} 보상",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236553,
+      "m_Localized": "축하합니다 Boss Strike #{1:cstring(d)}에서 티어 {0:cstring(d)}에 도달했어요 {2:cstring(s)}!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236554,
+      "m_Localized": "만료까지 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236555,
+      "m_Localized": "선택 해제 ({0:cstring(d)})",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236556,
+      "m_Localized": "예상 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236557,
+      "m_Localized": "{0:cstring(s)}을(를) 밴할까요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236558,
+      "m_Localized": "{0:cstring(s)}을(를) 떠나 {1:cstring(s)}에 합류할까요?",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236559,
+      "m_Localized": "수락하면 {0:cstring(s)} 가입 요청으로 인해 {1:cstring(s)}에서 추방됩니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236562,
+      "m_Localized": "{0:cstring(s)}에게 요청을 성공적으로 보냈습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236576,
+      "m_Localized": "{0:cstring(d)}일 전에 보냄",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236560,
+      "m_Localized": "{0:cstring(s)}에 가입할 수 없습니다 당신은 밴된 상태입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236561,
+      "m_Localized": "{0:cstring(s)}에 가입할 수 없습니다. 나중에 다시 시도해주세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236563,
+      "m_Localized": "{0:cstring(s)}에 가입 요청을 할 수 없습니다 당신은 밴된 상태입니다.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236564,
+      "m_Localized": "{0:cstring(s)}에 가입 요청을 보낼 수 없습니다. 나중에 다시 시도해주세요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236565,
+      "m_Localized": "{0:cstring(s)}이(가) {1:cstring(s)}을(를) {2:cstring(s)}로 변경했습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236566,
+      "m_Localized": "{0:cstring(s)}이(가) 길드에 가입했으며 {1:cstring(s)}이(가) 승인했습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236567,
+      "m_Localized": "{0:cstring(s)}이(가) 길드에 가입했고 {1:cstring(s)}이(가) 승인했습니다",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236568,
+      "m_Localized": "{0:cstring(s)} 님이 길드에 참여했어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236569,
+      "m_Localized": "{0:cstring(s)} 님이 길드를 떠났어요.",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236570,
+      "m_Localized": "{0:cstring(s)} 님이 {1:cstring(s)} 님에게 길드에서 추방됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236571,
+      "m_Localized": "{0:cstring(s)} 님이 {1:cstring(s)} 님에게 길드에서 밴됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236572,
+      "m_Localized": "{0:cstring(s)} 님이 {1:cstring(s)} 님에게 길드에서 밴 해제됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236573,
+      "m_Localized": "{0:cstring(s)} 님의 역할이 {2:cstring(s)} 님에 의해 {1:cstring(s)} 로 업데이트됐어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236574,
+      "m_Localized": "{0:cstring(s)}이(가) {1:cstring(s)}을(를) 구매했습니다 (레벨 {2:cstring(d)})",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236575,
+      "m_Localized": "{0:cstring(d)} 일 전에 보냈어요",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294851
+          }
+        ]
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": [
+      {
+        "rid": 2918897848747294851,
+        "type": {
+          "class": "SmartFormatTag",
+          "ns": "UnityEngine.Localization.Metadata",
+          "asm": "Unity.Localization"
+        },
+        "data": {}
+      }
+    ]
+  }
+}

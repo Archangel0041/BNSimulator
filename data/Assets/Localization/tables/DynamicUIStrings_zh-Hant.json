@@ -1,0 +1,2352 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "DynamicUIStrings_zh-Hant",
+  "m_LocaleId": {
+    "m_Code": "zh-Hant"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 4082352208231633427
+  },
+  "m_Metadata": {
+    "m_Items": [
+      {
+        "rid": 2918897848747294846
+      }
+    ]
+  },
+  "m_TableData": [
+    {
+      "m_Id": 10341667659776,
+      "m_Localized": "在研究這個之前， 我們需要從總部拿到{0:cstring(s)}的計劃。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825600,
+      "m_Localized": "{0:cstring(s)}正處於研究階段。你想立刻完成其研究進度嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825601,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825602,
+      "m_Localized": "跟我一起加入最刺激超好玩的帝國建造遊戲《戰場爭鋒》吧！我的用戶名是{0:cstring(s)}！http://z2.com/game/battle-nations/#ZD.apps-button",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825603,
+      "m_Localized": "我在《戰場爭鋒》中獲得了「$achievement」的成就！我的用戶名是{0:cstring(s)}，快加我吧！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825604,
+      "m_Localized": "你無法派遣{0:cstring(s)}到戰場上，因為你沒有任何可用的～",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825605,
+      "m_Localized": "在這場戰鬥中，你只能派遣{0:cstring(d)}個單元！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825606,
+      "m_Localized": "{0:cstring(+d)}% VS {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825607,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825608,
+      "m_Localized": "目前正在與{0:cstring(s)}作戰。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825609,
+      "m_Localized": "被{0:cstring(s)}擊敗～",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825610,
+      "m_Localized": "你的軍隊與{0:cstring(s)}作戰後，已安全返回基地。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825611,
+      "m_Localized": "你的軍隊與{0:cstring(s)}作戰後，正在返回基地。{1:cstring(s)}後能再開戰！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825612,
+      "m_Localized": "正從{0:cstring(s)}中收集獎勵…{1:cstring(s)}後準備就緒！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825613,
+      "m_Localized": "在{0:cstring(s)}的基地有財物可收",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825614,
+      "m_Localized": "正在占領{0:cstring(s)}的基地。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825615,
+      "m_Localized": "正從{0:cstring(s)}的基地撤退。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825616,
+      "m_Localized": "{0:cstring(s)}想要協助你。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825617,
+      "m_Localized": "我的帝國排名：{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825618,
+      "m_Localized": "達至排名前{0:cstring(d)}的所需點數",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825619,
+      "m_Localized": "排名前{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825620,
+      "m_Localized": "{0:cstring(s)}太弱小了，不值得攻擊～給該玩家發送訊息，讓對方升級，這樣才值得我們開戰！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825621,
+      "m_Localized": "你當前無法攻擊{0:cstring(s)}，因為你們是同盟。你應該攻擊其他玩家，這樣更有利可圖！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825622,
+      "m_Localized": "你當前無法攻擊{0:cstring(s)}，因為該玩家沒有升起戰旗。給對方發送信息，告訴他/她出來開戰吧！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825623,
+      "m_Localized": "你現在不能攻擊{0:cstring(s)}，該玩家的基地上已經有太多的侵襲者。請擊退一些侵襲者後再試一次！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825624,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825625,
+      "m_Localized": "賺取 {0:cstring(s)} Boss點數",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825626,
+      "m_Localized": "你與你的帝國公會已完成了Boss攻擊戰的第{0:cstring(d)}∕{1:cstring(d)}階段！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825627,
+      "m_Localized": "你已完成了Boss攻擊戰的第{0:cstring(d)}∕{1:cstring(d)}階段！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825628,
+      "m_Localized": "第{0:cstring(d)}階段",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825629,
+      "m_Localized": "第{0:cstring(d)}階段的獎勵！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825630,
+      "m_Localized": "已完成攻擊波：{0:cstring(d)}∕{1:cstring(d)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825631,
+      "m_Localized": "在這裏建造{0:cstring(s)}來采集這種資源",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825632,
+      "m_Localized": "等級{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825633,
+      "m_Localized": "{0:cstring(s)}等級{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825634,
+      "m_Localized": "你必須先完成{0:cstring(s)}的訓練！你想加快訓練進度嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825635,
+      "m_Localized": "{0:cstring(s)}不能容納此類單元。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825636,
+      "m_Localized": "此建築物必須升級到等級{0:cstring(d)}，你才能訓練這個單元。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825637,
+      "m_Localized": "這個倉庫讓你儲存每樣資源{0:cstring(d)}個。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825638,
+      "m_Localized": "這個倉庫讓你儲存{0:cstring(d)}支化學試管。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825639,
+      "m_Localized": "{0:cstring(d)} 回合",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825640,
+      "m_Localized": "接受「{0:cstring(s)}」的邀請？其它待回復的邀請將會被拒絕。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825641,
+      "m_Localized": "接受「{0:cstring(s)}」的邀請？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825642,
+      "m_Localized": "邀請 {0:cstring(s)} 加入您的帝國？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825643,
+      "m_Localized": "拒絕「{0:cstring(s)}」的邀請？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825644,
+      "m_Localized": "建造{0:cstring(d)}建築物",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825645,
+      "m_Localized": "{0:cstring(s)}在{1:cstring(d)}輪後才能使用該武器！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825646,
+      "m_Localized": "{0:cstring(s)}在{1:cstring(d)}輪後才能使用該武器！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825647,
+      "m_Localized": "{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825648,
+      "m_Localized": "暴擊% VS {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825649,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825650,
+      "m_Localized": "{0:cstring(d)}天",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825651,
+      "m_Localized": "{0:cstring(s)}已幫你擊退{1:cstring(s)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825652,
+      "m_Localized": "你想協助{0:cstring(s)}攻擊這支軍隊嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825653,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)} 防禦物",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341692825654,
+      "m_Localized": "{0:cstring(+d)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019904,
+      "m_Localized": "你捐赠的{0:cstring(d)}已存入帝国银行！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019905,
+      "m_Localized": "《战场争锋》绝对是一个给力好玩的帝国建造游戏哦！快来跟我一起玩吧，我的用户名是{0:cstring(s)}！http://z2.com/game/battle-nations/#ZD.apps-button",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019906,
+      "m_Localized": "我刚在《战场争锋》中博得了声望！我的用户名是{0:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019907,
+      "m_Localized": "已达到{0:cstring(d)}的人口上限。升级后能建造更多住房。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019908,
+      "m_Localized": "{0:cstring(s)}刚才邀请您对战，可是您当时太忙了。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019909,
+      "m_Localized": "{0:cstring(s)}想和您对战！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019910,
+      "m_Localized": "{0:cstring(s)}现时无法开战。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019911,
+      "m_Localized": "{0:cstring(s)}在玩游戏的更新版本。现在更新，然后访问该玩家的土地！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019912,
+      "m_Localized": "您不能访问{0:cstring(s)}的基地，因为对方还没有更新游戏。发送消息给该玩家，通知游戏已更新！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019913,
+      "m_Localized": "距能量全滿還剩：{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019914,
+      "m_Localized": "已捐贈：{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019915,
+      "m_Localized": "還需要{0:cstring(d)}才能達到等級{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019916,
+      "m_Localized": "你已被提拔為{0:cstring(s)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019917,
+      "m_Localized": "需要達到等級{0:cstring(d)}才能創建",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019918,
+      "m_Localized": "接受 {0:cstring(s)} 的入國申請？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019919,
+      "m_Localized": "你確定想要提拔{0:cstring(s)}成為帝國領袖，並將自己降職為軍官嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019920,
+      "m_Localized": "{0:cstring(s)} 行動家",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019921,
+      "m_Localized": "拒絕 {0:cstring(s)} 的入國申請？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019922,
+      "m_Localized": "{0:cstring(s)} 戰略家",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019923,
+      "m_Localized": "你確定想要把{0:cstring(s)}降職為普通公民嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019924,
+      "m_Localized": "「{0:cstring(s)}」帝國人數已滿，無法接納新成員。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019925,
+      "m_Localized": "加入「{0:cstring(s)}」？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019926,
+      "m_Localized": "加入「{0:cstring(s)}」？你早前發送加入「{1:cstring(s)}」的申請將會被取消。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019927,
+      "m_Localized": "申請加入「{0:cstring(s)}」帝國，可在以下添加留言。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019928,
+      "m_Localized": "創建一個新的帝國？您早前發送加入「{0:cstring(s)}」的申請將會被取消。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019929,
+      "m_Localized": "您已被踢出「{0:cstring(s)}」帝國～",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019930,
+      "m_Localized": "您確定想要把 {0:cstring(s)} 踢出帝國嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019931,
+      "m_Localized": "你確定想要提拔{0:cstring(s)}成為帝國軍官嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019937,
+      "m_Localized": "{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019939,
+      "m_Localized": "{0:cstring(d)}小时",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019940,
+      "m_Localized": "{0:cstring(d)} 生命值",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019941,
+      "m_Localized": "x{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019942,
+      "m_Localized": "第 {0:cstring(d)}/{1:cstring(d)} 级",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019944,
+      "m_Localized": "我们首先要庆祝{0:cstring(s)}的升级！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019945,
+      "m_Localized": "{0:cstring(s)}的升级已完成。你要收集它吗？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019946,
+      "m_Localized": "{0:cstring(s)}正在升级。你现在想要完成其升级进度吗？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019947,
+      "m_Localized": "你需要达到等级{0:cstring(d)}才能解锁这个物品～努力升级吧！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019948,
+      "m_Localized": "《战场争锋》绝对是一个给力好玩的帝国建造游戏哦！快来跟我一起玩吧，我的用户名是{0:cstring(s)}！http://z2.com/game/battle-nations/#ZD.apps-button",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019949,
+      "m_Localized": "我刚在《战场争锋》中升级到等级$level！我的用户名是{0:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019950,
+      "m_Localized": "等级{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019951,
+      "m_Localized": "买{0:cstring(s)}个",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019952,
+      "m_Localized": "买{0:cstring(s)}送1",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019953,
+      "m_Localized": "买{0:cstring(s)}送{1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019954,
+      "m_Localized": "你必须派遣至少{0:cstring(d)}个单元到该场战斗中！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019955,
+      "m_Localized": "{0:cstring(d)}分钟",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019956,
+      "m_Localized": "我已完成《战场争锋》中的{0:cstring(s)} ！加我：{1:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019957,
+      "m_Localized": "我已完成《战场争锋》中的{0:cstring(s)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019958,
+      "m_Localized": "我已完成《战场争锋》中的{0:cstring(s)}！ 加我：{1:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019959,
+      "m_Localized": "我已完成《战场争锋》中的{0:cstring(s)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019960,
+      "m_Localized": "上尉，这是一个好主意啊！使用{0:cstring(d)}个能量球真的能帮助我们。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019963,
+      "m_Localized": "{0:cstring(s)}将会在{1:cstring(s)}后撤退！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019964,
+      "m_Localized": "{0:cstring(s)}侵袭你的领地！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019965,
+      "m_Localized": "{0:cstring(s)}的防卫者超越了你的占领能力！这次攻击将不会得到占领地。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019966,
+      "m_Localized": "{0:cstring(s)}侵袭了此地！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019967,
+      "m_Localized": "{0:cstring(s)}侵袭了此地！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019968,
+      "m_Localized": "你的军队占领这一地点。{0:cstring(s)}后再次收集财物。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019969,
+      "m_Localized": "{0:cstring(s)}已被发现！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019970,
+      "m_Localized": "优惠{0:cstring(s)}%",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019971,
+      "m_Localized": "{0:cstring(+d)}/天",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019972,
+      "m_Localized": "{0:cstring(d)}/天",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019973,
+      "m_Localized": "{0:cstring(+d)}/小时",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019974,
+      "m_Localized": "{0:cstring(d)}/小时",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019975,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019976,
+      "m_Localized": "{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019977,
+      "m_Localized": "{0:cstring(s)}已加入你的军队！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341697019978,
+      "m_Localized": "在开战前，我们应该再增加{0:cstring(d)}个单元！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214208,
+      "m_Localized": "在开战前，我们应该再增加{0:cstring(d)}个单元！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214209,
+      "m_Localized": "PVP能量：{0:cstring(d)}/{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214210,
+      "m_Localized": "{0:cstring(d)} 发子弹",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214212,
+      "m_Localized": "您已成功加入了「{0:cstring(s)}」帝国！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214213,
+      "m_Localized": "您被拒绝加入「{0:cstring(s)}」帝国～",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214214,
+      "m_Localized": "{0:cstring(d)}{1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214215,
+      "m_Localized": "从战斗中返回。{0:cstring(s)}后能再开战。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214225,
+      "m_Localized": "+{0:cstring(s)}%!",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214226,
+      "m_Localized": "{0:cstring(d)}秒",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214227,
+      "m_Localized": "仅能建造一个{0:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214228,
+      "m_Localized": "{0:cstring(s)}：",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214229,
+      "m_Localized": "终止与{0:cstring(s)}的好友关系吗？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214230,
+      "m_Localized": "{0:cstring(s)}处于昏迷状态，暂时不能发出攻击！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214231,
+      "m_Localized": "到等级{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214232,
+      "m_Localized": "需要等级{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214233,
+      "m_Localized": "{0:cstring(d)} / {1:cstring(d)}单元",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214234,
+      "m_Localized": "你只能派遣{0:cstring(d)}个{1:cstring(s)}上战场。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214235,
+      "m_Localized": "升级建筑物到等级{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214236,
+      "m_Localized": "在{0:cstring(s)}进一步了解游戏之前，你无法访问！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214237,
+      "m_Localized": "攻击波 {0:cstring(d)}∕{1:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214238,
+      "m_Localized": "该军队袭击了你，正试图逃离 {0:cstring(s)}。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214239,
+      "m_Localized": "你的军队正在撤退，将于{0:cstring(s)}后返回基地。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214240,
+      "m_Localized": "{0:cstring(s)}的军队正在撤退！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214241,
+      "m_Localized": "你需要{0:cstring(s)}来建造这个。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214242,
+      "m_Localized": "等级{0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214243,
+      "m_Localized": "在研究這個之前， 我們需要從總部拿到{0:cstring(s)}的計劃。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330840219648,
+      "m_Localized": "{0:cstring(s)}正在治愈中！你想加快進度嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939904,
+      "m_Localized": "{0:cstring(d)} 受损",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330898939905,
+      "m_Localized": "{0:cstring(d)}受伤",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330903134208,
+      "m_Localized": "{0:cstring(s)}正在修理中！你想加快进度吗？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328512,
+      "m_Localized": "{0:cstring(d)}% {1:cstring(s)}的额外奖励",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328513,
+      "m_Localized": "范围 {0:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328514,
+      "m_Localized": "容纳 {0:cstring(d)} {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328515,
+      "m_Localized": "{0:cstring(s)}的工作",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328516,
+      "m_Localized": "{0:cstring(+d)}个工人",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328517,
+      "m_Localized": "{0:cstring(d)} {1:cstring(s)} / 1天",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328518,
+      "m_Localized": "{0:cstring(d)} {1:cstring(s)} / 1天",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328519,
+      "m_Localized": "每{0:cstring(d)}小时收集一次。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328520,
+      "m_Localized": "{0:cstring(+d)} 个",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328521,
+      "m_Localized": "@$#*%#&\\uff01@#*{0:cstring(s)}$\\uff01",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328522,
+      "m_Localized": "@#${0:cstring(s)}！$$%！！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328523,
+      "m_Localized": "@#${0:cstring(s)}#$......！！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328524,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 13742330907328525,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214249,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 10341701214250,
+      "m_Localized": "",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 154412938981888000,
+      "m_Localized": "你的朋友還沒有接受你的幫助。提醒他們看看吧！你的助力將在 {0:cstring(s)} 后恢復。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 164152327517765632,
+      "m_Localized": "好消息，指挥官！有新更新可以下载了！你现在的版本是 {0:cstring(d)}。快去获取更新然后重返战场吧！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816328,
+      "m_Localized": "你無法加入 {0:cstring(s)} 因為你已被封禁",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816329,
+      "m_Localized": "無法加入 {0:cstring(s)} 公會已滿",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816330,
+      "m_Localized": "無法加入 {0:cstring(s)} 請先退出你當前的公會",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816331,
+      "m_Localized": "無法接納 {0:cstring(s)} 加入公會 公會已滿 請移除成員或升級公會以開放更多名額",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816332,
+      "m_Localized": "無法接納 {0:cstring(s)} 加入公會 他們已經在另一個公會中 他們需要先退出當前的公會才能加入",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 163805067013816333,
+      "m_Localized": "你確定要選擇 {0:cstring(s)} 作為新的領導者嗎",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067263459328,
+      "m_Localized": "太早了 請在 {0:cstring(s)} 小時 {1:cstring(s)} 分鐘后再試",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236544,
+      "m_Localized": "已被邀請加入 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236545,
+      "m_Localized": "你已被 {1:cstring(s)} 邀請加入 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236546,
+      "m_Localized": "已被踢出 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236547,
+      "m_Localized": "你已被 {1:cstring(s)} 從 {0:cstring(s)} 踢出",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236548,
+      "m_Localized": "已被禁止加入 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236549,
+      "m_Localized": "你已被 {1:cstring(s)} 禁止加入 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236550,
+      "m_Localized": "從 {0:cstring(s)} 中解禁",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236551,
+      "m_Localized": "你已被 {1:cstring(s)} 從 {0:cstring(s)} 中解禁",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236552,
+      "m_Localized": "Boss Strike 第 {0:cstring(d)} 場 第 {1:cstring(d)} 級獎勵",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236553,
+      "m_Localized": "恭喜你在 Boss Strike 第 {1:cstring(d)} 場中達到第 {0:cstring(d)} 級：{2:cstring(s)}！",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236554,
+      "m_Localized": "到期時間：{0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236555,
+      "m_Localized": "取消選擇（{0:cstring(d)}）",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236556,
+      "m_Localized": "預計 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236557,
+      "m_Localized": "要封禁 {0:cstring(s)} 嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236558,
+      "m_Localized": "離開 {0:cstring(s)} 並加入 {1:cstring(s)} 嗎？",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236562,
+      "m_Localized": "成功發送了請求至 {0:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236576,
+      "m_Localized": "在 {0:cstring(d)} 天前發送",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236559,
+      "m_Localized": "如果接受，你加入 {0:cstring(s)} 的請求將導致你被踢出 {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236560,
+      "m_Localized": "無法加入 {0:cstring(s)} 因為你已被封禁。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236561,
+      "m_Localized": "無法加入 {0:cstring(s)} 請稍後再試。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236563,
+      "m_Localized": "無法申請加入 {0:cstring(s)} 因為你已被封禁。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236564,
+      "m_Localized": "無法申請加入 {0:cstring(s)} 請稍後再試。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236565,
+      "m_Localized": "{0:cstring(s)} 將 {1:cstring(s)} 改為 {2:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236566,
+      "m_Localized": "{0:cstring(s)} 加入了公會 由 {1:cstring(s)} 批准",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236567,
+      "m_Localized": "{0:cstring(s)} 加入了公會 由 {1:cstring(s)} 批准",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236568,
+      "m_Localized": "{0:cstring(s)} 加入了公會",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236569,
+      "m_Localized": "{0:cstring(s)} 離開了公會。",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236570,
+      "m_Localized": "{0:cstring(s)} 被 {1:cstring(s)} 踢出了公會",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236571,
+      "m_Localized": "{0:cstring(s)} 被 {1:cstring(s)} 從公會封禁了",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236572,
+      "m_Localized": "{0:cstring(s)} 被 {1:cstring(s)} 取消了公會封禁",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236573,
+      "m_Localized": "{0:cstring(s)} 的身份被 {2:cstring(s)} 更新為 {1:cstring(s)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236574,
+      "m_Localized": "{0:cstring(s)} 購買了 {1:cstring(s)}（等級 {2:cstring(d)}",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    },
+    {
+      "m_Id": 182662067280236575,
+      "m_Localized": "在 {0:cstring(d)} 天前發送",
+      "m_Metadata": {
+        "m_Items": [
+          {
+            "rid": 2918897848747294846
+          }
+        ]
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": [
+      {
+        "rid": 2918897848747294846,
+        "type": {
+          "class": "SmartFormatTag",
+          "ns": "UnityEngine.Localization.Metadata",
+          "asm": "Unity.Localization"
+        },
+        "data": {}
+      }
+    ]
+  }
+}
