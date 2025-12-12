@@ -1,1 +1,2 @@
 data/Assets/dump.cs filter=lfs diff=lfs merge=lfs -text
+data/Art/* filter=lfs diff=lfs merge=lfs -text
