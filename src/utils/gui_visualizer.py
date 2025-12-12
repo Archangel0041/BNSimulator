@@ -12,10 +12,13 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from typing import TYPE_CHECKING, Optional, Callable
 from dataclasses import dataclass
+from pathlib import Path
 
 if TYPE_CHECKING:
     from src.simulator.battle import BattleState, BattleUnit, Action, ActionResult
     from src.simulator.models import Position, Ability
+
+from src.utils.localization import LocalizationManager
 
 # Color scheme
 COLORS = {
@@ -67,6 +70,16 @@ class BattleGUIVisualizer:
 
         # Callback for action execution
         self.on_action_callback: Optional[Callable[[Action], ActionResult]] = None
+
+        # Initialize localization
+        self.loc = None
+        try:
+            loc_dir = Path("data") / "Assets" / "Localization"
+            if loc_dir.exists():
+                self.loc = LocalizationManager(loc_dir)
+                self.loc.load("GameText", "en")
+        except Exception as e:
+            print(f"Warning: Failed to load localization: {e}")
 
         # Create window
         self.root = tk.Tk()
@@ -276,35 +289,47 @@ class BattleGUIVisualizer:
             unit_at[(unit.position.x, unit.position.y)] = unit
 
         # Draw cells
+        # Enemy grid should be flipped vertically so units face downward toward player
         for row in range(self.battle.layout.height):
+            # Flip enemy rows: row 0 (front) becomes row 2 (back) in display
+            display_row = (self.battle.layout.height - 1 - row) if not is_player else row
+
             for col in range(self.battle.layout.width):
                 cell_x = self.padding + x_offset + col * self.cell_size
-                cell_y = y_offset + row * self.cell_size
+                cell_y = y_offset + display_row * self.cell_size
+
+                # Check if this cell should be blocked (back row corners)
+                is_back_row = row == (self.battle.layout.height - 1)
+                is_corner = col == 0 or col == (self.battle.layout.width - 1)
+                is_blocked = is_back_row and is_corner
 
                 pos = (col, row)
                 unit = unit_at.get(pos)
 
                 # Determine cell color
-                cell_color = COLORS['empty_cell']
+                if is_blocked:
+                    cell_color = COLORS['blocked_cell']
+                else:
+                    cell_color = COLORS['empty_cell']
 
-                # Check if this cell is part of selection/targeting
-                if self.selected_unit_idx is not None and self.selected_is_player == is_player:
-                    selected_unit = units[self.selected_unit_idx]
-                    if selected_unit.position.x == col and selected_unit.position.y == row:
-                        cell_color = COLORS['selected_unit']
+                    # Check if this cell is part of selection/targeting
+                    if self.selected_unit_idx is not None and self.selected_is_player == is_player:
+                        selected_unit = units[self.selected_unit_idx]
+                        if selected_unit.position.x == col and selected_unit.position.y == row:
+                            cell_color = COLORS['selected_unit']
 
-                # Check if valid target
-                if any(t.x == col and t.y == row for t in self.valid_targets):
-                    if not is_player if self.selected_is_player else is_player:
-                        cell_color = COLORS['valid_target']
+                    # Check if valid target
+                    if any(t.x == col and t.y == row for t in self.valid_targets):
+                        if not is_player if self.selected_is_player else is_player:
+                            cell_color = COLORS['valid_target']
 
-                # Check AOE pattern
-                if pos in self.aoe_pattern:
-                    damage_pct = self.aoe_pattern[pos]
-                    if damage_pct >= 80:
-                        cell_color = COLORS['aoe_primary']
-                    else:
-                        cell_color = COLORS['aoe_secondary']
+                    # Check AOE pattern
+                    if pos in self.aoe_pattern:
+                        damage_pct = self.aoe_pattern[pos]
+                        if damage_pct >= 80:
+                            cell_color = COLORS['aoe_primary']
+                        else:
+                            cell_color = COLORS['aoe_secondary']
 
                 # Draw cell background
                 self.canvas.create_rectangle(
@@ -313,11 +338,26 @@ class BattleGUIVisualizer:
                     fill=cell_color,
                     outline=COLORS['grid_line'],
                     width=2,
-                    tags=f'cell_{col}_{row}_{"player" if is_player else "enemy"}'
+                    tags=f'cell_{col}_{display_row}_{"player" if is_player else "enemy"}'
                 )
 
+                # Draw blocked marker for blocked cells
+                if is_blocked:
+                    # Draw X
+                    margin = 15
+                    self.canvas.create_line(
+                        cell_x + margin, cell_y + margin,
+                        cell_x + self.cell_size - margin, cell_y + self.cell_size - margin,
+                        fill='white', width=3
+                    )
+                    self.canvas.create_line(
+                        cell_x + self.cell_size - margin, cell_y + margin,
+                        cell_x + margin, cell_y + self.cell_size - margin,
+                        fill='white', width=3
+                    )
+
                 # Draw unit if present
-                if unit and unit.is_alive:
+                elif unit and unit.is_alive:
                     self._draw_unit(cell_x, cell_y, unit, is_player)
 
     def _draw_unit(self, x: int, y: int, unit: "BattleUnit", is_player: bool):
@@ -461,6 +501,12 @@ class BattleGUIVisualizer:
         if cell_x >= self.battle.layout.width or cell_y >= self.battle.layout.height:
             return None
 
+        # For enemy grid, reverse the flip to get logical coordinates
+        # Enemy display is flipped: display_row = height - 1 - logical_row
+        # So to get logical_row from display_row: logical_row = height - 1 - display_row
+        if not is_player:
+            cell_y = self.battle.layout.height - 1 - cell_y
+
         # Find unit at this position
         unit = None
         for u in units:
@@ -488,6 +534,12 @@ class BattleGUIVisualizer:
                 self._draw_grid()
                 return
 
+    def _get_localized(self, key: str) -> str:
+        """Get localized text for a key, or return the key if localization unavailable."""
+        if self.loc:
+            return self.loc.get(key)
+        return key
+
     def _update_unit_info(self, unit: "BattleUnit"):
         """Update the unit info panel."""
         self.info_text.delete('1.0', tk.END)
@@ -496,8 +548,12 @@ class BattleGUIVisualizer:
         num_ranks = len(unit.template.all_rank_stats)
         rank_info = f" (Rank {num_ranks} available)" if num_ranks > 1 else ""
 
+        # Get localized unit name
+        unit_name = self._get_localized(unit.template.name)
+
         info = f"""
-CLASS: {unit.template.class_type.name}{rank_info}
+UNIT: {unit_name}{rank_info}
+CLASS: {unit.template.class_type.name}
 POSITION: ({unit.position.x}, {unit.position.y})
 
 HP: {unit.current_hp}/{unit.template.stats.hp}
@@ -520,13 +576,18 @@ WEAPONS: {len(unit.template.weapons)}
             if weapon.stats.ammo >= 0:
                 ammo_str = f" ({unit.ammo.get(wid, 0)}/{weapon.stats.ammo})"
 
-            info += f"\n  [{wid}] {weapon.name}{ammo_str} {cd_str}"
+            # Get localized weapon name
+            weapon_name = self._get_localized(weapon.name)
+
+            info += f"\n  [{wid}] {weapon_name}{ammo_str} {cd_str}"
             info += f"\n      DMG: {weapon.stats.base_damage_min}-{weapon.stats.base_damage_max}"
 
         if unit.status_effects:
             info += f"\n\nSTATUS EFFECTS: {len(unit.status_effects)}"
             for effect in unit.status_effects:
-                info += f"\n  {effect.effect.family.name}: {effect.remaining_turns} turns"
+                # Get localized status effect name
+                effect_name = self._get_localized(effect.effect.name) if hasattr(effect.effect, 'name') else effect.effect.family.name
+                info += f"\n  {effect_name}: {effect.remaining_turns} turns"
 
         self.info_text.insert('1.0', info)
 
@@ -551,9 +612,12 @@ WEAPONS: {len(unit.template.weapons)}
         for weapon_id in available_weapons:
             weapon = unit.template.weapons[weapon_id]
 
+            # Get localized weapon name
+            weapon_name = self._get_localized(weapon.name)
+
             btn = tk.Button(
                 self.weapon_frame,
-                text=f"{weapon.name}\n{weapon.stats.base_damage_min}-{weapon.stats.base_damage_max} DMG",
+                text=f"{weapon_name}\n{weapon.stats.base_damage_min}-{weapon.stats.base_damage_max} DMG",
                 command=lambda wid=weapon_id: self._select_weapon(wid),
                 bg='#455A64',
                 fg='white',
