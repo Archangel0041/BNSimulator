@@ -727,7 +727,12 @@ class BattleSimulator:
         for enc_unit in encounter.enemy_units:
             template = self.data_loader.get_unit(enc_unit.unit_id)
             if template:
-                # Apply rank from encounter
+                # Log if unit has multiple ranks available
+                num_ranks = len(template.all_rank_stats)
+                if num_ranks > 1:
+                    print(f"  ℹ Unit {enc_unit.unit_id} ({template.name}) has {num_ranks} ranks available")
+
+                # Apply rank from encounter (defaults to 1 if not specified)
                 template_with_rank = self._apply_rank_to_template(template, enc_unit.rank)
                 pos = Position.from_grid_id(enc_unit.grid_id, layout.width)
                 enemy_units.append(BattleUnit(
