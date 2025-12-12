@@ -228,9 +228,83 @@ class BattleEngine:
         # Check range for each position
         for pos in target_positions:
             if self._is_in_range(state, attacker.position, pos, ability):
-                valid.append(pos)
+                # Check if target is blocked by another unit (based on LOF)
+                if not self._is_target_blocked(state, attacker, pos, ability, potential_targets):
+                    valid.append(pos)
 
         return valid
+
+    def _is_target_blocked(
+        self,
+        state: BattleState,
+        attacker: BattleUnit,
+        target_pos: int,
+        ability: Ability,
+        potential_targets: list[BattleUnit]
+    ) -> bool:
+        """
+        Check if a target is blocked by another unit based on Line of Fire.
+
+        Line of Fire values:
+        - 0 = Contact (melee): Not blocked, requires adjacent
+        - 1 = Direct: Can be blocked by units with blocking >= 1
+        - 2 = Precise: Only blocked by units with blocking == 2 (full)
+        - 3 = Indirect: Never blocked (arc trajectory)
+
+        Blocking values:
+        - 0 = No blocking
+        - 1 = Partial blocking (blocks direct fire)
+        - 2 = Full blocking (blocks direct and precise fire)
+        """
+        line_of_fire = ability.stats.line_of_fire
+
+        # Indirect fire (3) bypasses all blocking
+        if line_of_fire == 3:
+            return False
+
+        # Contact (0) is melee, not blocked
+        if line_of_fire == 0:
+            return False
+
+        if not state.layout:
+            return False
+
+        # Get target coordinates
+        target_row, target_col = state.layout.pos_to_coords(target_pos)
+
+        # Find blocking units in front rows (closer to attacker)
+        # The attacker is on the opposite side, so "front" means lower row numbers
+        # for the defender's perspective (units closer to the attacker)
+        for blocker in potential_targets:
+            if not blocker.is_alive:
+                continue
+
+            if blocker.position == target_pos:
+                continue  # Can't block yourself
+
+            blocker_row, blocker_col = state.layout.pos_to_coords(blocker.position)
+
+            # Check if blocker is in front of target (lower row = closer to attacker)
+            if blocker_row >= target_row:
+                continue  # Not in front
+
+            # Check if blocker is in same column (or adjacent for wide blocking)
+            if abs(blocker_col - target_col) > 0:
+                continue  # Not in line
+
+            blocking_value = blocker.template.blocking
+
+            # Check if this blocker can block based on LOF
+            if line_of_fire == 1:  # Direct fire
+                # Blocked by any unit with blocking >= 1
+                if blocking_value >= 1:
+                    return True
+            elif line_of_fire == 2:  # Precise fire
+                # Only blocked by full blocking (value 2)
+                if blocking_value >= 2:
+                    return True
+
+        return False
 
     def _is_in_range(
         self,
