@@ -427,24 +427,34 @@ class BattleEngine:
             if damage_type in effect.stun_damage_mods:
                 damage *= effect.stun_damage_mods[damage_type]
 
+        # Get damage modifiers for this damage type
+        armor_mod = target.stats.armor_damage_mods.get(damage_type_name, 1.0)
+        hp_mod = target.stats.damage_mods.get(damage_type_name, 1.0)
+
         # Calculate armor and HP damage
-        armor_piercing = ability.stats.armor_piercing_percent
-        total_damage = int(max(1, damage))
+        # Armor absorbs raw damage based on its modifier
+        # Overflow damage goes to HP with HP modifier applied
+        raw_damage = max(1, damage)
 
-        if target.current_armor > 0:
-            # Damage to armor (reduced by armor damage mods)
-            armor_damage = total_damage
-            if damage_type_name in target.stats.armor_damage_mods:
-                armor_damage = int(armor_damage * target.stats.armor_damage_mods[damage_type_name])
+        if target.current_armor > 0 and armor_mod > 0:
+            # How much raw damage can armor absorb?
+            # armor_absorbed * armor_mod = current_armor (when armor depletes)
+            # So: max_raw_absorbed = current_armor / armor_mod
+            max_raw_absorbed = target.current_armor / armor_mod
 
-            # Armor piercing bypasses armor
-            piercing_damage = int(total_damage * armor_piercing)
-            armor_damage = min(armor_damage - piercing_damage, target.current_armor)
-
-            result.armor_damage = armor_damage
-            result.hp_damage = piercing_damage + max(0, total_damage - armor_damage - piercing_damage)
+            if raw_damage <= max_raw_absorbed:
+                # Armor absorbs all damage
+                result.armor_damage = int(raw_damage * armor_mod)
+                result.hp_damage = 0
+            else:
+                # Armor depletes, overflow goes to HP
+                result.armor_damage = target.current_armor  # Armor fully depleted
+                overflow_raw = raw_damage - max_raw_absorbed
+                result.hp_damage = int(overflow_raw * hp_mod)
         else:
-            result.hp_damage = total_damage
+            # No armor - all damage goes to HP with HP modifier
+            result.hp_damage = int(raw_damage * hp_mod)
+            result.armor_damage = 0
 
         result.damage = result.armor_damage + result.hp_damage
         return result
