@@ -1,22 +1,27 @@
-"""Game enumerations and constants."""
-from enum import IntEnum, auto
+"""Game enumerations and constants - aligned with Unity game code (dump.cs)."""
+from enum import IntEnum
 
 
 class DamageType(IntEnum):
-    """Damage types in the game."""
+    """Damage types in the game (from Unity DamageType enum)."""
+    NONE = 0
     PIERCING = 1
-    CRUSHING = 2
-    SLASHING = 3
+    COLD = 2
+    CRUSHING = 3
     EXPLOSIVE = 4
     FIRE = 5
-    COLD = 6
-    ELECTRIC = 7
+    TORPEDO = 6
+    DEPTH_CHARGE = 7
+    MELEE = 8
+    PROJECTILE = 9
+    SHELL = 10
 
 
 class UnitClass(IntEnum):
-    """Unit class types (from battle_config.json class_types)."""
-    WEAPON_PLACEMENT = 1
-    FORTRESS_INVULN = 2  # Invulnerable fortress (all 0 damage mods)
+    """Unit class types (from Unity UnitClass enum)."""
+    NONE = 0
+    EMPLACEMENT = 1      # Was WEAPON_PLACEMENT
+    INVINCIBLE = 2       # Was FORTRESS_INVULN
     CRITTER = 3
     AIRCRAFT = 4
     SUB = 5
@@ -32,8 +37,100 @@ class UnitClass(IntEnum):
     SHIP = 15
 
 
+class UnitTag(IntEnum):
+    """Unit tags for targeting (from Unity UnitTag enum - 69 values)."""
+    NONE = 0
+    SEA_DEFENSE = 1
+    LEGEND = 2
+    ARTILLERY = 3
+    BIGFOOT = 4
+    VRB = 5
+    SOLDIER = 6
+    MECH_ARTILLERY = 7
+    SUB = 8
+    LTA = 9
+    ANI = 10
+    VEHICLE = 11
+    HUNTER = 12
+    SUBMERSIBLE = 13
+    ANCIENT = 14
+    SEA = 15
+    SRB = 16
+    BATTLESHIP = 17
+    DEFENSE = 18
+    SOL = 19
+    TANK = 20
+    SEALIFE = 21
+    GROUPER = 22
+    HELICOPTER = 23
+    GROUND = 24
+    FLYING_CRITTER = 25
+    METAL = 26
+    IGNORABLE = 27
+    CROSSOVER2 = 28
+    SHIP = 29
+    I17_ANCIENT = 30
+    WIMP = 31
+    FAST = 32
+    ZOMBIE = 33
+    SPIDERWASP = 34
+    INF = 35
+    FIGHTER = 36
+    DESTROYER = 37
+    CRITTER = 38
+    AIR = 39
+    UNICORN = 40
+    CIVILIAN = 41
+    ZOMBIE_CANDIDATE = 42
+    AIRC = 43
+    VEH = 44
+    MISSILE_STRIKE = 45
+    SNIPER = 46
+    GUNBOAT = 47
+    CROSSOVER = 48
+    HOSPITAL = 49
+    PERSONNEL = 50
+    UNIT = 51
+    AIRCRAFT = 52
+    DRONE = 53
+    BOMBER = 54
+    STRUCTURE = 55
+    SEA_STRUCTURE = 56
+    NON_COM = 57
+    WALL = 58
+    SEA_WALL = 59
+    ARMORED = 60
+    BIOLOGICAL = 61
+    ELITE = 62
+    IMMOBILE = 63
+    MECHANICAL = 64
+    RAIDER = 65
+    SLOW = 66
+    STEALTH = 67
+    USES_COVER = 68
+
+
+class UnitStatusEffect(IntEnum):
+    """Status effect IDs (from Unity UnitStatusEffect enum)."""
+    NONE = 0
+    STUN = 1
+    POISON = 2
+    FROZEN = 3
+    PLAGUE = 4
+    FIRE = 5
+    FLAMMABLE = 6
+    BREACH = 7
+    SHELL = 8
+    COLD = 9
+    SHATTER = 10
+    ACID = 11
+    QUAKE = 12
+    FREEZE = 13
+    FIREMOD = 14
+
+
 class StatusEffectType(IntEnum):
-    """Status effect types."""
+    """Status effect behavior types (internal classification)."""
     DOT = 1  # Damage over time
     STUN = 2  # Stun/debuff effect
 
@@ -56,7 +153,7 @@ class StatusEffectFamily(IntEnum):
 
 
 class TargetType(IntEnum):
-    """Target area types."""
+    """Target area types (game logic - for ability targeting patterns)."""
     SELF = 0
     ALL_ENEMIES = 1
     SINGLE = 2
@@ -80,42 +177,212 @@ class LineOfFire(IntEnum):
 
 
 class Side(IntEnum):
-    """Battle side identifiers."""
-    ATTACKER = 1
-    DEFENDER = 2
+    """Battle side identifiers (from Unity UnitSide enum)."""
+    NONE = 0
+    PLAYER = 1      # Was ATTACKER
+    HOSTILE = 2     # Was DEFENDER
     NEUTRAL = 3
-    ALLY = 4
-    ENEMY_SPECIAL = 5
-    NPC = 6
+    HERO = 4        # Was ALLY
+    VILLAIN = 5     # Was ENEMY_SPECIAL
+    TEST = 6        # Was NPC
+
+    # Aliases for backwards compatibility
+    @classmethod
+    def ATTACKER(cls):
+        return cls.PLAYER
+
+    @classmethod
+    def DEFENDER(cls):
+        return cls.HOSTILE
+
+    @classmethod
+    def ALLY(cls):
+        return cls.HERO
+
+
+class UnitBlocking(IntEnum):
+    """Unit blocking types (from Unity UnitBlocking enum)."""
+    NONE = 0
+    PARTIAL = 1
+    FULL = 2
+    GOD = 3
 
 
 # Grid layout constants
 class CellType(IntEnum):
-    """Grid cell types from layout data."""
-    VALID = 1
-    INVALID = 2  # Dead zone (corners in back row)
+    """Grid cell types (from Unity BattleGridTileConfig enum)."""
+    NONE = 0
+    AVAILABLE = 1   # Was VALID
+    UNAVAILABLE = 2  # Was INVALID (dead zone corners)
+    WALL = 3
+
+    # Alias for backwards compatibility
+    @classmethod
+    def VALID(cls):
+        return cls.AVAILABLE
+
+    @classmethod
+    def INVALID(cls):
+        return cls.UNAVAILABLE
 
 
 # Layout IDs
 class LayoutId(IntEnum):
-    """Battle layout configurations."""
-    RAID = 1      # 3x3 with dead corners
-    STANDARD = 2  # 5x3 with dead corners
-    ASSAULT = 3   # 4x3 asymmetric
+    """Battle layout configurations (from Unity LayoutId enum)."""
+    NONE = 0
+    EQUAL_3X3 = 1   # Was RAID - 3x3 with dead corners
+    EQUAL_5X3 = 2   # Was STANDARD - 5x3 with dead corners
+    EQUAL_4X3 = 3   # Was ASSAULT - 4x3 asymmetric
+
+    # Aliases for backwards compatibility
+    @classmethod
+    def RAID(cls):
+        return cls.EQUAL_3X3
+
+    @classmethod
+    def STANDARD(cls):
+        return cls.EQUAL_5X3
+
+    @classmethod
+    def ASSAULT(cls):
+        return cls.EQUAL_4X3
 
 
 # Common unit tags that affect targeting
-TARGETABLE_ALL = 39  # Most common target tag - "all units"
-TARGETABLE_GROUND = 24
-TARGETABLE_AIR = 15
-TARGETABLE_BUILDINGS = 6
+TARGETABLE_ALL = 51  # UnitTag.UNIT - targets all units
+TARGETABLE_GROUND = UnitTag.GROUND
+TARGETABLE_AIR = UnitTag.AIR
+TARGETABLE_BUILDINGS = UnitTag.STRUCTURE
 
 
 # Damage type string mapping for JSON parsing
 DAMAGE_TYPE_NAMES = {
+    "none": DamageType.NONE,
     "piercing": DamageType.PIERCING,
+    "cold": DamageType.COLD,
     "crushing": DamageType.CRUSHING,
     "explosive": DamageType.EXPLOSIVE,
     "fire": DamageType.FIRE,
-    "cold": DamageType.COLD,
+    "torpedo": DamageType.TORPEDO,
+    "depthcharge": DamageType.DEPTH_CHARGE,
+    "depth_charge": DamageType.DEPTH_CHARGE,
+    "melee": DamageType.MELEE,
+    "projectile": DamageType.PROJECTILE,
+    "shell": DamageType.SHELL,
+}
+
+
+# Status effect string mapping for JSON parsing
+STATUS_EFFECT_NAMES = {
+    "none": UnitStatusEffect.NONE,
+    "stun": UnitStatusEffect.STUN,
+    "poison": UnitStatusEffect.POISON,
+    "frozen": UnitStatusEffect.FROZEN,
+    "plague": UnitStatusEffect.PLAGUE,
+    "fire": UnitStatusEffect.FIRE,
+    "flammable": UnitStatusEffect.FLAMMABLE,
+    "breach": UnitStatusEffect.BREACH,
+    "shell": UnitStatusEffect.SHELL,
+    "cold": UnitStatusEffect.COLD,
+    "shatter": UnitStatusEffect.SHATTER,
+    "acid": UnitStatusEffect.ACID,
+    "quake": UnitStatusEffect.QUAKE,
+    "freeze": UnitStatusEffect.FREEZE,
+    "firemod": UnitStatusEffect.FIREMOD,
+}
+
+
+# Unit tag string mapping for JSON parsing
+UNIT_TAG_NAMES = {
+    "none": UnitTag.NONE,
+    "sea_defense": UnitTag.SEA_DEFENSE,
+    "legend": UnitTag.LEGEND,
+    "artillery": UnitTag.ARTILLERY,
+    "bigfoot": UnitTag.BIGFOOT,
+    "vrb": UnitTag.VRB,
+    "soldier": UnitTag.SOLDIER,
+    "mech_artillery": UnitTag.MECH_ARTILLERY,
+    "sub": UnitTag.SUB,
+    "lta": UnitTag.LTA,
+    "ani": UnitTag.ANI,
+    "vehicle": UnitTag.VEHICLE,
+    "hunter": UnitTag.HUNTER,
+    "submersible": UnitTag.SUBMERSIBLE,
+    "ancient": UnitTag.ANCIENT,
+    "sea": UnitTag.SEA,
+    "srb": UnitTag.SRB,
+    "battleship": UnitTag.BATTLESHIP,
+    "defense": UnitTag.DEFENSE,
+    "sol": UnitTag.SOL,
+    "tank": UnitTag.TANK,
+    "sealife": UnitTag.SEALIFE,
+    "grouper": UnitTag.GROUPER,
+    "helicopter": UnitTag.HELICOPTER,
+    "ground": UnitTag.GROUND,
+    "flying_critter": UnitTag.FLYING_CRITTER,
+    "metal": UnitTag.METAL,
+    "ignorable": UnitTag.IGNORABLE,
+    "crossover2": UnitTag.CROSSOVER2,
+    "ship": UnitTag.SHIP,
+    "i17_ancient": UnitTag.I17_ANCIENT,
+    "wimp": UnitTag.WIMP,
+    "fast": UnitTag.FAST,
+    "zombie": UnitTag.ZOMBIE,
+    "spiderwasp": UnitTag.SPIDERWASP,
+    "inf": UnitTag.INF,
+    "fighter": UnitTag.FIGHTER,
+    "destroyer": UnitTag.DESTROYER,
+    "critter": UnitTag.CRITTER,
+    "air": UnitTag.AIR,
+    "unicorn": UnitTag.UNICORN,
+    "civilian": UnitTag.CIVILIAN,
+    "zombie_candidate": UnitTag.ZOMBIE_CANDIDATE,
+    "airc": UnitTag.AIRC,
+    "veh": UnitTag.VEH,
+    "missile_strike": UnitTag.MISSILE_STRIKE,
+    "sniper": UnitTag.SNIPER,
+    "gunboat": UnitTag.GUNBOAT,
+    "crossover": UnitTag.CROSSOVER,
+    "hospital": UnitTag.HOSPITAL,
+    "personnel": UnitTag.PERSONNEL,
+    "unit": UnitTag.UNIT,
+    "aircraft": UnitTag.AIRCRAFT,
+    "drone": UnitTag.DRONE,
+    "bomber": UnitTag.BOMBER,
+    "structure": UnitTag.STRUCTURE,
+    "sea_structure": UnitTag.SEA_STRUCTURE,
+    "non_com": UnitTag.NON_COM,
+    "wall": UnitTag.WALL,
+    "sea_wall": UnitTag.SEA_WALL,
+    "armored": UnitTag.ARMORED,
+    "biological": UnitTag.BIOLOGICAL,
+    "elite": UnitTag.ELITE,
+    "immobile": UnitTag.IMMOBILE,
+    "mechanical": UnitTag.MECHANICAL,
+    "raider": UnitTag.RAIDER,
+    "slow": UnitTag.SLOW,
+    "stealth": UnitTag.STEALTH,
+    "uses_cover": UnitTag.USES_COVER,
+}
+
+
+# Unit class string mapping for JSON parsing
+UNIT_CLASS_NAMES = {
+    "none": UnitClass.NONE,
+    "emplacement": UnitClass.EMPLACEMENT,
+    "invincible": UnitClass.INVINCIBLE,
+    "critter": UnitClass.CRITTER,
+    "aircraft": UnitClass.AIRCRAFT,
+    "sub": UnitClass.SUB,
+    "fortress": UnitClass.FORTRESS,
+    "vehicle": UnitClass.VEHICLE,
+    "destroyer": UnitClass.DESTROYER,
+    "heavy_soldier": UnitClass.HEAVY_SOLDIER,
+    "heavysoldier": UnitClass.HEAVY_SOLDIER,
+    "artillery": UnitClass.ARTILLERY,
+    "battleship": UnitClass.BATTLESHIP,
+    "gunboat": UnitClass.GUNBOAT,
+    "soldier": UnitClass.SOLDIER,
+    "tank": UnitClass.TANK,
+    "ship": UnitClass.SHIP,
 }
