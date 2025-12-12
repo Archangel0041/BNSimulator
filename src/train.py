@@ -104,7 +104,7 @@ class HeuristicAgent:
             return score
 
         # Find target at position
-        target = state.get_unit_at_position(action.target_pos, Side.ENEMY)
+        target = state.get_unit_at_position(action.target_pos, Side.HOSTILE)
         if not target:
             return score
 

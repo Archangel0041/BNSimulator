@@ -45,7 +45,7 @@ class TestDataLoader:
             assert unit.id == unit_id
             assert unit.name is not None
             assert unit.class_id >= 0
-            assert unit.side in [Side.PLAYER, Side.ENEMY]
+            assert unit.side in [Side.PLAYER, Side.HOSTILE, Side.VILLAIN, Side.HERO, Side.NEUTRAL, Side.TEST]
 
     def test_unit_has_stats(self, game_data):
         """Test that units have stats."""
@@ -118,7 +118,7 @@ class TestDataLoader:
         enemy_units = game_data.get_enemy_units()
         assert len(enemy_units) > 0
         for unit in enemy_units:
-            assert unit.side == Side.ENEMY
+            assert unit.side == Side.HOSTILE
 
 
 if __name__ == "__main__":

@@ -292,7 +292,7 @@ class BNBattleEnv(gym.Env):
             info.update({
                 "turn": self.state.turn_number,
                 "player_units_alive": len(self.state.get_living_units(Side.PLAYER)),
-                "enemy_units_alive": len(self.state.get_living_units(Side.ENEMY)),
+                "enemy_units_alive": len(self.state.get_living_units(Side.HOSTILE)),
                 "damage_dealt": self.state.total_damage_dealt,
                 "damage_taken": self.state.total_damage_taken,
                 "is_finished": self.state.is_finished,

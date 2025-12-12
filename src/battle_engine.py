@@ -144,7 +144,7 @@ class BattleEngine:
                 state.player_units.append(unit)
 
         for unit_id, level, pos in enemy_units:
-            unit = self.create_battle_unit(unit_id, level, pos, Side.ENEMY)
+            unit = self.create_battle_unit(unit_id, level, pos, Side.HOSTILE)
             if unit:
                 state.enemy_units.append(unit)
 
@@ -159,7 +159,7 @@ class BattleEngine:
 
             # Determine level based on encounter level and unit stats
             level = self._get_unit_level_for_encounter(template, encounter_level)
-            unit = self.create_battle_unit(unit_id, level, grid_id, Side.ENEMY)
+            unit = self.create_battle_unit(unit_id, level, grid_id, Side.HOSTILE)
             if unit:
                 state.enemy_units.append(unit)
 
@@ -296,7 +296,7 @@ class BattleEngine:
 
         for pos in affected_positions:
             # Find target at position
-            target = state.get_unit_at_position(pos, Side.ENEMY if state.is_player_turn else Side.PLAYER)
+            target = state.get_unit_at_position(pos, Side.HOSTILE if state.is_player_turn else Side.PLAYER)
             if not target:
                 continue
 

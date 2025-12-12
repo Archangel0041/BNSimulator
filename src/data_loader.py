@@ -355,7 +355,7 @@ class GameData:
 
     def get_enemy_units(self) -> list[UnitTemplate]:
         """Get all enemy-side units."""
-        return [u for u in self.units.values() if u.side == Side.ENEMY]
+        return [u for u in self.units.values() if u.side == Side.HOSTILE]
 
 
 # Global instance for convenience

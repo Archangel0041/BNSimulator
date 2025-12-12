@@ -22,12 +22,12 @@ class DamageType(IntEnum):
 
 class Side(IntEnum):
     """Unit sides."""
-    ENEMY = 1
-    PLAYER = 2
-    NEUTRAL = 3
-    ALLY_NPC = 4
-    SPECIAL_1 = 5
-    SPECIAL_2 = 6
+    PLAYER = 1      # Player-controlled units
+    HOSTILE = 2     # Enemy units
+    VILLAIN = 3     # Villain characters
+    HERO = 4        # Main cast / hero characters
+    NEUTRAL = 5     # Neutral units
+    TEST = 6        # Test units
 
 
 class StatusEffectType(IntEnum):
@@ -436,7 +436,7 @@ class BattleState:
     def get_unit_at_position(self, pos: int, side: Optional[Side] = None) -> Optional[BattleUnit]:
         """Get unit at grid position."""
         units = self.player_units if side == Side.PLAYER else (
-            self.enemy_units if side == Side.ENEMY else self.get_all_units()
+            self.enemy_units if side == Side.HOSTILE else self.get_all_units()
         )
         for unit in units:
             if unit.position == pos and unit.is_alive:
@@ -507,7 +507,7 @@ class BattleState:
             1.0 if self.is_player_turn else 0.0,
             self.current_wave / max(self.total_waves, 1),
             len(self.get_living_units(Side.PLAYER)) / max(len(self.player_units), 1),
-            len(self.get_living_units(Side.ENEMY)) / max(len(self.enemy_units), 1),
+            len(self.get_living_units(Side.HOSTILE)) / max(len(self.enemy_units), 1),
         ], dtype=np.float32)
 
         return np.concatenate([obs.flatten(), global_features])
