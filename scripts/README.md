@@ -10,6 +10,9 @@ A **GUI-based battle visualizer** with interactive targeting and AOE visualizati
 
 **Features:**
 - Visual grid display with color-coded units and HP bars
+- **Unit icons displayed** - Shows unit artwork instead of text abbreviations
+- **Ability icons** - Weapon buttons display ability icons
+- **Localized names** - Shows proper unit, weapon, and ability names
 - Click units to select them
 - Select weapons to see valid targeting patterns highlighted
 - **Hover over targets to see AOE damage patterns**:
@@ -22,7 +25,11 @@ A **GUI-based battle visualizer** with interactive targeting and AOE visualizati
 
 **Requirements:**
 - Python with tkinter (comes standard with most Python installations)
-- If tkinter is not available, install with: `sudo apt-get install python3-tk` (Linux) or it comes pre-installed on Windows/Mac
+  - Linux: `sudo apt-get install python3-tk`
+  - Windows/Mac: Pre-installed with Python
+- Pillow (PIL) for icon display: `pip install Pillow`
+  - Icons will be shown if Pillow is installed
+  - Falls back to text display if Pillow is not available
 
 **Usage:**
 

@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from src.simulator.models import Position, Ability
 
 from src.utils.localization import LocalizationManager
+from src.utils.icon_manager import IconManager
 
 # Color scheme
 COLORS = {
@@ -80,6 +81,15 @@ class BattleGUIVisualizer:
                 self.loc.load("GameText", "en")
         except Exception as e:
             print(f"Warning: Failed to load localization: {e}")
+
+        # Initialize icon manager
+        self.icons = None
+        try:
+            icons_dir = Path("data") / "Assets" / "Art" / "icons"
+            if icons_dir.exists():
+                self.icons = IconManager(icons_dir)
+        except Exception as e:
+            print(f"Warning: Failed to load icon manager: {e}")
 
         # Create window
         self.root = tk.Tk()
@@ -259,6 +269,8 @@ class BattleGUIVisualizer:
     def _draw_grid(self):
         """Draw the battle grid."""
         self.canvas.delete('all')
+        # Clear icon references to allow garbage collection
+        self._icon_refs = []
 
         # Draw enemy grid (top)
         y_offset = self.padding
@@ -374,15 +386,36 @@ class BattleGUIVisualizer:
             width=2
         )
 
-        # Unit class text
-        class_text = unit.template.class_type.name[:3]
-        self.canvas.create_text(
-            x + self.cell_size // 2,
-            y + self.cell_size // 2 - 10,
-            text=class_text,
-            fill='white',
-            font=('Arial', 12, 'bold')
-        )
+        # Try to load and display unit icon
+        icon_displayed = False
+        if self.icons:
+            # Extract unit name from template name (remove _name suffix if present)
+            unit_name = unit.template.name.replace("_name", "")
+            # Determine facing based on side
+            facing = "front" if is_player else "back"
+            icon_size = (self.cell_size - margin * 2 - 20, self.cell_size - margin * 2 - 20)
+
+            icon = self.icons.get_unit_tk_icon(unit_name, facing, icon_size)
+            if icon:
+                icon_x = x + self.cell_size // 2
+                icon_y = y + margin + (self.cell_size - margin * 2 - 20) // 2
+                self.canvas.create_image(icon_x, icon_y, image=icon)
+                # Keep reference to avoid garbage collection
+                if not hasattr(self, '_icon_refs'):
+                    self._icon_refs = []
+                self._icon_refs.append(icon)
+                icon_displayed = True
+
+        # Fallback to text if no icon
+        if not icon_displayed:
+            class_text = unit.template.class_type.name[:3]
+            self.canvas.create_text(
+                x + self.cell_size // 2,
+                y + self.cell_size // 2 - 10,
+                text=class_text,
+                fill='white',
+                font=('Arial', 12, 'bold')
+            )
 
         # HP bar
         hp_percent = unit.current_hp / max(1, unit.template.stats.hp)
@@ -615,17 +648,44 @@ WEAPONS: {len(unit.template.weapons)}
             # Get localized weapon name
             weapon_name = self._get_localized(weapon.name)
 
-            btn = tk.Button(
-                self.weapon_frame,
-                text=f"{weapon_name}\n{weapon.stats.base_damage_min}-{weapon.stats.base_damage_max} DMG",
-                command=lambda wid=weapon_id: self._select_weapon(wid),
-                bg='#455A64',
-                fg='white',
-                font=('Arial', 9),
-                relief=tk.RAISED,
-                bd=2,
-                pady=5
-            )
+            # Try to get icon for first ability of this weapon
+            icon = None
+            if self.icons and weapon.abilities:
+                ability_id = weapon.abilities[0]
+                ability = self.battle.data_loader.get_ability(ability_id)
+                if ability:
+                    # Remove _name suffix from ability name
+                    ability_name = ability.name.replace("_name", "")
+                    icon = self.icons.get_ability_tk_icon(ability_name, (24, 24))
+
+            if icon:
+                btn = tk.Button(
+                    self.weapon_frame,
+                    text=f" {weapon_name}\n{weapon.stats.base_damage_min}-{weapon.stats.base_damage_max} DMG",
+                    image=icon,
+                    compound=tk.LEFT,
+                    command=lambda wid=weapon_id: self._select_weapon(wid),
+                    bg='#455A64',
+                    fg='white',
+                    font=('Arial', 9),
+                    relief=tk.RAISED,
+                    bd=2,
+                    pady=5
+                )
+                # Keep reference to avoid garbage collection
+                btn.image = icon
+            else:
+                btn = tk.Button(
+                    self.weapon_frame,
+                    text=f"{weapon_name}\n{weapon.stats.base_damage_min}-{weapon.stats.base_damage_max} DMG",
+                    command=lambda wid=weapon_id: self._select_weapon(wid),
+                    bg='#455A64',
+                    fg='white',
+                    font=('Arial', 9),
+                    relief=tk.RAISED,
+                    bd=2,
+                    pady=5
+                )
             btn.pack(fill=tk.X, pady=2)
 
     def _select_weapon(self, weapon_id: int):
