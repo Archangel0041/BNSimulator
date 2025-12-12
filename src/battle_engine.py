@@ -370,13 +370,21 @@ class BattleEngine:
         Calculate damage for an attack.
 
         Damage formula: random(base_damage_min, base_damage_max) * (1 + 2 * power / 100)
-        Defense, accuracy, offense are only used for dodge calculation.
+
+        Dodge formula: dodge_chance = defense + 5 - offense (as %)
+            where offense = ability.attack + attacker.accuracy
+
+        Critical: 1.85x multiplier applied before armor calculations
+
+        Armor piercing: X% of damage bypasses armor entirely, goes to HP
+            Remaining (100-X)% goes through armor system (can overflow)
         """
         result = DamageResult(target_idx=-1, damage=0, is_crit=False, is_dodge=False)
 
-        # Check dodge - uses defense, accuracy, dodge stats
-        # TODO: Verify exact dodge formula
-        dodge_chance = max(0, target.stats.dodge - attacker.stats.accuracy)
+        # Check dodge: dodge_chance = defense + 5 - offense
+        # offense = ability.attack + attacker.accuracy
+        offense = ability.stats.attack + attacker.stats.accuracy
+        dodge_chance = max(0, target.stats.defense + 5 - offense)
         if not self.config.deterministic and self.rng.random() * 100 < dodge_chance:
             result.is_dodge = True
             return result
@@ -394,7 +402,7 @@ class BattleEngine:
 
         damage = base_damage * power_multiplier
 
-        # Check critical hit
+        # Check critical hit - 1.85x multiplier applied before armor
         crit_chance = (
             weapon.stats.base_crit_percent +
             attacker.stats.critical +
@@ -408,16 +416,17 @@ class BattleEngine:
 
         if not self.config.deterministic and self.rng.random() * 100 < crit_chance:
             result.is_crit = True
-            damage *= 1.5  # Critical multiplier (TODO: verify)
+            damage *= 1.85  # Critical multiplier
 
-        # Apply damage type modifiers
+        # Get damage type info
         damage_type = ability.stats.damage_type
         damage_type_name = self._get_damage_type_name(damage_type)
 
-        if damage_type_name in target.stats.damage_mods:
-            damage *= target.stats.damage_mods[damage_type_name]
+        # Get damage modifiers for this damage type
+        armor_mod = target.stats.armor_damage_mods.get(damage_type_name, 1.0)
+        hp_mod = target.stats.damage_mods.get(damage_type_name, 1.0)
 
-        # Apply class damage modifiers
+        # Apply class damage modifiers to raw damage
         attacker_class = self.game_data.get_class_config(attacker.template.class_id)
         if attacker_class and target.template.class_id in attacker_class.damage_mods:
             damage *= attacker_class.damage_mods[target.template.class_id]
@@ -427,34 +436,35 @@ class BattleEngine:
             if damage_type in effect.stun_damage_mods:
                 damage *= effect.stun_damage_mods[damage_type]
 
-        # Get damage modifiers for this damage type
-        armor_mod = target.stats.armor_damage_mods.get(damage_type_name, 1.0)
-        hp_mod = target.stats.damage_mods.get(damage_type_name, 1.0)
-
-        # Calculate armor and HP damage
-        # Armor absorbs raw damage based on its modifier
-        # Overflow damage goes to HP with HP modifier applied
         raw_damage = max(1, damage)
 
-        if target.current_armor > 0 and armor_mod > 0:
-            # How much raw damage can armor absorb?
-            # armor_absorbed * armor_mod = current_armor (when armor depletes)
-            # So: max_raw_absorbed = current_armor / armor_mod
+        # Armor piercing: X% bypasses armor entirely, goes straight to HP
+        # Remaining (100-X)% goes through armor system
+        armor_piercing = ability.stats.armor_piercing_percent
+        piercing_damage = raw_damage * armor_piercing  # This bypasses armor
+        blockable_damage = raw_damage * (1 - armor_piercing)  # This goes through armor
+
+        # Calculate armor damage from blockable portion
+        if target.current_armor > 0 and armor_mod > 0 and blockable_damage > 0:
+            # How much raw blockable damage can armor absorb?
             max_raw_absorbed = target.current_armor / armor_mod
 
-            if raw_damage <= max_raw_absorbed:
-                # Armor absorbs all damage
-                result.armor_damage = int(raw_damage * armor_mod)
-                result.hp_damage = 0
+            if blockable_damage <= max_raw_absorbed:
+                # Armor absorbs all blockable damage
+                result.armor_damage = int(blockable_damage * armor_mod)
+                blocked_overflow_hp = 0
             else:
                 # Armor depletes, overflow goes to HP
                 result.armor_damage = target.current_armor  # Armor fully depleted
-                overflow_raw = raw_damage - max_raw_absorbed
-                result.hp_damage = int(overflow_raw * hp_mod)
+                overflow_raw = blockable_damage - max_raw_absorbed
+                blocked_overflow_hp = overflow_raw * hp_mod
         else:
-            # No armor - all damage goes to HP with HP modifier
-            result.hp_damage = int(raw_damage * hp_mod)
+            # No armor or no blockable damage
             result.armor_damage = 0
+            blocked_overflow_hp = blockable_damage * hp_mod if blockable_damage > 0 else 0
+
+        # HP damage = piercing damage * hp_mod + overflow from blocked damage
+        result.hp_damage = int(piercing_damage * hp_mod + blocked_overflow_hp)
 
         result.damage = result.armor_damage + result.hp_damage
         return result
