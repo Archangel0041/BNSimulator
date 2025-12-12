@@ -1,0 +1,50 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": 7442561414784416887
+  },
+  "m_Name": "AppMetadata Shared Data",
+  "m_TableCollectionName": "AppMetadata",
+  "m_TableCollectionNameGuidString": "806430f67b867e048a4bd1b2f7f5a2eb",
+  "m_Entries": [
+    {
+      "m_Id": 5164528210632704,
+      "m_Key": "app_name",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 5164579657965568,
+      "m_Key": "att_description",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    }
+  ],
+  "m_Metadata": {
+    "m_Items": []
+  },
+  "m_KeyGenerator": {
+    "rid": 6466589065030664192
+  },
+  "references": {
+    "version": 2,
+    "RefIds": [
+      {
+        "rid": 6466589065030664192,
+        "type": {
+          "class": "DistributedUIDGenerator",
+          "ns": "UnityEngine.Localization.Tables",
+          "asm": "Unity.Localization"
+        },
+        "data": {}
+      }
+    ]
+  }
+}

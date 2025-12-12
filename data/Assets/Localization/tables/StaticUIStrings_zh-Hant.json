@@ -1,0 +1,1197 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "StaticUIStrings_zh-Hant",
+  "m_LocaleId": {
+    "m_Code": "zh-Hant"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 6670489456778263615
+  },
+  "m_Metadata": {
+    "m_Items": []
+  },
+  "m_TableData": [
+    {
+      "m_Id": 38820354425106432,
+      "m_Localized": "電子郵件：",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239424,
+      "m_Localized": "提交",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239426,
+      "m_Localized": "輸入您在電子郵件中收到的密碼登入",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239427,
+      "m_Localized": "密碼",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239428,
+      "m_Localized": "重新發送密碼",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239431,
+      "m_Localized": "選擇使用者名稱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239432,
+      "m_Localized": "使用者名稱:",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435893590917120,
+      "m_Localized": "登入",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435922783272960,
+      "m_Localized": "報名",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435997018259456,
+      "m_Localized": "沒有賬戶？免費註冊！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436359167049728,
+      "m_Localized": "使用者名稱每年只能更改一次。額外更改費用為 25",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436451009724416,
+      "m_Localized": "提交",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436548250468352,
+      "m_Localized": "我已年滿 13 歲，並同意 Madrona Games 的<color=#b44f1c><a href=\\\"https://madronagames.com/terms-of-service/\\\"><u>服務條款</u></a></color>和<color=#b44f1c><a href=\\\"https://madronagames.com/privacy-policy/\\\"><u>隱私權政策</u></a></color>的條款。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436634208534528,
+      "m_Localized": "密碼無效",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438177594966016,
+      "m_Localized": "提交",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438194015666176,
+      "m_Localized": "無法設定使用者名稱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117472021972197376,
+      "m_Localized": "任务完成！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920576,
+      "m_Localized": "你無法發送這個好友請求，因爲你的好友數量已達上限。請先移除一個好友來騰出位置。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920577,
+      "m_Localized": "你無法接受這個好友請求，因爲你的好友數量已達上限。請先刪除一個好友來騰出位置。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920578,
+      "m_Localized": "你無法接受這個好友請求，因爲對方的好友數量已滿。他們需要先刪除一個好友才能空出位置。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920579,
+      "m_Localized": "你已經舉報過這個玩家了！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920580,
+      "m_Localized": "玩家舉報成功！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920581,
+      "m_Localized": "已經有其他玩家在戰鬥了！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920582,
+      "m_Localized": "請重新啓動遊戲以完全應用語言更改",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920583,
+      "m_Localized": "訪問他們時無法取消好友！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920584,
+      "m_Localized": "恢復購買時出了點問題！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920585,
+      "m_Localized": "購買已成功恢復！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920586,
+      "m_Localized": "我們處理您的購買時遇到了一些問題。請嘗試重新啓動遊戲或者聯繫客服。給您帶來不便，真是抱歉。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920587,
+      "m_Localized": "我們還在處理你的訂單，商品很快就能用了，抱歉讓你久等了。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841467723776,
+      "m_Localized": "已發送",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500992,
+      "m_Localized": "朋友了",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500993,
+      "m_Localized": "添加朋友",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500994,
+      "m_Localized": "朋友",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500995,
+      "m_Localized": "看起來你的朋友列表是空的。試着搜索一些玩家吧！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500996,
+      "m_Localized": "沒有待處理的朋友請求！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500997,
+      "m_Localized": "開始搜索一些朋友吧！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500998,
+      "m_Localized": "利用商店賺取經驗值，升級並解鎖新任務！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500999,
+      "m_Localized": "援助來了！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937536,
+      "m_Localized": "你需要至少達到等級10才能創建公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937537,
+      "m_Localized": "你的賬號已被禁止使用多人功能",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937538,
+      "m_Localized": "你正在退出戰場爭鋒",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937539,
+      "m_Localized": "你將前往一個不屬於也不由 Madrona Games 管理的網站。我們對第三方平台的內容不負責，請謹慎訪問。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937540,
+      "m_Localized": "你確定要退出嗎？公會裡沒有其他成員了，所以它將被解散。這個操作無法撤銷！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937541,
+      "m_Localized": "在你離開之前，請先選擇一位新的首領。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937542,
+      "m_Localized": "選擇新的首領",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937543,
+      "m_Localized": "你確定要退出嗎？如果你離開，這次首領突襲的獎勵將不會繼續獲得，即使你加入另一個公會也一樣。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937544,
+      "m_Localized": "没有可被感染的受伤单位",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899320168448,
+      "m_Localized": "尝试重启 Steam 来强制刷新更新缓存。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362752,
+      "m_Localized": "退出",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362753,
+      "m_Localized": "指挥官！我们正在进行维护，很快就会回来！请稍后再来查看。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639061667840,
+      "m_Localized": "已經存在了，請輸入別的內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862144,
+      "m_Localized": "不合適，請輸入別的內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862145,
+      "m_Localized": "這看起來像郵箱地址，請輸入別的內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862146,
+      "m_Localized": "太長了，請輸入更短的內容 ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862147,
+      "m_Localized": "太短了，請輸入更長的內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862148,
+      "m_Localized": "空格太多了，請去掉多餘的空格",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862149,
+      "m_Localized": "出了點問題，請稍後再試",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862150,
+      "m_Localized": "郵箱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862151,
+      "m_Localized": "全選",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862152,
+      "m_Localized": "領取所選內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862153,
+      "m_Localized": "系統",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862154,
+      "m_Localized": "關閉",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862155,
+      "m_Localized": "已過期",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862156,
+      "m_Localized": "已領取",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862157,
+      "m_Localized": "查看公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862158,
+      "m_Localized": "郵件讀取失敗",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862159,
+      "m_Localized": "郵件已成功刪除",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862160,
+      "m_Localized": "郵件刪除失敗",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862161,
+      "m_Localized": "請先領取獎勵再刪除郵件",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862162,
+      "m_Localized": "領取所選內容",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862163,
+      "m_Localized": "領取以下獎勵嗎",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862164,
+      "m_Localized": "警告 有些獎勵超過你當前的容量 會被浪費",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862165,
+      "m_Localized": "稍後領取",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862166,
+      "m_Localized": "打開",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862167,
+      "m_Localized": "邀請",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862168,
+      "m_Localized": "已關閉",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862169,
+      "m_Localized": "編輯描述",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862170,
+      "m_Localized": "此字段是公開的 任何查看你公會主頁的人都能看到",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862171,
+      "m_Localized": "編輯每日消息",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862172,
+      "m_Localized": "此字段是私密的 只有成員才能看到",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862173,
+      "m_Localized": "已捐贈",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862174,
+      "m_Localized": "踢出 / 禁止",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862175,
+      "m_Localized": "禁止",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862176,
+      "m_Localized": "公會主頁",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862177,
+      "m_Localized": "成員",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862178,
+      "m_Localized": "公會銀行",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862179,
+      "m_Localized": "管理面板",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862180,
+      "m_Localized": "你沒有捐贈的權限",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862181,
+      "m_Localized": "你將離開戰場爭鋒前往一個外部網站 Madrona Games 無法控制目標網站的內容 請注意安全 你確定要繼續嗎",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862182,
+      "m_Localized": "公會瀏覽器",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862183,
+      "m_Localized": "最低等級",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862184,
+      "m_Localized": "最高等級",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862185,
+      "m_Localized": "加入",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862186,
+      "m_Localized": "編輯公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862187,
+      "m_Localized": "創建公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862188,
+      "m_Localized": "公會名稱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862189,
+      "m_Localized": "公會簡稱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862190,
+      "m_Localized": "加入規則",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862191,
+      "m_Localized": "無效的縮寫",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862192,
+      "m_Localized": "Discord 鏈接",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862193,
+      "m_Localized": "無效的 Discord 鏈接",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862194,
+      "m_Localized": "全部",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862195,
+      "m_Localized": "名稱",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862196,
+      "m_Localized": "縮寫",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862197,
+      "m_Localized": "描述",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862198,
+      "m_Localized": "今日消息",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862199,
+      "m_Localized": "加入類型",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862200,
+      "m_Localized": "標籤",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862201,
+      "m_Localized": "升級",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862202,
+      "m_Localized": "獎勵領取成功！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862203,
+      "m_Localized": "全部",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862204,
+      "m_Localized": "元數據更改",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862205,
+      "m_Localized": "銀行支出",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862206,
+      "m_Localized": "封禁玩家",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862207,
+      "m_Localized": "解封玩家",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862208,
+      "m_Localized": "玩家加入",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862209,
+      "m_Localized": "玩家離開",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862210,
+      "m_Localized": "玩家角色更新",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862211,
+      "m_Localized": "類型",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862212,
+      "m_Localized": "創建公會？",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862213,
+      "m_Localized": "你確定要用這些選項創建公會嗎？",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862214,
+      "m_Localized": "以後更改名稱和縮寫每次將花費25個納米豆。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 183395635669946368,
+      "m_Localized": "獲得",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101327986688,
+      "m_Localized": "團結起來！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346816,
+      "m_Localized": "加入公會！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346817,
+      "m_Localized": "創建公會！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346818,
+      "m_Localized": "沒有任何國家能獨自前行。加入公會，共同崛起。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346819,
+      "m_Localized": "鑄就你的傳奇——團結盟友，帶領你的國家走向榮耀。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346820,
+      "m_Localized": "加入公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346821,
+      "m_Localized": "創建公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346822,
+      "m_Localized": "加入請求",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346823,
+      "m_Localized": "加入邀請",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346824,
+      "m_Localized": "被封禁的成員",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346825,
+      "m_Localized": "審計日誌",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346826,
+      "m_Localized": "抱歉指揮官 在首領突襲開始前你還不是這個公會的成員你仍然可以參加首領突襲為你的部隊獲取SP但你不能貢獻首領突襲積分或獲得任何獎勵階段",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346827,
+      "m_Localized": "抱歉指揮官 你在首領突襲開始前還不是公會成員你仍然可以參加首領突襲為你的部隊獲取SP但你不能貢獻首領突襲積分或獲得任何獎勵階段記得加入一個公會為下一次首領突襲做好準備",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346828,
+      "m_Localized": "你仍然可以參加首領突襲為你的部隊獲取SP",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346829,
+      "m_Localized": "但你不能貢獻首領突襲積分或獲得任何獎勵階段",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346830,
+      "m_Localized": "記得加入一個公會為下一次首領突襲做好準備",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346831,
+      "m_Localized": "Boss戰開始時必須在公會中才能獲得獎勵。在Boss戰期間離開公會將無法繼續獲得獎勵。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346832,
+      "m_Localized": "在Boss戰開始前加入公會，才能領取獎勵！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346833,
+      "m_Localized": "你當前已加入公會。一旦Boss戰開始，大家一起努力獲取獎勵！記得整個活動都留在公會裡，否則將無法獲得獎勵。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346834,
+      "m_Localized": "填滿進度條即可獲得這個獎勵並解鎖下一個等級！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346835,
+      "m_Localized": "無法為老闆戰捐款",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346836,
+      "m_Localized": "有東西來了",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346837,
+      "m_Localized": "完成",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346838,
+      "m_Localized": "向公會捐贈",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346839,
+      "m_Localized": "你至少要是副會長才能升級公會！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346840,
+      "m_Localized": "舉報公會時出錯，請稍後再試。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346841,
+      "m_Localized": "已成功舉報該公會。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346842,
+      "m_Localized": "全部",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346843,
+      "m_Localized": "已讀",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346844,
+      "m_Localized": "未讀",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346845,
+      "m_Localized": "已領取",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346846,
+      "m_Localized": "未領取",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346847,
+      "m_Localized": "你的捐贈出了點問題。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186334083658539008,
+      "m_Localized": "在我們的官方網店購物即可獲得額外的納米莢獎勵！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186407362825879552,
+      "m_Localized": "解封",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541472768000,
+      "m_Localized": "舉報玩家",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128128,
+      "m_Localized": "不良名字",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128129,
+      "m_Localized": "不良基地",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128130,
+      "m_Localized": "舉報公會",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322432,
+      "m_Localized": "不良縮寫",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322433,
+      "m_Localized": "不良描述",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322434,
+      "m_Localized": "不良消息",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322435,
+      "m_Localized": "不良 Discord",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322436,
+      "m_Localized": "冒充",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": []
+  }
+}

@@ -1,0 +1,1197 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "StaticUIStrings_es",
+  "m_LocaleId": {
+    "m_Code": "es"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 6670489456778263615
+  },
+  "m_Metadata": {
+    "m_Items": []
+  },
+  "m_TableData": [
+    {
+      "m_Id": 38820354425106432,
+      "m_Localized": "Correo electrónico:",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239424,
+      "m_Localized": "Entregar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239426,
+      "m_Localized": "Introduce la contraseña que recibiste en tu correo electrónico para iniciar sesión",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239427,
+      "m_Localized": "Código de acceso",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239428,
+      "m_Localized": "Reenviar código de acceso",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239431,
+      "m_Localized": "Elija un nombre de usuario",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239432,
+      "m_Localized": "Nombre de usuario:",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435893590917120,
+      "m_Localized": "Acceso",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435922783272960,
+      "m_Localized": "Inscribirse",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435997018259456,
+      "m_Localized": "¿No tienes cuenta? ¡Regístrate gratis!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436359167049728,
+      "m_Localized": "Los cambios de nombre de usuario están limitados a una vez al año. Los cambios adicionales cuestan 25.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436451009724416,
+      "m_Localized": "Entregar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436548250468352,
+      "m_Localized": "Tengo 13 años o más y acepto los términos de los <color=#b44f1c><a href=\\\"https://madronagames.com/terms-of-service/\\\"><u>Términos de servicio</u></a></color> y la <color=#b44f1c><a href=\\\"https://madronagames.com/privacy-policy/\\\"><u>Política de privacidad</u></a></color> de Madrona Games.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436634208534528,
+      "m_Localized": "Código de acceso no válido",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438177594966016,
+      "m_Localized": "Entregar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438194015666176,
+      "m_Localized": "No se pudo establecer el nombre de usuario",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117472021972197376,
+      "m_Localized": "¡Misión cumplida!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920576,
+      "m_Localized": "No puedes enviar esta solicitud de amistad porque ya llegaste al límite. Elimina a un amigo para hacer espacio.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920577,
+      "m_Localized": "No puedes aceptar esta solicitud de amistad porque ya llegaste al límite. Elimina a un amigo para hacer espacio.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920578,
+      "m_Localized": "No puedes aceptar esta solicitud de amistad porque la persona ya tiene el máximo de amigos. Tendrá que eliminar a alguien para hacer espacio.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920579,
+      "m_Localized": "¡Ya has reportado a este jugador!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920580,
+      "m_Localized": "¡Jugador reportado con éxito!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920581,
+      "m_Localized": "¡Otro jugador ya está luchando aquí!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920582,
+      "m_Localized": "Por favor, reinicia tu juego para que los cambios de idioma se apliquen por completo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920583,
+      "m_Localized": "No puedes eliminar a un amigo mientras lo visitas.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920584,
+      "m_Localized": "¡Hubo un error al restaurar tus compras!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920585,
+      "m_Localized": "¡Compras restauradas!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920586,
+      "m_Localized": "Tuvimos un problema al procesar tu compra. Intenta reiniciar el juego o contacta con soporte. Perdona las molestias.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920587,
+      "m_Localized": "Todavía estamos procesando tu compra. Tus artículos estarán disponibles pronto. Perdona la demora.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841467723776,
+      "m_Localized": "Enviado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500992,
+      "m_Localized": "Amigo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500993,
+      "m_Localized": "Agregar amigo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500994,
+      "m_Localized": "Amigos",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500995,
+      "m_Localized": "Parece que tu lista de amigos está vacía. ¡Prueba buscando algunos jugadores!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500996,
+      "m_Localized": "¡No hay solicitudes de amistad pendientes!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500997,
+      "m_Localized": "¡Empieza a buscar algunos amigos!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500998,
+      "m_Localized": "¡Usa las tiendas para ganar XP, subir de nivel y desbloquear nuevas misiones!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500999,
+      "m_Localized": "¡La ayuda está aquí!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937536,
+      "m_Localized": "Debes tener al menos nivel 10 para crear una guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937537,
+      "m_Localized": "Tu cuenta ha sido bloqueada de las funciones multijugador",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937538,
+      "m_Localized": "Estás saliendo de Battle Nations",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937539,
+      "m_Localized": "Estás entrando a un sitio que no es propiedad ni está moderado por Madrona Games. No somos responsables del contenido de plataformas de terceros. Por favor procede con cuidado.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937540,
+      "m_Localized": "¿Seguro que quieres salir? No hay más miembros en la guild así que se disolverá. ¡Esta acción es irreversible!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937541,
+      "m_Localized": "Antes de salir por favor elige un nuevo líder.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937542,
+      "m_Localized": "Seleccionar un nuevo líder",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937543,
+      "m_Localized": "¿Seguro que quieres salir? Si sales no seguirás recibiendo recompensas de este Boss Strike aunque te unas a otra guild.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937544,
+      "m_Localized": "No hay unidades heridas disponibles para infectar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899320168448,
+      "m_Localized": "Prueba a reiniciar Steam para forzar la actualización de la caché de actualizaciones.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362752,
+      "m_Localized": "Salir",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362753,
+      "m_Localized": "¡Comandante! Estamos en una pausa de mantenimiento ahora mismo y volveremos pronto. Vuelve a comprobar más tarde.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639061667840,
+      "m_Localized": "Ya existe, por favor ingresa algo diferente",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862144,
+      "m_Localized": "No es apropiado, por favor ingresa algo diferente",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862145,
+      "m_Localized": "Parece un email, por favor ingresa algo diferente",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862146,
+      "m_Localized": "Es muy largo, por favor ingresa algo más corto",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862147,
+      "m_Localized": "Es muy corto, por favor ingresa algo más largo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862148,
+      "m_Localized": "Hay demasiados espacios, por favor quita los que sobran",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862149,
+      "m_Localized": "Ha ocurrido un problema, por favor inténtalo de nuevo más tarde",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862150,
+      "m_Localized": "Buzón",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862151,
+      "m_Localized": "Seleccionar todo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862152,
+      "m_Localized": "Reclamar lo seleccionado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862153,
+      "m_Localized": "Sistema",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862154,
+      "m_Localized": "Cerrar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862155,
+      "m_Localized": "Vencido",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862156,
+      "m_Localized": "Ya reclamado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862157,
+      "m_Localized": "Ver la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862158,
+      "m_Localized": "No se pudo leer el correo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862159,
+      "m_Localized": "Correo eliminado con éxito",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862160,
+      "m_Localized": "No se pudo eliminar el correo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862161,
+      "m_Localized": "Por favor recoge tus recompensas antes de borrar el correo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862162,
+      "m_Localized": "Recoger lo seleccionado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862163,
+      "m_Localized": "Recoger las siguientes recompensas",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862164,
+      "m_Localized": "Advertencia algunas recompensas superan tu capacidad actual y se perderán",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862165,
+      "m_Localized": "Reclamar más tarde",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346843,
+      "m_Localized": "Leído",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346844,
+      "m_Localized": "No leído",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346845,
+      "m_Localized": "Reclamado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346846,
+      "m_Localized": "Sin reclamar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346847,
+      "m_Localized": "Hubo un problema con tu donación.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186334083658539008,
+      "m_Localized": "Consigue nanopods extra en todas tus compras en nuestra tienda oficial!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862166,
+      "m_Localized": "Abrir",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862167,
+      "m_Localized": "Invitar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862168,
+      "m_Localized": "Cerrado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862169,
+      "m_Localized": "Editar descripción",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862170,
+      "m_Localized": "Este campo es público y será visible para cualquiera que visite la página principal de tu guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862171,
+      "m_Localized": "Editar el mensaje del día",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862172,
+      "m_Localized": "Este campo es privado y solo será visible para los miembros",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862173,
+      "m_Localized": "Donado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862174,
+      "m_Localized": "Expulsar / Banear",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862175,
+      "m_Localized": "Banear",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862176,
+      "m_Localized": "Inicio de la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862177,
+      "m_Localized": "Miembros",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862178,
+      "m_Localized": "Banco de la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862179,
+      "m_Localized": "Panel de admin",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862180,
+      "m_Localized": "No tienes permiso para donar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862181,
+      "m_Localized": "Estás saliendo de Battle Nations hacia un sitio externo Madrona Games no controla el contenido del sitio de destino Por favor procede con precaución ¿Seguro que quieres continuar",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862182,
+      "m_Localized": "Navegador de guilds",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862183,
+      "m_Localized": "Nivel mínimo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862184,
+      "m_Localized": "Nivel máximo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862185,
+      "m_Localized": "Unirse",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862186,
+      "m_Localized": "Editar la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862187,
+      "m_Localized": "Crear una guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862188,
+      "m_Localized": "Nombre de la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862189,
+      "m_Localized": "Acrónimo de la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862190,
+      "m_Localized": "Política de ingreso",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862191,
+      "m_Localized": "Acrónimo no válido",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862192,
+      "m_Localized": "Enlace de Discord",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862193,
+      "m_Localized": "Enlace de Discord no válido",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862194,
+      "m_Localized": "Todos",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862195,
+      "m_Localized": "Nombre",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862196,
+      "m_Localized": "Acrónimo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862197,
+      "m_Localized": "Descripción",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862198,
+      "m_Localized": "Mensaje del día",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862199,
+      "m_Localized": "Tipo de ingreso",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862200,
+      "m_Localized": "Etiqueta",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862201,
+      "m_Localized": "Subir de nivel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862202,
+      "m_Localized": "¡Recompensas recogidas con éxito!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862203,
+      "m_Localized": "Todos",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862204,
+      "m_Localized": "Cambio de metadatos",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862205,
+      "m_Localized": "Gasto del banco",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862206,
+      "m_Localized": "Banear jugador",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862207,
+      "m_Localized": "Desbanear jugador",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862208,
+      "m_Localized": "Jugador se unió",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862209,
+      "m_Localized": "Jugador se fue",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862210,
+      "m_Localized": "Actualización del rol del jugador",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862211,
+      "m_Localized": "Tipo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862212,
+      "m_Localized": "¿Crear una hermandad?",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862213,
+      "m_Localized": "¿Estás seguro de que quieres crear una hermandad con estas selecciones?",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862214,
+      "m_Localized": "Los futuros cambios de nombre y acrónimo costarán 25 nanopods cada uno.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 183395635669946368,
+      "m_Localized": "obtenido",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101327986688,
+      "m_Localized": "¡Uníos!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346816,
+      "m_Localized": "¡Unirse a una hermandad!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346817,
+      "m_Localized": "¡Crear una hermandad!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346818,
+      "m_Localized": "Ninguna nación se mantiene sola. Únete a una hermandad y crezcan juntos.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346819,
+      "m_Localized": "Forja tu legado — une a tus aliados bajo tu estandarte y guía a tu nación hacia la gloria.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346820,
+      "m_Localized": "Unirse a una hermandad",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346821,
+      "m_Localized": "Crear una hermandad",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346822,
+      "m_Localized": "Solicitudes de unión",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346823,
+      "m_Localized": "Invitaciones para unirse",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346824,
+      "m_Localized": "Miembros expulsados",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346825,
+      "m_Localized": "Registro de auditoría",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346826,
+      "m_Localized": "Perdón Comandante no eras miembro de esta hermandad cuando empezó el Ataque del Jefe Igual puedes participar para ganar SP para tus tropas pero no podrás aportar puntos del Ataque del Jefe ni obtener los niveles de recompensa",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346827,
+      "m_Localized": "Perdón Comandante no eras miembro de una hermandad cuando empezó el Ataque del Jefe Igual puedes participar para ganar SP para tus tropas pero no podrás aportar puntos del Ataque del Jefe ni obtener los niveles de recompensa Asegúrate de unirte a una hermandad para estar listo para el próximo Ataque del Jefe",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346828,
+      "m_Localized": "¡Evento terminado!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346829,
+      "m_Localized": "No eres elegible para recompensas",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346830,
+      "m_Localized": "Se requiere gremio",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346831,
+      "m_Localized": "Debes estar en un gremio cuando comience el Boss Strike para poder recibir recompensas. Salir de tu gremio durante el Boss Strike te hará perder la posibilidad de obtener más recompensas.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346832,
+      "m_Localized": "¡Únete a un gremio antes de que comience el Boss Strike para poder obtener recompensas!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346833,
+      "m_Localized": "Actualmente estás en un Gremio. ¡Cuando comience el Boss Strike, trabajen juntos para ganar recompensas! Asegúrate de permanecer en tu gremio durante todo el evento o perderás la posibilidad de obtener recompensas.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346834,
+      "m_Localized": "¡Llena la barra para conseguir este premio y desbloquear el siguiente nivel!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346835,
+      "m_Localized": "No se pudo donar para la huelga del jefe",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346836,
+      "m_Localized": "En camino",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346837,
+      "m_Localized": "Completado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346838,
+      "m_Localized": "Donar a la guilda",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346839,
+      "m_Localized": "Debes ser al menos sublíder para subir de nivel el gremio!",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346840,
+      "m_Localized": "Hubo un error al reportar el gremio, inténtalo de nuevo más tarde.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346841,
+      "m_Localized": "Gremio reportado con éxito.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346842,
+      "m_Localized": "Todo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186407362825879552,
+      "m_Localized": "Desbloquear",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541472768000,
+      "m_Localized": "Reportar al jugador",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128128,
+      "m_Localized": "Nombre inapropiado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128129,
+      "m_Localized": "Base inapropiada",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128130,
+      "m_Localized": "Reportar la guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322432,
+      "m_Localized": "Acrónimo inapropiado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322433,
+      "m_Localized": "Descripción inapropiada",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322434,
+      "m_Localized": "Mensaje inapropiado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322435,
+      "m_Localized": "Discord inapropiado",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322436,
+      "m_Localized": "Suplantación",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": []
+  }
+}

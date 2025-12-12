@@ -1,0 +1,1190 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": -2378050947708348859
+  },
+  "m_Name": "StaticUIStrings_ja",
+  "m_LocaleId": {
+    "m_Code": "ja"
+  },
+  "m_SharedData": {
+    "m_FileID": 2,
+    "m_PathID": 6670489456778263615
+  },
+  "m_Metadata": {
+    "m_Items": []
+  },
+  "m_TableData": [
+    {
+      "m_Id": 38820354425106432,
+      "m_Localized": "スタート",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239424,
+      "m_Localized": "提出する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239426,
+      "m_Localized": "メールで受け取ったパスコードを入力してログインしてください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239427,
+      "m_Localized": "パスコード",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239428,
+      "m_Localized": "パスコードを再送信",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239431,
+      "m_Localized": "ユーザー名を選択",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 38825520331239432,
+      "m_Localized": "ユーザー名:",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435893590917120,
+      "m_Localized": "ログイン",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435922783272960,
+      "m_Localized": "サインアップ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117435997018259456,
+      "m_Localized": "アカウントをお持ちではありませんか？無料で登録しましょう！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436359167049728,
+      "m_Localized": "ユーザー名の変更は1年に1回までです。追加の変更には25",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436451009724416,
+      "m_Localized": "提出する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436548250468352,
+      "m_Localized": "私は 13 歳以上であり、Madrona Games の <color=#b44f1c><a href=\\\"https://madronagames.com/terms-of-service/\\\"><u>利用規約</u></a></color> および <color=#b44f1c><a href=\\\"https://madronagames.com/privacy-policy/\\\"><u>プライバシー ポリシー</u></a></color> に同意します。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117436634208534528,
+      "m_Localized": "無効なパスコード",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438177594966016,
+      "m_Localized": "提出する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117438194015666176,
+      "m_Localized": "ユーザー名の設定に失敗しました",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 117472021972197376,
+      "m_Localized": "任務完了！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920576,
+      "m_Localized": "フレンドリクエストを送れません。フレンドの上限に達しています。誰かをフレンド解除して空きを作ってください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920577,
+      "m_Localized": "フレンド数の上限に達しているため、このフレンドリクエストは受け取れません。フレンドを1人解除して空きを作ってください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920578,
+      "m_Localized": "このフレンドリクエストは承認できません。送信者のフレンド数が上限に達しています。誰かを解除して枠を空ける必要があります。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920579,
+      "m_Localized": "このプレイヤーはすでに通報しています！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920580,
+      "m_Localized": "プレイヤーを通報しました！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920581,
+      "m_Localized": "他のプレイヤーがもう戦ってるよ！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920582,
+      "m_Localized": "言語の変更を完全に反映するためにゲームを再起動してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920583,
+      "m_Localized": "訪問中は友達解除できないよ！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920584,
+      "m_Localized": "購入の復元中にエラーが発生しました！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920585,
+      "m_Localized": "購入が正常に復元されました！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920586,
+      "m_Localized": "購入の処理中に問題が発生しました。ゲームを再起動するかサポートに連絡してみてください。ご不便をおかけしてすみません。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154409511056920587,
+      "m_Localized": "まだ購入を処理中です。商品はすぐに使えるようになります。遅れてごめんなさい。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841467723776,
+      "m_Localized": "送信済み",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500992,
+      "m_Localized": "友達",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500993,
+      "m_Localized": "友達を追加",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500994,
+      "m_Localized": "友達",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500995,
+      "m_Localized": "フレンドリストが空のようです。プレイヤーを検索してみてください！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500996,
+      "m_Localized": "保留中の友達リクエストはありません！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500997,
+      "m_Localized": "友達を探し始めよう！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500998,
+      "m_Localized": "ショップを使ってXPを稼ぎ、レベルアップして新しいミッションをアンロックしよう！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154427841484500999,
+      "m_Localized": "助けが来た！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937536,
+      "m_Localized": "ギルドを作るにはレベル10以上が必要だよ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937537,
+      "m_Localized": "あなたのアカウントはマルチプレイ機能から利用停止になっています",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937538,
+      "m_Localized": "Battle Nationsを退出します",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937539,
+      "m_Localized": "これからアクセスするのは Madrona Games が所有や管理していないウェブサイトです。第三者のプラットフォームの内容については当社は責任を負いません。注意して進んでください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937540,
+      "m_Localized": "本当に脱退しますか？ギルドには他のメンバーがいないので解散されます。この操作は元に戻せません！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937541,
+      "m_Localized": "抜ける前に新しいリーダーを選んでください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937542,
+      "m_Localized": "新しいリーダーを選ぶ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937543,
+      "m_Localized": "本当に脱退しますか？抜けるとこのボスストライクの報酬はもう受け取れません。別のギルドに入っても同じです。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163801639759937544,
+      "m_Localized": "感染できる負傷ユニットはありません",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899320168448,
+      "m_Localized": "Steam を再起動してアップデートキャッシュを強制的に更新してみてください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362752,
+      "m_Localized": "終了",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164148899324362753,
+      "m_Localized": "司令官！ただいまメンテナンス中です、すぐに戻ります！後でもう一度確認してください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639061667840,
+      "m_Localized": "すでにあります。ほかのものを入力してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862144,
+      "m_Localized": "不適切です。ほかのものを入力してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862145,
+      "m_Localized": "メールアドレスのようです。ほかのものを入力してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862146,
+      "m_Localized": "長すぎます。もっと短いものを入力してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862147,
+      "m_Localized": "短すぎます。もっと長いものを入力してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862148,
+      "m_Localized": "スペースが多すぎます。余分なスペースを削除してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862149,
+      "m_Localized": "問題が発生しました。しばらくしてからもう一度試してください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862150,
+      "m_Localized": "メールボックス",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862151,
+      "m_Localized": "すべて選択",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862152,
+      "m_Localized": "選択したものを取得",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862153,
+      "m_Localized": "システム",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862154,
+      "m_Localized": "閉じる",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862155,
+      "m_Localized": "期限切れ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862156,
+      "m_Localized": "既に受け取り済み",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862157,
+      "m_Localized": "ギルドを見る",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862158,
+      "m_Localized": "メールを読み込めませんでした",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862159,
+      "m_Localized": "メールを正常に削除しました",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862160,
+      "m_Localized": "メールを削除できませんでした",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862161,
+      "m_Localized": "メールを削除する前に報酬を受け取ってください",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862162,
+      "m_Localized": "選択したものを受け取る",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862163,
+      "m_Localized": "以下の報酬を受け取りますか",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862164,
+      "m_Localized": "警告 一部の報酬が現在の上限を超えており失われます",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862165,
+      "m_Localized": "後で受け取る",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862166,
+      "m_Localized": "開く",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346842,
+      "m_Localized": "すべて",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346843,
+      "m_Localized": "既読",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346844,
+      "m_Localized": "未読",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346845,
+      "m_Localized": "受け取り済み",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346846,
+      "m_Localized": "未受け取り",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346847,
+      "m_Localized": "あなたの寄付にちょっと問題がありました。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186334083658539008,
+      "m_Localized": "公式ウェブショップでの購入でナノポッドを追加でゲットしよう！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862167,
+      "m_Localized": "招待する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862168,
+      "m_Localized": "閉じました",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862169,
+      "m_Localized": "説明を編集",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862170,
+      "m_Localized": "この項目は公開されており あなたのギルドのホームページを見る人なら誰でも見られます",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862171,
+      "m_Localized": "今日のメッセージを編集",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862172,
+      "m_Localized": "この項目は非公開で メンバーだけが見ることができます",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862173,
+      "m_Localized": "寄付済み",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862174,
+      "m_Localized": "キック / バン",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862175,
+      "m_Localized": "バンする",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862176,
+      "m_Localized": "ギルドホーム",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862177,
+      "m_Localized": "メンバー",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862178,
+      "m_Localized": "ギルドバンク",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862179,
+      "m_Localized": "管理パネル",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862180,
+      "m_Localized": "寄付する権限がありません",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862181,
+      "m_Localized": "これから Battle Nations を離れて外部サイトに移動します Madrona Games は移動先のサイト内容を管理していません 十分に注意してください 続行してもよろしいですか",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862182,
+      "m_Localized": "ギルドブラウザー",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862183,
+      "m_Localized": "最低レベル",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862184,
+      "m_Localized": "最大レベル",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862185,
+      "m_Localized": "参加する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862186,
+      "m_Localized": "ギルドを編集",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862187,
+      "m_Localized": "ギルドを作成",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862188,
+      "m_Localized": "ギルド名",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862189,
+      "m_Localized": "ギルド略称",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862190,
+      "m_Localized": "参加方針",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862191,
+      "m_Localized": "無効な略称",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862192,
+      "m_Localized": "Discordリンク",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862193,
+      "m_Localized": "無効なDiscordリンク",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862194,
+      "m_Localized": "すべて",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862195,
+      "m_Localized": "名前",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862196,
+      "m_Localized": "略称",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862197,
+      "m_Localized": "説明",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862198,
+      "m_Localized": "本日のメッセージ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862199,
+      "m_Localized": "参加タイプ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862200,
+      "m_Localized": "タグ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862201,
+      "m_Localized": "レベルアップ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862202,
+      "m_Localized": "報酬を正常に受け取りました！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862203,
+      "m_Localized": "すべて",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862204,
+      "m_Localized": "メタデータの変更",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862205,
+      "m_Localized": "銀行支出",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862206,
+      "m_Localized": "プレイヤーを禁止",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862207,
+      "m_Localized": "プレイヤーの禁止解除",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862208,
+      "m_Localized": "プレイヤーが参加",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862209,
+      "m_Localized": "プレイヤーが退出",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862210,
+      "m_Localized": "プレイヤー役割の更新",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862211,
+      "m_Localized": "タイプ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862212,
+      "m_Localized": "ギルドを作成？",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862213,
+      "m_Localized": "この選択でギルドを作成してもよろしいですか？",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182658639065862214,
+      "m_Localized": "今後の名前や略称の変更にはそれぞれ25ナノポッドが必要です。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 183395635669946368,
+      "m_Localized": "獲得",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101327986688,
+      "m_Localized": "力を合わせろ！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346816,
+      "m_Localized": "ギルドに参加！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346817,
+      "m_Localized": "ギルドを作成！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346818,
+      "m_Localized": "どの国も一人では立てない。ギルドに参加して共に成長しよう。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346819,
+      "m_Localized": "あなたの伝説を築け――味方を旗のもとに集め、国を栄光へ導こう。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346820,
+      "m_Localized": "ギルドに参加",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346821,
+      "m_Localized": "ギルドを作成",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346822,
+      "m_Localized": "参加リクエスト",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346823,
+      "m_Localized": "参加招待",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346824,
+      "m_Localized": "追放メンバー",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346825,
+      "m_Localized": "監査ログ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346826,
+      "m_Localized": "ごめん司令官 ボスストライクが始まった時あなたはこのギルドのメンバーじゃなかったよボスストライクには参加できて部隊のためにSPは稼げるけどポイントに貢献したり報酬の段階をもらったりはできないよ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346827,
+      "m_Localized": "ごめん司令官 ボスストライクが始まった時あなたはギルドに入っていなかったよボスストライクには参加できて部隊のためにSPは稼げるけどポイントに貢献したり報酬の段階をもらったりはできないよ次のボスストライクに備えてギルドに入っておいてね",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346828,
+      "m_Localized": "イベント終了！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346829,
+      "m_Localized": "報酬を受け取れません",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346830,
+      "m_Localized": "ギルド必須",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346831,
+      "m_Localized": "ボスストライクが始まる時にはギルドに所属している必要があります。ボスストライク中にギルドを抜けると、以降の報酬を受け取れなくなります。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346832,
+      "m_Localized": "ボスストライクが始まる前にギルドに参加して、報酬をもらおう！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346833,
+      "m_Localized": "あなたは現在ギルドに所属しています。ボスストライクが始まったら、みんなで協力して報酬をゲットしよう！イベント中は必ずギルドに残っていないと、報酬を獲得できなくなります。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346835,
+      "m_Localized": "Korean: 현재 길드에 가입되어 있습니다. 보스 전투가 시작되면 함께 협력하여 보상을 획득하세요! 이벤트 동안 반드시 길드에 남아 있어야 보상을 얻을 수 있습니다.",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346836,
+      "m_Localized": "来るよ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346837,
+      "m_Localized": "完了",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346838,
+      "m_Localized": "ギルドに寄付する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346839,
+      "m_Localized": "ギルドをレベルアップするには少なくとも副リーダーである必要があります！",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346840,
+      "m_Localized": "ギルドを通報する時にエラーが発生しました。あとでまた試してください。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186275101357346841,
+      "m_Localized": "ギルドを正常に通報しました。",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186407362825879552,
+      "m_Localized": "解除",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541472768000,
+      "m_Localized": "プレイヤーを報告する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128128,
+      "m_Localized": "不適切な名前",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128129,
+      "m_Localized": "不適切な基地",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541502128130,
+      "m_Localized": "ギルドを報告する",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322432,
+      "m_Localized": "不適切な略称",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322433,
+      "m_Localized": "不適切な説明",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322434,
+      "m_Localized": "不適切なメッセージ",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322435,
+      "m_Localized": "不適切な Discord",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 186959541506322436,
+      "m_Localized": "なりすまし",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    }
+  ],
+  "references": {
+    "version": 2,
+    "RefIds": []
+  }
+}

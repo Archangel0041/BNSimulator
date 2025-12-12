@@ -1,0 +1,1548 @@
+{
+  "m_GameObject": {
+    "m_FileID": 0,
+    "m_PathID": 0
+  },
+  "m_Enabled": 1,
+  "m_Script": {
+    "m_FileID": 1,
+    "m_PathID": 7442561414784416887
+  },
+  "m_Name": "DynamicUIStrings Shared Data",
+  "m_TableCollectionName": "DynamicUIStrings",
+  "m_TableCollectionNameGuidString": "ffd82d79b409aa3498666ced399e4cac",
+  "m_Entries": [
+    {
+      "m_Id": 10341667659776,
+      "m_Key": "abilityerrorcollectneeded",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825600,
+      "m_Key": "abilityerrorinprogress",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825601,
+      "m_Key": "accuracystats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825602,
+      "m_Key": "achievement_facebookpost_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825603,
+      "m_Key": "achievement_twitterpost",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825604,
+      "m_Key": "addunavailableunitwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825605,
+      "m_Key": "addunittocombatwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825606,
+      "m_Key": "aimmodstat",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825607,
+      "m_Key": "ammostats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825608,
+      "m_Key": "armyviewinbattle",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825609,
+      "m_Key": "armyviewpopupdead",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825610,
+      "m_Key": "armyviewpopuphomesafely",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825611,
+      "m_Key": "armyviewpopuphomesafewithcooldown",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825612,
+      "m_Key": "armyviewpopuplooting",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825613,
+      "m_Key": "armyviewpopuplootready",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825614,
+      "m_Key": "armyviewpopupoccupying",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825615,
+      "m_Key": "armyviewpopupwithdrawing",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825616,
+      "m_Key": "assistancepinpbody",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825617,
+      "m_Key": "async_guild_rank",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825618,
+      "m_Key": "async_points_to_next_tier",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825619,
+      "m_Key": "async_rewards_tiers",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825620,
+      "m_Key": "attackerror_cannotattack",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825621,
+      "m_Key": "attackerror_npcally",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825622,
+      "m_Key": "attackerror_oppshieldson",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825623,
+      "m_Key": "attackerror_oppslotsfull",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825624,
+      "m_Key": "attackstats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825625,
+      "m_Key": "boss_earnpoints",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825626,
+      "m_Key": "boss_eventconcludedprogressguild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825627,
+      "m_Key": "boss_eventconcludedprogressself",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825628,
+      "m_Key": "boss_tier",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825629,
+      "m_Key": "boss_tierprize",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825630,
+      "m_Key": "boss_wavescompleted",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825631,
+      "m_Key": "buildinfo",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825632,
+      "m_Key": "buildinglevel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825633,
+      "m_Key": "buildingupgradelevel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825634,
+      "m_Key": "buildwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825635,
+      "m_Key": "cantaddunittogarrisonwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825636,
+      "m_Key": "cantbuildprojectbuildinglevel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825637,
+      "m_Key": "centralstoragesubtitle",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825638,
+      "m_Key": "centralstoragesubtitle_chem",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825639,
+      "m_Key": "chargestats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825640,
+      "m_Key": "confirmacceptguildinvite",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825641,
+      "m_Key": "confirmacceptguildinvitesingle",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825642,
+      "m_Key": "confirmguildinvite",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825643,
+      "m_Key": "confirmrejectguildinvite",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825644,
+      "m_Key": "constructbuildings",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825645,
+      "m_Key": "cooldownwarningpural",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825646,
+      "m_Key": "cooldownwarningsingle",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825647,
+      "m_Key": "countofcount",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825648,
+      "m_Key": "critpertag",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825649,
+      "m_Key": "damagestats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825650,
+      "m_Key": "daysshort",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825651,
+      "m_Key": "defendml",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825652,
+      "m_Key": "defendvl",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825653,
+      "m_Key": "defensesplaced",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341692825654,
+      "m_Key": "dodgestats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019904,
+      "m_Key": "donationpopupbody",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019905,
+      "m_Key": "earnedstar_facebookpost_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019906,
+      "m_Key": "earnedstar_twitterpost",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019907,
+      "m_Key": "enoughpopulationwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019908,
+      "m_Key": "fafmissedrequestnotification",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019909,
+      "m_Key": "fafrequestnotification",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019910,
+      "m_Key": "fightafriendtimeout",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019911,
+      "m_Key": "friend_greater_version",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019912,
+      "m_Key": "friend_less_version",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019913,
+      "m_Key": "fullintime",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019914,
+      "m_Key": "guild_amountdonated",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019915,
+      "m_Key": "guild_amountneeded",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019916,
+      "m_Key": "guild_promoted_to_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019917,
+      "m_Key": "guild_required_level_to_create_guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019918,
+      "m_Key": "guildacceptjoinrequestbrief",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019919,
+      "m_Key": "guildassignnewleadermsg",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019920,
+      "m_Key": "guildattackleader_shortname",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019921,
+      "m_Key": "guilddeclinejoinrequestbrief",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019922,
+      "m_Key": "guilddefenseleader_shortname",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019923,
+      "m_Key": "guilddemoteofficermsg",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019924,
+      "m_Key": "guildfullbody",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019925,
+      "m_Key": "guildjoin",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019926,
+      "m_Key": "guildjoin_retractprev",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019927,
+      "m_Key": "guildjoinrequestbrief",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019928,
+      "m_Key": "guildjoinrequestwillberetracted",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019929,
+      "m_Key": "guildkickedmessage",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019930,
+      "m_Key": "guildkickmembermsg",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019931,
+      "m_Key": "guildpromotemembermsg",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019932,
+      "m_Key": "guildstore_collect_successful",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019933,
+      "m_Key": "guildstore_hurry_confirmation",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019934,
+      "m_Key": "guildstore_hurry_successful",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019935,
+      "m_Key": "guildstore_purchase_successful",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019936,
+      "m_Key": "gvgenergycount",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330840219648,
+      "m_Key": "heal_warning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019937,
+      "m_Key": "healthstats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019939,
+      "m_Key": "hoursshort",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019940,
+      "m_Key": "hp",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019941,
+      "m_Key": "hudmultiplier",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019942,
+      "m_Key": "hudtiers",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019943,
+      "m_Key": "invqty",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019944,
+      "m_Key": "levelcollecterrorinprogress",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019945,
+      "m_Key": "levelerrorcollectneeded",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019946,
+      "m_Key": "levelerrorinprogress",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019947,
+      "m_Key": "levelprereqwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019948,
+      "m_Key": "levelup_facebookpost_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019949,
+      "m_Key": "levelup_twitterpost",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019950,
+      "m_Key": "lvlwithdata",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019951,
+      "m_Key": "mbbuyplural",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019952,
+      "m_Key": "mbbuypluralget01",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019953,
+      "m_Key": "mbbuypluralgetplural",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019954,
+      "m_Key": "minunitsnotmet",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019955,
+      "m_Key": "minutesshort",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019956,
+      "m_Key": "missioncomplete_facebookpost_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019957,
+      "m_Key": "missioncomplete_facebookpost_title_guest",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019958,
+      "m_Key": "missioncomplete_twitterpost",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019959,
+      "m_Key": "missioncomplete_twitterpost_guest",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019960,
+      "m_Key": "nanopodconfirmation",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330898939904,
+      "m_Key": "num_damaged",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330898939905,
+      "m_Key": "num_injured",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019963,
+      "m_Key": "occupy_withdraw",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019964,
+      "m_Key": "occupyml",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019965,
+      "m_Key": "occupytakesmorethanoneattackwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019966,
+      "m_Key": "occupyvl",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019967,
+      "m_Key": "occupyvlmission",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019968,
+      "m_Key": "occupywithloot",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019969,
+      "m_Key": "outsidearmyml",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019970,
+      "m_Key": "per_off",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019971,
+      "m_Key": "perdayplusslash",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019972,
+      "m_Key": "perdayslash",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019973,
+      "m_Key": "perhourplusslash",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019974,
+      "m_Key": "perhourslash",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019975,
+      "m_Key": "playerguildname",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019976,
+      "m_Key": "playername",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019977,
+      "m_Key": "purchasedunitadded",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341697019978,
+      "m_Key": "pvp_place_more_units_plural",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214208,
+      "m_Key": "pvp_place_more_units_single",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214209,
+      "m_Key": "pvpenergycount",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214210,
+      "m_Key": "reloadstats",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330903134208,
+      "m_Key": "repair_warning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214212,
+      "m_Key": "requestacceptedmessage",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214213,
+      "m_Key": "requestrejectedmessage",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214214,
+      "m_Key": "resourcelabel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214215,
+      "m_Key": "returningfrombattlewithcooldown",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328512,
+      "m_Key": "role_text_bonus",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328513,
+      "m_Key": "role_text_defense",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328514,
+      "m_Key": "role_text_garrison",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328515,
+      "m_Key": "role_text_goods",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328516,
+      "m_Key": "role_text_housing",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328517,
+      "m_Key": "role_text_mill",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328518,
+      "m_Key": "role_text_mine",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328519,
+      "m_Key": "role_text_orchard",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328520,
+      "m_Key": "role_text_storage",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214225,
+      "m_Key": "sale_per",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214226,
+      "m_Key": "secondsshort",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214227,
+      "m_Key": "singleentitywarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214228,
+      "m_Key": "someonesays",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214229,
+      "m_Key": "stopbeingfriends",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214230,
+      "m_Key": "stunwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214231,
+      "m_Key": "tolevel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214232,
+      "m_Key": "unitlevelprereqwarning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214233,
+      "m_Key": "unitsplaced",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214234,
+      "m_Key": "unittaglimitreached",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214235,
+      "m_Key": "upgradetolevel",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214236,
+      "m_Key": "visit_friend_in_tutorial_error",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214237,
+      "m_Key": "wavecounter",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214238,
+      "m_Key": "withdrawml",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214239,
+      "m_Key": "withdrawvl",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214240,
+      "m_Key": "withdrawvlother",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214241,
+      "m_Key": "youneedtobuildthis",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214242,
+      "m_Key": "lvl",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214243,
+      "m_Key": "abilitycollecterrorinprogress",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328521,
+      "m_Key": "mis_p01_promo_shaman_020_big_fight_10startdialog_1_body_0",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328522,
+      "m_Key": "mis_p01_promo_shaman_020_big_fight_10startdialog_8_body_0",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328523,
+      "m_Key": "mis_p01_promo_shaman_020_big_fight_70enddialog_2_body_0",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328524,
+      "m_Key": "mis_p02_chem_100_train_light_chem_tank_10startdialog_1_title_0",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 13742330907328525,
+      "m_Key": "p01_final_0858_make_disinfectant_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214249,
+      "m_Key": "achievement_twitterpost_guest",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 10341701214250,
+      "m_Key": "criticalpercent",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 154412938981888000,
+      "m_Key": "warn_friend_needs_to_ack_assistance",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816328,
+      "m_Key": "error_banned_from_guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816329,
+      "m_Key": "error_accept_guild_invitation_guild_full",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816330,
+      "m_Key": "error_accept_guild_invitation_already_in_guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816331,
+      "m_Key": "error_accept_guild_join_application_guild_full",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816332,
+      "m_Key": "error_accept_guild_join_application_already_in_guild",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 163805067013816333,
+      "m_Key": "warn_select_new_leader_confirm",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 164152327517765632,
+      "m_Key": "warn_new_version",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067263459328,
+      "m_Key": "error_too_soon",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236544,
+      "m_Key": "mail_message_guild_invite_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236545,
+      "m_Key": "mail_message_guild_invite_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236546,
+      "m_Key": "mail_message_guild_kicked_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236547,
+      "m_Key": "mail_message_guild_kicked_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236548,
+      "m_Key": "mail_message_guild_banned_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236549,
+      "m_Key": "mail_message_guild_banned_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236550,
+      "m_Key": "mail_message_guild_unbanned_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236551,
+      "m_Key": "mail_message_guild_unbanned_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236552,
+      "m_Key": "mail_message_boss_strike_reward_title",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236553,
+      "m_Key": "mail_message_boss_strike_reward_body",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236554,
+      "m_Key": "mailbox_expires_in",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236555,
+      "m_Key": "mailbox_deselect",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236556,
+      "m_Key": "guild_established",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236557,
+      "m_Key": "guild_ban_player",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236558,
+      "m_Key": "guild_leave_to_join_another",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236559,
+      "m_Key": "guild_request_accepted_warning",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236560,
+      "m_Key": "guild_failed_to_join_banned",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236561,
+      "m_Key": "guild_failed_to_join",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236562,
+      "m_Key": "guild_success_to_request_join",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236563,
+      "m_Key": "guild_failed_to_request_join_banned",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236564,
+      "m_Key": "guild_failed_to_request_join",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236565,
+      "m_Key": "guild_audit_entry_metadata_change",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236566,
+      "m_Key": "guild_audit_entry_player_join_invited",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236567,
+      "m_Key": "guild_audit_entry_player_join_accepted",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236568,
+      "m_Key": "guild_audit_entry_player_join",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236569,
+      "m_Key": "guild_audit_entry_player_leave",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236570,
+      "m_Key": "guild_audit_entry_player_kick",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236571,
+      "m_Key": "guild_audit_entry_player_ban",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236572,
+      "m_Key": "guild_audit_entry_player_unban",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236573,
+      "m_Key": "guild_audit_entry_player_role_update",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236574,
+      "m_Key": "guild_audit_entry_bank_spend",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236575,
+      "m_Key": "guild_invite_age_singular",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    },
+    {
+      "m_Id": 182662067280236576,
+      "m_Key": "guild_invite_age_plural",
+      "m_Metadata": {
+        "m_Items": []
+      }
+    }
+  ],
+  "m_Metadata": {
+    "m_Items": []
+  },
+  "m_KeyGenerator": {
+    "rid": 2918897848747294837
+  },
+  "references": {
+    "version": 2,
+    "RefIds": [
+      {
+        "rid": 2918897848747294837,
+        "type": {
+          "class": "DistributedUIDGenerator",
+          "ns": "UnityEngine.Localization.Tables",
+          "asm": "Unity.Localization"
+        },
+        "data": {}
+      }
+    ]
+  }
+}
