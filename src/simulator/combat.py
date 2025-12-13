@@ -262,6 +262,37 @@ class DamageCalculator:
         """
         self.class_damage_mods = class_damage_mods
 
+    @staticmethod
+    def calculate_damage_at_rank(base_damage: int, power: int) -> int:
+        """
+        Calculate damage at rank using power scaling.
+        Formula from TypeScript: Damage = BaseDamage * (1 + 2 * 0.01 * Power)
+
+        Args:
+            base_damage: Base weapon damage
+            power: Unit's power stat
+
+        Returns:
+            Scaled damage value
+        """
+        return int(base_damage * (1 + 2 * 0.01 * power))
+
+    @staticmethod
+    def calculate_dodge_chance(defender_defense: int, attacker_offense: int) -> float:
+        """
+        Calculate dodge chance.
+        Formula from TypeScript: max(0, Defense - Offense + 5)
+
+        Args:
+            defender_defense: Defender's defense stat
+            attacker_offense: Attacker's offense (accuracy + ability attack)
+
+        Returns:
+            Dodge chance percentage (0-100)
+        """
+        dodge_chance = defender_defense - attacker_offense + 5
+        return max(0.0, float(dodge_chance))
+
     def calculate_damage(
         self,
         attacker: "BattleUnit",
@@ -279,30 +310,33 @@ class DamageCalculator:
         stats = ability.stats
         weapon_stats = weapon.stats
 
-        # Check dodge first
-        dodge_chance = defender.template.stats.dodge - attacker.template.stats.accuracy
-        dodge_chance = max(0, min(95, dodge_chance))  # Cap at 0-95%
+        # Calculate offense for dodge calculation
+        offense = stats.attack + attacker.template.stats.accuracy
+        defense = defender.template.stats.defense
+
+        # Check dodge first - using correct TypeScript formula
+        dodge_chance = self.calculate_dodge_chance(defense, offense)
+        dodge_chance = min(95.0, dodge_chance)  # Cap at 95%
 
         if rng.random() * 100 < dodge_chance:
             return (0, False, True)
 
-        # Base damage from weapon (random within range)
+        # Base damage from weapon with rank scaling
+        # TypeScript applies power scaling to base damage
+        power = attacker.template.stats.power
         if weapon_stats.base_damage_max > weapon_stats.base_damage_min:
-            base_damage = rng.randint(weapon_stats.base_damage_min, weapon_stats.base_damage_max)
+            base_min = self.calculate_damage_at_rank(weapon_stats.base_damage_min, power)
+            base_max = self.calculate_damage_at_rank(weapon_stats.base_damage_max, power)
+            base_damage = rng.randint(base_min, base_max)
         else:
-            base_damage = weapon_stats.base_damage_min
+            base_damage = self.calculate_damage_at_rank(weapon_stats.base_damage_min, power)
 
-        # Add ability damage and attack stat contribution
+        # Start with base damage + ability damage
         damage = base_damage + stats.damage
 
-        # Attack stat contribution (attack vs defense)
-        attack_bonus = (
-            stats.attack * stats.attack_from_weapon +
-            weapon_stats.base_atk * stats.attack_from_unit +
-            attacker.template.stats.power
-        )
-        defense = defender.template.stats.defense
-        damage += max(0, attack_bonus - defense)
+        # Attack stat contribution (already included in offense but needs weapon scaling)
+        # Note: TypeScript uses offense which includes accuracy, not power
+        # The power was already applied to base damage above
 
         # Critical hit check
         crit_chance = (
@@ -342,9 +376,15 @@ class DamageCalculator:
         armor_piercing: float = 0.0
     ) -> int:
         """
-        Apply damage to a unit.
+        Apply damage to a unit using TypeScript-accurate armor mechanics.
 
-        Returns actual damage dealt.
+        Armor mechanics from TypeScript:
+        - EffectiveArmorCapacity = ArmorHP / ArmorMod
+        - If armorMod is 0.6 (60% damage taken), armor blocks more raw damage
+        - Armor piercing bypasses a percentage of damage directly to HP
+        - Overflow damage goes to HP with HP damage modifier
+
+        Returns actual damage dealt (sum of armor + HP damage).
         """
         if not target.is_alive:
             return 0
@@ -360,31 +400,54 @@ class DamageCalculator:
             DamageType.ELECTRIC: "electric",
         }.get(damage_type, "piercing")
 
-        damage_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
-        modified_damage = int(damage * damage_mod)
+        # Get modifiers
+        hp_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
+        armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
 
-        # Apply to armor first if present
-        if target.current_armor > 0 and armor_piercing < 1.0:
-            armor_damage = int(modified_damage * (1 - armor_piercing))
-            armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
-            armor_damage = int(armor_damage * armor_mod)
+        # If no armor, damage goes straight to HP
+        if target.current_armor <= 0:
+            hp_damage = int(damage * hp_mod)
+            target.current_hp -= hp_damage
 
-            if armor_damage >= target.current_armor:
-                overflow = armor_damage - target.current_armor
-                target.current_armor = 0
-                target.current_hp -= overflow
-            else:
-                target.current_armor -= armor_damage
-                return armor_damage
+            # Check death
+            if target.current_hp <= 0:
+                target.current_hp = 0
+                target.is_alive = False
+
+            return hp_damage
+
+        # Split damage: armor piercing bypasses armor
+        piercing_damage = int(damage * armor_piercing)
+        armorable_damage = damage - piercing_damage
+
+        # Calculate effective armor capacity (TypeScript formula)
+        # If armor_mod is 0.6, armor can absorb more raw damage
+        effective_armor_capacity = int(target.current_armor / armor_mod) if armor_mod > 0 else target.current_armor
+
+        armor_damage_taken = 0
+        hp_damage_taken = piercing_damage  # Piercing damage goes directly to HP
+
+        if armorable_damage <= effective_armor_capacity:
+            # Armor absorbs all armorable damage
+            armor_damage_taken = int(armorable_damage * armor_mod)
+            target.current_armor -= armor_damage_taken
         else:
-            target.current_hp -= modified_damage
+            # Armor is depleted, overflow goes to HP
+            armor_damage_taken = target.current_armor
+            target.current_armor = 0
+            overflow_damage = armorable_damage - effective_armor_capacity
+            hp_damage_taken += overflow_damage
+
+        # Apply HP damage with HP modifier
+        hp_damage_final = int(hp_damage_taken * hp_mod)
+        target.current_hp -= hp_damage_final
 
         # Check death
         if target.current_hp <= 0:
             target.current_hp = 0
             target.is_alive = False
 
-        return modified_damage
+        return armor_damage_taken + hp_damage_final
 
 
 class StatusEffectSystem:
