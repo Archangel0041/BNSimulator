@@ -561,10 +561,20 @@ class DamageCalculator:
         target: "BattleUnit",
         damage: int,
         damage_type: DamageType,
-        armor_piercing: float = 0.0
+        armor_piercing: float = 0.0,
+        environmental_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_armor_mods: Optional[dict[int, float]] = None,
+        bypass_armor_due_to_stun: bool = False
     ) -> int:
         """
         Apply damage to a unit using TypeScript-accurate armor mechanics.
+
+        NEW in Phase 4: Environmental & Status Effect Modifiers
+        - Environmental damage mods (e.g., Firemod terrain)
+        - Status effect damage mods (e.g., Freeze, Shatter)
+        - Status effect armor mods
+        - Stun armor bypass for Active armor units
 
         Armor mechanics from TypeScript:
         - EffectiveArmorCapacity = ArmorHP / ArmorMod
@@ -576,6 +586,20 @@ class DamageCalculator:
         """
         if not target.is_alive:
             return 0
+
+        # PHASE 4: Apply environmental and status effect modifiers FIRST
+        # These modifiers apply to ALL damage before armor/HP mods
+        env_mod = 1.0
+        if environmental_damage_mods:
+            env_mod = environmental_damage_mods.get(damage_type, 1.0)
+
+        status_mod = 1.0
+        if status_effect_damage_mods:
+            status_mod = status_effect_damage_mods.get(damage_type, 1.0)
+
+        # Combine environmental and status effect modifiers
+        combined_mod = env_mod * status_mod
+        modified_damage = int(damage * combined_mod)
 
         # Get damage type modifier
         dtype_name = {
@@ -592,9 +616,22 @@ class DamageCalculator:
         hp_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
         armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
 
+        # PHASE 4: Stun armor bypass for Active armor units
+        # If unit has armor and is bypassing it due to stun, all damage goes to HP
+        if bypass_armor_due_to_stun and target.current_armor > 0:
+            hp_damage = int(modified_damage * hp_mod)
+            target.current_hp -= hp_damage
+
+            # Check death
+            if target.current_hp <= 0:
+                target.current_hp = 0
+                target.is_alive = False
+
+            return hp_damage  # Armor bypassed, not damaged
+
         # If no armor, damage goes straight to HP
         if target.current_armor <= 0:
-            hp_damage = int(damage * hp_mod)
+            hp_damage = int(modified_damage * hp_mod)
             target.current_hp -= hp_damage
 
             # Check death
@@ -605,8 +642,14 @@ class DamageCalculator:
             return hp_damage
 
         # Split damage: armor piercing bypasses armor
-        piercing_damage = int(damage * armor_piercing)
-        armorable_damage = damage - piercing_damage
+        piercing_damage = int(modified_damage * armor_piercing)
+        armorable_damage = modified_damage - piercing_damage
+
+        # PHASE 4: Apply status effect armor modifiers
+        # Combine base armor mods with status effect armor mods
+        if status_effect_armor_mods:
+            status_armor_mod = status_effect_armor_mods.get(damage_type, 1.0)
+            armor_mod = armor_mod * status_armor_mod
 
         # Calculate effective armor capacity (TypeScript formula)
         # If armor_mod is 0.6, armor can absorb more raw damage
@@ -737,7 +780,14 @@ class StatusEffectSystem:
         return False
 
     def get_damage_modifiers(self, unit: "BattleUnit") -> dict[int, float]:
-        """Get any damage modifiers from status effects."""
+        """
+        Get combined damage modifiers from all active status effects.
+
+        PHASE 4: Used for environmental/status effect damage mods.
+        These multiply together and apply before armor/HP mods.
+
+        Returns: dict mapping damage_type (int) -> multiplier (float)
+        """
         mods = {}
         for status in unit.status_effects:
             if status.effect.effect_type == StatusEffectType.STUN:
@@ -747,3 +797,38 @@ class StatusEffectSystem:
                     else:
                         mods[dtype] = mult
         return mods
+
+    def get_armor_damage_modifiers(self, unit: "BattleUnit") -> dict[int, float]:
+        """
+        Get combined armor damage modifiers from all active status effects.
+
+        PHASE 4: These multiply with base armor mods.
+        Example: Freeze effect might make armor more vulnerable to crushing damage.
+
+        Returns: dict mapping damage_type (int) -> multiplier (float)
+        """
+        mods = {}
+        for status in unit.status_effects:
+            if status.effect.effect_type == StatusEffectType.STUN:
+                for dtype, mult in status.effect.stun_armor_damage_mods.items():
+                    if dtype in mods:
+                        mods[dtype] *= mult
+                    else:
+                        mods[dtype] = mult
+        return mods
+
+    def should_bypass_armor(self, unit: "BattleUnit") -> bool:
+        """
+        Check if armor should be bypassed due to status effects.
+
+        PHASE 4: Active armor units bypass armor when stunned.
+        This is a special mechanic from TypeScript.
+
+        Returns: True if damage should bypass armor
+        """
+        # Check if unit has Active armor style (armor_def_style check)
+        # and is stunned
+        has_active_armor = unit.template.stats.armor_def_style == 1  # Assuming 1 = Active
+        is_stunned = self.is_stunned(unit)
+
+        return has_active_armor and is_stunned

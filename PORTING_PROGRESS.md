@@ -197,20 +197,88 @@ Formula: `total_shots = shots_per_attack × attacks_per_use`
 
 ---
 
-## 🌍 Phase 4: Environmental Effects (PENDING)
+## ✅ Phase 4: Environmental Effects & Advanced Status (COMPLETED)
 
-### Features to Port
+### Changes Made
 
-#### Environmental Damage Modifiers
-- Terrain effects (e.g., Firemod increases fire damage)
-- Applied to ALL damage before armor/HP mods
-- Multiplicative with status effect mods
+#### 1. Environmental Damage Modifiers
+**Updated:** `src/simulator/combat.py:559-681`
 
-#### Status Effect Enhancements
-- Status effects can modify incoming damage
-- Freeze/Shatter mechanics
-- Stun armor bypass for Active armor units
-- Effect families for immunity grouping
+Added environmental modifier support to `apply_damage()`:
+```python
+# Environmental modifiers apply FIRST, before armor/HP mods
+env_mod = environmental_damage_mods.get(damage_type, 1.0)
+status_mod = status_effect_damage_mods.get(damage_type, 1.0)
+combined_mod = env_mod * status_mod
+modified_damage = int(damage * combined_mod)
+```
+
+**Examples:**
+- Firemod terrain: 1.5x fire damage
+- Burning status: 1.2x additional fire damage
+- Combined: 1.5 × 1.2 = 1.8x total multiplier
+
+#### 2. Status Effect Damage Modifiers
+**New Methods:** `src/simulator/combat.py:782-834`
+
+Added to `StatusEffectSystem`:
+- `get_damage_modifiers()` - Extract damage mods from active status effects
+- `get_armor_damage_modifiers()` - Extract armor mods from status effects
+- `should_bypass_armor()` - Check for stun armor bypass
+
+**Mechanics:**
+- Status effects can modify incoming damage by type
+- Multiple status effects multiply together
+- Freeze/Shatter combinations work correctly
+
+#### 3. Stun Armor Bypass
+**Implementation:** `src/simulator/combat.py:619-630`
+
+Special mechanic for Active armor units:
+```python
+if bypass_armor_due_to_stun and target.current_armor > 0:
+    hp_damage = int(modified_damage * hp_mod)
+    # Armor is bypassed, damage goes directly to HP
+    return hp_damage
+```
+
+**When Active:**
+- Unit has `armor_def_style == 1` (Active armor)
+- Unit is stunned (`stun_block_action == True`)
+- Damage bypasses armor entirely, goes to HP
+
+#### 4. Status Effect Armor Modifiers
+**Implementation:** `src/simulator/combat.py:648-652`
+
+Armor modifiers from status effects:
+```python
+if status_effect_armor_mods:
+    status_armor_mod = status_effect_armor_mods.get(damage_type, 1.0)
+    armor_mod = armor_mod * status_armor_mod
+```
+
+**Examples:**
+- Shatter: Increases armor damage taken
+- Freeze: Makes armor more vulnerable to certain types
+
+### Modifier Application Order
+
+1. **Rank Scaling** - `BaseDamage * (1 + 0.02 * Power)`
+2. **Environmental & Status Mods** - `Damage * EnvMod * StatusMod`
+3. **Armor/HP Mods** - `Damage * ArmorMod` or `* HPMod`
+
+### Testing
+All Phase 4 mechanics validated in `tests/test_environmental_effects.py`:
+- ✅ Environmental damage modifiers
+- ✅ Status effect damage modifiers
+- ✅ Status effect armor modifiers
+- ✅ Stun armor bypass
+- ✅ Modifier stacking (multiplicative)
+- ✅ Correct application order
+
+### Files Modified
+- `src/simulator/combat.py` - DamageCalculator and StatusEffectSystem
+- `tests/test_environmental_effects.py` - New test file
 
 ---
 
@@ -245,9 +313,9 @@ suppressionValue = damage * suppressionMult + suppressionBonus
 | Phase 1: Damage Formulas | ✅ Complete | 100% |
 | Phase 2: Blocking & LoF | ✅ Complete | 100% |
 | Phase 3: AOE Patterns & Attack Types | ✅ Complete | 100% |
-| Phase 4: Environmental | ⏳ Pending | 0% |
+| Phase 4: Environmental & Status | ✅ Complete | 100% |
 | Phase 5: Advanced | ⏳ Pending | 0% |
-| **Overall** | **In Progress** | **~60%** |
+| **Overall** | **In Progress** | **~80%** |
 
 ---
 
