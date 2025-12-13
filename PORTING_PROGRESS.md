@@ -148,26 +148,52 @@ All blocking logic validated in `tests/test_blocking_system.py`:
 
 ---
 
-## 📋 Phase 3: AOE Targeting Patterns (PENDING)
+## ✅ Phase 3: AOE Targeting Patterns & Attack Types (COMPLETED)
 
-### Features to Port
+### Changes Made
 
-#### Target Area vs Damage Area
-TypeScript distinguishes between:
-- **target_area**: Where abilities can be AIMED (movable reticle)
-- **damage_area**: Splash damage AROUND each impact point
+#### 1. Attack Type Detection
+**New Methods:** `src/simulator/combat.py:312-431`
 
-#### Pattern Types
-- **Single Target**: Direct hit, no pattern
-- **Fixed Attacks**: Predetermined pattern, no aiming
-- **AOE Patterns**: Movable reticle with splash
-- **Random Weighted**: Randomly selects from weighted positions
+Added helper methods to `TargetingSystem`:
+- `is_fixed_attack()` - Detect fixed attack patterns
+- `is_single_target()` - Detect true single-target abilities
+- `get_all_affected_positions()` - Get all positions hit by an attack
+- `can_attack_direction()` - Validate attack direction constraints
 
-#### Key Mechanics
-- `targetType` determines pattern behavior
-- `damagePercent` controls splash falloff
-- `aoeOrderDelay` for staggered impacts
-- `random` flag for weighted selection
+#### 2. Attack Direction Support
+Implemented attack direction validation:
+- **ANY (0)**: Can attack in any direction
+- **FORWARD (1)**: Can only attack units behind (higher y)
+- **BACKWARD (2)**: Can only attack units in front (lower y)
+
+#### 3. Enhanced AOE Pattern Resolution
+Comprehensive pattern resolution combining:
+- **target_area** - Where attacks can be aimed
+- **damage_area** - Splash around each impact
+- Combined damage percentage calculation
+
+#### 4. Multi-Hit Attack Support
+Formula: `total_shots = shots_per_attack × attacks_per_use`
+- Already in models, ready for combat implementation
+
+### Pattern Types Supported
+
+1. **Single Target** - No AOE, hits one unit
+2. **Fixed Attack** - Predetermined pattern, can't aim
+3. **AOE Reticle** - Movable pattern
+4. **Splash Damage** - Falloff around impacts
+5. **Random Weighted** - Random selection with weights
+
+### Testing
+- ✅ Attack direction validation
+- ✅ Multi-hit calculations
+- ✅ Attack type classification
+- ✅ AOE pattern resolution
+
+### Files Modified
+- `src/simulator/combat.py` - TargetingSystem class
+- `tests/test_attack_patterns.py` - New test file
 
 ---
 
@@ -218,10 +244,10 @@ suppressionValue = damage * suppressionMult + suppressionBonus
 |-------|--------|------------|
 | Phase 1: Damage Formulas | ✅ Complete | 100% |
 | Phase 2: Blocking & LoF | ✅ Complete | 100% |
-| Phase 3: AOE Patterns | ⏳ Pending | 0% |
+| Phase 3: AOE Patterns & Attack Types | ✅ Complete | 100% |
 | Phase 4: Environmental | ⏳ Pending | 0% |
 | Phase 5: Advanced | ⏳ Pending | 0% |
-| **Overall** | **In Progress** | **~40%** |
+| **Overall** | **In Progress** | **~60%** |
 
 ---
 

@@ -6,7 +6,7 @@ import random
 
 from .enums import (
     DamageType, UnitClass, BattleSide, TargetType, LineOfFire,
-    StatusEffectType, UnitBlocking, DAMAGE_TYPE_NAMES
+    StatusEffectType, UnitBlocking, AttackDirection, DAMAGE_TYPE_NAMES
 )
 from .models import Position, Ability, Weapon, StatusEffect
 
@@ -109,6 +109,14 @@ class TargetingSystem:
             # Check range
             distance = self._calculate_distance(attacker.position, target_unit.position)
             if distance < stats.min_range or distance > stats.max_range:
+                continue
+
+            # Check attack direction
+            if not self.can_attack_direction(
+                attacker.position,
+                target_unit.position,
+                stats.attack_direction
+            ):
                 continue
 
             # Check line of fire with blocking
@@ -308,6 +316,126 @@ class TargetingSystem:
             results.append((pos, entry.damage_percent))
 
         return results
+
+    def is_fixed_attack(self, ability: Ability) -> bool:
+        """
+        Check if ability is a fixed attack pattern (can't be aimed).
+
+        From TypeScript: Fixed attacks have target_type 1 (SINGLE) but have
+        multiple positions with non-zero offsets.
+        """
+        stats = ability.stats
+        if not stats.target_area:
+            return False
+
+        # Fixed if target_type is SINGLE/ALL_ENEMIES but has offset positions
+        if stats.target_area.target_type in (TargetType.SINGLE, TargetType.ALL_ENEMIES):
+            has_offsets = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.target_area.data
+            )
+            return has_offsets
+
+        return False
+
+    def is_single_target(self, ability: Ability) -> bool:
+        """
+        Check if ability is true single target (no AOE).
+
+        Single target = no target_area OR only center position with 100% damage.
+        Not single target if there's damage_area (splash).
+        """
+        stats = ability.stats
+
+        # If damage_area has splash (non-center positions), not single target
+        if stats.damage_area:
+            has_splash = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.damage_area
+            )
+            if has_splash:
+                return False
+
+        # If no target_area, it's single target
+        if not stats.target_area:
+            return True
+
+        # If target_area exists, check if it's just center position
+        if stats.target_area.target_type == TargetType.SINGLE:
+            has_offsets = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.target_area.data
+            )
+            return not has_offsets
+
+        # ROW, COLUMN, ALL_ENEMIES are not single target
+        return False
+
+    def get_all_affected_positions(
+        self,
+        ability: Ability,
+        primary_target: Position,
+        rng: random.Random
+    ) -> list[tuple[Position, float]]:
+        """
+        Get all positions affected by an attack with damage percentages.
+
+        Combines target_area (where attack hits) with damage_area (splash).
+        Returns: List of (position, damage_percent) tuples
+        """
+        stats = ability.stats
+        all_positions = []
+
+        # Step 1: Resolve target_area to get impact points
+        if stats.target_area:
+            target_positions = self.resolve_target_area(ability, primary_target, None, rng)
+        else:
+            target_positions = [(primary_target, 100.0)]
+
+        # Step 2: For each impact point, apply damage_area (splash)
+        for impact_pos, target_damage_percent in target_positions:
+            if stats.damage_area:
+                # Apply splash around each impact point
+                for splash_entry in stats.damage_area:
+                    splash_pos = Position(
+                        impact_pos.x + splash_entry.pos.x,
+                        impact_pos.y + splash_entry.pos.y
+                    )
+                    # Combine damage percentages
+                    combined_percent = (target_damage_percent / 100.0) * splash_entry.damage_percent
+                    all_positions.append((splash_pos, combined_percent))
+            else:
+                # No splash, just the impact point
+                all_positions.append((impact_pos, target_damage_percent))
+
+        return all_positions
+
+    def can_attack_direction(
+        self,
+        attacker_pos: Position,
+        target_pos: Position,
+        attack_direction: AttackDirection
+    ) -> bool:
+        """
+        Check if attack direction allows hitting target.
+
+        From TypeScript:
+        - FORWARD (1): Can only attack units in front (attacker's y < target's y)
+        - BACKWARD (2): Can only attack units behind (attacker's y > target's y)
+        - ANY (0): Can attack in any direction
+        """
+        if attack_direction == AttackDirection.ANY:
+            return True
+
+        if attack_direction == AttackDirection.FORWARD:
+            # Forward means target is further back (higher y)
+            return target_pos.y > attacker_pos.y
+
+        if attack_direction == AttackDirection.BACKWARD:
+            # Backward means target is in front (lower y)
+            return target_pos.y < attacker_pos.y
+
+        return True
 
 
 class DamageCalculator:

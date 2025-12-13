@@ -87,7 +87,7 @@ class AbilityStats:
     min_range: int = 1
     max_range: int = 5
     max_range_mod_atk: float = 0.0
-    line_of_fire: LineOfFire = LineOfFire.ANY
+    line_of_fire: LineOfFire = LineOfFire.DIRECT  # Default to Direct fire
     attack_direction: AttackDirection = AttackDirection.ANY
 
     # AOE
