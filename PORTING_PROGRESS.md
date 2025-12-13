@@ -282,27 +282,81 @@ All Phase 4 mechanics validated in `tests/test_environmental_effects.py`:
 
 ---
 
-## ⚡ Phase 5: Advanced Mechanics (PENDING)
+## ✅ Phase 5: Advanced Mechanics (COMPLETED)
 
-### Features to Port
+### Changes Made
 
-#### Multi-Hit Attacks
-```typescript
-totalShots = shotsPerAttack * attacksPerUse
+#### 1. Ammo Management System
+**New Methods:** `src/simulator/battle.py:192-240`
+
+Added to `BattleUnit`:
+- `consume_ammo()` - Consume ammo when using abilities
+- `needs_reload()` - Check if weapon needs reloading
+- `reload_weapon()` - Reload weapon to full capacity
+
+**Mechanics:**
+- Weapons have max ammo capacity (`weapon.stats.ammo`)
+- Abilities consume ammo per use (`ability.stats.ammo_required`)
+- Infinite ammo weapons use `-1` as special value
+- Out of ammo weapons must reload (`weapon.stats.reload_time`)
+
+#### 2. Charge Time System
+**New Methods:** `src/simulator/battle.py:242-287`
+
+Added to `BattleUnit`:
+- `start_charging()` - Begin charging an ability
+- `is_charging()` - Check if unit is charging
+- `tick_charge()` - Decrement charge timer, returns weapon_id when ready
+
+**Mechanics:**
+- Abilities can have `charge_time` (turns before firing)
+- Unit cannot act while charging
+- Charge can be interrupted (e.g., by stun)
+- Charge completes after specified turns
+
+#### 3. Suppression/Aggro System
+**New Method:** `src/simulator/combat.py:683-699`
+
+Added to `DamageCalculator`:
+```python
+calculate_suppression(damage, suppression_mult, suppression_bonus)
 ```
 
-#### Suppression/Aggro System
-```typescript
+**Formula from TypeScript:**
+```python
 suppressionValue = damage * suppressionMult + suppressionBonus
 ```
 
-#### Ammo & Reload
-- `ammoRequired` per use
-- `weaponMaxAmmo` capacity
-- `weaponReloadTime` turns
+**Use Cases:**
+- High threat abilities: mult > 1.0
+- Stealth abilities: mult < 1.0
+- Tank taunts: high bonus value
 
-#### Charge Time
-- Abilities with `chargeTime` delay before firing
+#### 4. Multi-Hit Integration
+**Already in models**, ready for use:
+```python
+total_shots = shots_per_attack × attacks_per_use
+```
+
+Combined with ammo:
+- Each use costs `ammo_required`
+- Fires `total_shots` projectiles
+- Can have charge time before firing
+
+### Testing
+All Phase 5 mechanics validated in `tests/test_advanced_mechanics.py`:
+- ✅ Suppression calculation (damage * mult + bonus)
+- ✅ Ammo consumption and tracking
+- ✅ Reload mechanics
+- ✅ Charge time system
+- ✅ Charge interruption
+- ✅ Multi-hit integration with ammo
+- ✅ All mechanics work together
+
+### Files Modified
+- `src/simulator/battle.py` - BattleUnit methods
+- `src/simulator/combat.py` - DamageCalculator suppression
+- `tests/test_advanced_mechanics.py` - New test file
 
 ---
 
@@ -314,8 +368,8 @@ suppressionValue = damage * suppressionMult + suppressionBonus
 | Phase 2: Blocking & LoF | ✅ Complete | 100% |
 | Phase 3: AOE Patterns & Attack Types | ✅ Complete | 100% |
 | Phase 4: Environmental & Status | ✅ Complete | 100% |
-| Phase 5: Advanced | ⏳ Pending | 0% |
-| **Overall** | **In Progress** | **~80%** |
+| Phase 5: Advanced Mechanics | ✅ Complete | 100% |
+| **Overall** | **🎉 COMPLETE 🎉** | **100%** |
 
 ---
 

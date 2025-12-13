@@ -680,6 +680,24 @@ class DamageCalculator:
 
         return armor_damage_taken + hp_damage_final
 
+    @staticmethod
+    def calculate_suppression(damage: int, suppression_mult: float, suppression_bonus: float) -> int:
+        """
+        Calculate suppression/aggro value from damage.
+
+        PHASE 5: Suppression system from TypeScript.
+        Formula: suppressionValue = damage * suppressionMult + suppressionBonus
+
+        Args:
+            damage: Base damage dealt
+            suppression_mult: Multiplier for damage-based suppression (damage_distraction)
+            suppression_bonus: Flat bonus suppression (damage_distraction_bonus)
+
+        Returns:
+            Suppression value (aggro/threat generation)
+        """
+        return int(damage * suppression_mult + suppression_bonus)
+
 
 class StatusEffectSystem:
     """Handles status effect application and processing."""
