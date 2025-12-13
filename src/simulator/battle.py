@@ -497,9 +497,17 @@ class BattleState:
         """Get all units affected by an AOE attack."""
         targets = []
 
+        # Target units from the opposing side
+        target_units = self.opposing_side_units
+
         # Primary target
-        primary = self.get_unit_at_position(target_pos)
-        if primary and primary.is_alive:
+        primary = None
+        for unit in target_units:
+            if unit.is_alive and unit.position == target_pos:
+                primary = unit
+                break
+
+        if primary:
             targets.append((primary, 100.0))
 
         # AOE splash from damage_area
@@ -511,9 +519,12 @@ class BattleState:
                 target_pos.x + area.pos.x,
                 target_pos.y + area.pos.y
             )
-            splash_unit = self.get_unit_at_position(splash_pos)
-            if splash_unit and splash_unit.is_alive:
-                targets.append((splash_unit, area.damage_percent))
+
+            # Find splash target in opposing units
+            for unit in target_units:
+                if unit.is_alive and unit.position == splash_pos:
+                    targets.append((unit, area.damage_percent))
+                    break
 
         return targets
 

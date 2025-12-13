@@ -357,8 +357,8 @@ class BattleGUIVisualizer:
         # Try to load and display unit icon
         icon_displayed = False
         if self.icons:
-            # Use back_icon for player units, icon for enemy units
-            icon_name = unit.template.back_icon if is_player else unit.template.icon
+            # Always use icon field, vary facing based on side
+            icon_name = unit.template.icon
             # Determine facing based on side (enemy=front, player=back)
             facing = "back" if is_player else "front"
             icon_size = (self.cell_size - margin * 2 - 20, self.cell_size - margin * 2 - 20)
@@ -721,6 +721,9 @@ WEAPONS: {len(unit.template.weapons)}
             self._show_action_result(action, result)
             self.battle.end_turn()
 
+            # Execute enemy turns automatically
+            self._execute_enemy_turns()
+
         # Clear selection
         self._clear_selection()
         self._update_display()
@@ -753,8 +756,34 @@ WEAPONS: {len(unit.template.weapons)}
     def _end_turn(self):
         """End the current turn."""
         self.battle.end_turn()
+
+        # Execute enemy turns automatically
+        self._execute_enemy_turns()
+
         self._clear_selection()
         self._update_display()
+
+    def _execute_enemy_turns(self):
+        """Execute enemy turns automatically until it's the player's turn again."""
+        from src.simulator.battle import BattleResult
+
+        while not self.battle.is_player_turn and self.battle.result == BattleResult.IN_PROGRESS:
+            # Get all legal actions for enemy
+            legal_actions = self.battle.get_legal_actions()
+
+            if not legal_actions:
+                # No actions available, skip turn
+                self.battle.end_turn()
+                continue
+
+            # Pick a random action (as described by user logic)
+            action = self.battle.rng.choice(legal_actions)
+
+            # Execute the action
+            self.battle.execute_action(action)
+
+            # End enemy turn
+            self.battle.end_turn()
 
     def _clear_selection(self):
         """Clear current selection."""
