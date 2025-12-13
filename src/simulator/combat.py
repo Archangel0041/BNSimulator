@@ -6,7 +6,7 @@ import random
 
 from .enums import (
     DamageType, UnitClass, BattleSide, TargetType, LineOfFire,
-    StatusEffectType, DAMAGE_TYPE_NAMES
+    StatusEffectType, UnitBlocking, DAMAGE_TYPE_NAMES
 )
 from .models import Position, Ability, Weapon, StatusEffect
 
@@ -111,10 +111,17 @@ class TargetingSystem:
             if distance < stats.min_range or distance > stats.max_range:
                 continue
 
-            # Check line of fire
-            if stats.line_of_fire == LineOfFire.DIRECT:
-                if not self._has_line_of_sight(attacker, target_unit, battle):
-                    continue
+            # Check line of fire with blocking
+            block_result = self.check_line_of_fire(
+                attacker.position,
+                target_unit.position,
+                stats.line_of_fire,
+                attacker.battle_side,
+                target_units,
+                battle
+            )
+            if block_result["is_blocked"]:
+                continue
 
             targets.append(target_unit.position)
 
@@ -133,31 +140,84 @@ class TargetingSystem:
         col_diff = abs(attacker_pos.x - target_pos.x)
         return base_distance + col_diff // 2
 
-    def _has_line_of_sight(
+    def check_line_of_fire(
         self,
-        attacker: "BattleUnit",
-        target: "BattleUnit",
+        attacker_pos: Position,
+        target_pos: Position,
+        line_of_fire: int,
+        attacker_battle_side: BattleSide,
+        target_units: list["BattleUnit"],
         battle: "BattleState"
-    ) -> bool:
+    ) -> dict:
         """
-        Check if there's a clear line of sight.
+        Check if target is blocked by units in front based on line of fire.
 
-        Front row units block attacks to back row units in same column.
+        From TypeScript battleTargeting.ts:
+        - Indirect fire: Ignores all blocking
+        - Contact fire: Only hits closest row (checked in range logic)
+        - Direct fire: Blocked by Partial+ blocking (UnitBlocking >= 1)
+        - Precise fire: Blocked by Full+ blocking (UnitBlocking >= 2)
+
+        IMPORTANT: Blocking propagates - if a unit blocks at row Y,
+        all units at row Y+1, Y+2, etc. are also blocked.
+
+        Returns: dict with keys:
+            - is_blocked: bool
+            - blocked_by: Optional[BattleUnit]
+            - reason: Optional[str]
         """
-        if attacker.position.x != target.position.x:
-            return True  # Different columns, no blocking
+        # Indirect fire ignores all blocking
+        if line_of_fire == LineOfFire.INDIRECT:
+            return {"is_blocked": False}
 
-        # Check for blocking units in front of target
-        target_units = battle.enemy_units if attacker.battle_side == BattleSide.PLAYER_TEAM else battle.player_units
+        # Contact fire doesn't use blocking (row constraint handled in range check)
+        if line_of_fire == LineOfFire.CONTACT:
+            return {"is_blocked": False}
 
+        # Get units in the same column as target that could block
+        # For cross-grid attacks, "in front" means units at lower y (closer to attacker)
+        units_in_column = []
         for unit in target_units:
-            if unit == target or not unit.is_alive:
+            if not unit.is_alive or unit.position == target_pos:
                 continue
-            # Unit blocks if in same column and closer to attacker
-            if unit.position.x == target.position.x and unit.position.y < target.position.y:
-                return False
 
-        return True
+            # Must be in same column as target
+            if unit.position.x != target_pos.x:
+                continue
+
+            # Must be in front of target (lower y = closer to attacker)
+            if unit.position.y < target_pos.y:
+                units_in_column.append(unit)
+
+        # Sort by y (front to back - lowest y first)
+        units_in_column.sort(key=lambda u: u.position.y)
+
+        # Check each unit in path based on line of fire rules
+        # If ANY unit blocks, the target is blocked (blocking propagates)
+        for blocking_unit in units_in_column:
+            blocking_level = blocking_unit.template.stats.blocking
+
+            if line_of_fire == LineOfFire.DIRECT:
+                # Direct: Can fire PAST None blocking units
+                # Blocked by Partial (1), Full (2), God (3)
+                if blocking_level >= UnitBlocking.PARTIAL:
+                    return {
+                        "is_blocked": True,
+                        "blocked_by": blocking_unit,
+                        "reason": "Direct fire blocked by Partial+ blocking"
+                    }
+
+            elif line_of_fire == LineOfFire.PRECISE:
+                # Precise: Can fire past None and Partial blocking
+                # Blocked by Full (2), God (3)
+                if blocking_level >= UnitBlocking.FULL:
+                    return {
+                        "is_blocked": True,
+                        "blocked_by": blocking_unit,
+                        "reason": "Precise fire blocked by Full+ blocking"
+                    }
+
+        return {"is_blocked": False}
 
     def resolve_target_area(
         self,

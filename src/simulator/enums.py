@@ -169,11 +169,18 @@ class AttackDirection(IntEnum):
 
 
 class LineOfFire(IntEnum):
-    """Line of fire requirements."""
-    NONE = 0
-    DIRECT = 1
-    INDIRECT = 2
-    ANY = 3
+    """Line of fire types (from TypeScript battleTargeting.ts).
+
+    Determines how abilities interact with blocking units:
+    - Contact: Only hits closest row, ignores blocking
+    - Direct: Blocked by Partial+ blocking units
+    - Precise: Blocked by Full+ blocking units
+    - Indirect: Never blocked, can hit any unit in range
+    """
+    CONTACT = 0   # Only hits closest row
+    DIRECT = 1    # Blocked by Partial, Full, God
+    PRECISE = 2   # Blocked by Full, God
+    INDIRECT = 3  # Never blocked
 
 
 class Side(IntEnum):

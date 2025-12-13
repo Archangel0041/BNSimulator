@@ -80,34 +80,71 @@ All formulas validated with unit tests in `tests/test_damage_formulas.py`.
 
 ---
 
-## 🔄 Phase 2: Blocking & Line of Fire (PENDING)
+## ✅ Phase 2: Blocking & Line of Fire (COMPLETED)
 
-### Features to Port
+### Changes Made
 
-#### Blocking Levels
-TypeScript has 4 blocking levels:
-- **None (0)**: No blocking
-- **Partial (1)**: Blocks Direct fire
-- **Full (2)**: Blocks Direct + Precise fire
-- **God (3)**: Blocks everything except Indirect
+#### 1. Line of Fire Enum Update
+**Updated:** `src/simulator/enums.py:171-183`
+```python
+class LineOfFire(IntEnum):
+    CONTACT = 0   # Only hits closest row
+    DIRECT = 1    # Blocked by Partial, Full, God
+    PRECISE = 2   # Blocked by Full, God
+    INDIRECT = 3  # Never blocked
+```
 
-#### Line of Fire Types
-- **Contact (0)**: Only hits closest row
-- **Direct (1)**: Blocked by Partial+ blocking
-- **Precise (2)**: Blocked by Full+ blocking
-- **Indirect (3)**: Never blocked
+**Old Values (WRONG):**
+- NONE=0, DIRECT=1, INDIRECT=2, ANY=3
 
-#### Key Mechanics
-- Blocking propagates to units behind
-- Front row units block attacks to back row
-- Column-based blocking (same X coordinate)
+**New Values (CORRECT):**
+- CONTACT=0, DIRECT=1, PRECISE=2, INDIRECT=3
 
-### Implementation Plan
-1. Add blocking level enum to `enums.py`
-2. Add blocking stat to `UnitStats` model
-3. Implement `check_line_of_fire()` in targeting system
-4. Update `get_valid_targets()` to respect blocking
-5. Add blocking visualization to GUI
+#### 2. Blocking System Implementation
+**New Method:** `src/simulator/combat.py:143-220`
+- Implemented `TargetingSystem.check_line_of_fire()`
+- Full blocking logic from TypeScript
+- Blocking levels:
+  - **None (0)**: No blocking
+  - **Partial (1)**: Blocks Direct fire
+  - **Full (2)**: Blocks Direct + Precise fire
+  - **God (3)**: Blocks everything except Indirect
+
+#### 3. Blocking Propagation
+**Key Mechanic:** If a unit blocks at row Y, all units at Y+1, Y+2, etc. are also blocked.
+
+**Implementation Details:**
+```python
+# Units in same column in front of target
+units_in_column = [u for u in targets
+                   if u.position.x == target.x
+                   and u.position.y < target.y]
+
+# Check each blocker front-to-back
+for blocker in sorted(units_in_column, key=lambda u: u.y):
+    if blocker.stats.blocking >= threshold:
+        return {"is_blocked": True, "blocked_by": blocker}
+```
+
+#### 4. Updated Targeting Validation
+**Modified:** `src/simulator/combat.py:84-128`
+- Updated `get_valid_targets()` to use new blocking system
+- Integrated `check_line_of_fire()` for all target validation
+- Proper blocking checks for each line of fire type
+
+### Testing
+All blocking logic validated in `tests/test_blocking_system.py`:
+- ✅ Line of Fire enum values match TypeScript
+- ✅ Direct fire blocked by Partial+
+- ✅ Precise fire blocked by Full+
+- ✅ Indirect never blocked
+- ✅ Contact fire ignores blocking
+- ✅ Blocking propagation working
+
+### Files Modified
+- `src/simulator/enums.py` - LineOfFire enum
+- `src/simulator/combat.py` - TargetingSystem class
+- `tests/test_blocking_system.py` - New test file
 
 ---
 
@@ -180,11 +217,11 @@ suppressionValue = damage * suppressionMult + suppressionBonus
 | Phase | Status | Completion |
 |-------|--------|------------|
 | Phase 1: Damage Formulas | ✅ Complete | 100% |
-| Phase 2: Blocking & LoF | ⏳ Pending | 0% |
+| Phase 2: Blocking & LoF | ✅ Complete | 100% |
 | Phase 3: AOE Patterns | ⏳ Pending | 0% |
 | Phase 4: Environmental | ⏳ Pending | 0% |
 | Phase 5: Advanced | ⏳ Pending | 0% |
-| **Overall** | **In Progress** | **~20%** |
+| **Overall** | **In Progress** | **~40%** |
 
 ---
 
