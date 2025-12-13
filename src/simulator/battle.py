@@ -28,10 +28,14 @@ class BattleResult(Enum):
 
 @dataclass
 class ActiveStatusEffect:
-    """An active status effect on a unit."""
+    """An active status effect on a unit (updated to match TypeScript commit 80e3d25)."""
     effect: StatusEffect
     remaining_turns: int
-    source_damage: float = 0.0  # For DOT calculation
+    # DOT tracking - NEW formula matches TypeScript
+    original_dot_damage: float = 0.0  # DOT damage with env mods baked in
+    original_duration: int = 0         # For decay calculation
+    current_turn: int = 1              # Which turn of the effect (for decay)
+    source_damage: float = 0.0         # DEPRECATED: kept for backward compatibility
 
 
 @dataclass
@@ -188,6 +192,103 @@ class BattleUnit:
             self.take_damage(dot_damage, DamageType.FIRE)  # DOT is typically fire
 
         return dot_damage
+
+    def consume_ammo(self, weapon_id: int, amount: int) -> bool:
+        """
+        Consume ammo for a weapon.
+
+        PHASE 5: Ammo management.
+
+        Args:
+            weapon_id: The weapon to consume ammo from
+            amount: Amount of ammo to consume
+
+        Returns:
+            True if ammo was consumed, False if not enough ammo
+        """
+        weapon = self.template.weapons.get(weapon_id)
+        if not weapon:
+            return False
+
+        # Infinite ammo weapons (ammo < 0)
+        if weapon.stats.ammo < 0:
+            return True
+
+        current_ammo = self.ammo.get(weapon_id, 0)
+        if current_ammo < amount:
+            return False
+
+        self.ammo[weapon_id] = current_ammo - amount
+        return True
+
+    def needs_reload(self, weapon_id: int) -> bool:
+        """
+        Check if weapon needs reloading.
+
+        PHASE 5: Returns True if weapon is out of ammo and has reload time.
+        """
+        weapon = self.template.weapons.get(weapon_id)
+        if not weapon or weapon.stats.ammo < 0:
+            return False  # Infinite ammo
+
+        return self.ammo.get(weapon_id, 0) <= 0 and weapon.stats.reload_time > 0
+
+    def reload_weapon(self, weapon_id: int) -> None:
+        """
+        Reload a weapon to full ammo.
+
+        PHASE 5: Called after reload_time turns have passed.
+        """
+        weapon = self.template.weapons.get(weapon_id)
+        if weapon and weapon.stats.ammo >= 0:
+            self.ammo[weapon_id] = weapon.stats.ammo
+
+    def start_charging(self, weapon_id: int, charge_time: int) -> bool:
+        """
+        Start charging an ability.
+
+        PHASE 5: Charge time mechanic.
+
+        Args:
+            weapon_id: The weapon being charged
+            charge_time: Turns until ability fires
+
+        Returns:
+            True if charging started
+        """
+        if not self.can_act():
+            return False
+
+        if charge_time <= 0:
+            return False  # No charge needed
+
+        self.charging_weapon = weapon_id
+        self.charge_turns_remaining = charge_time
+        return True
+
+    def is_charging(self) -> bool:
+        """Check if unit is currently charging an ability."""
+        return self.charging_weapon is not None and self.charge_turns_remaining > 0
+
+    def tick_charge(self) -> Optional[int]:
+        """
+        Tick charge timer down.
+
+        PHASE 5: Returns weapon_id if charge completed, None otherwise.
+        """
+        if not self.is_charging():
+            return None
+
+        self.charge_turns_remaining -= 1
+
+        if self.charge_turns_remaining <= 0:
+            # Charge complete!
+            weapon_id = self.charging_weapon
+            self.charging_weapon = None
+            self.charge_turns_remaining = 0
+            return weapon_id
+
+        return None
 
 
 @dataclass

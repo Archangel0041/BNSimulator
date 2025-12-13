@@ -6,7 +6,7 @@ import random
 
 from .enums import (
     DamageType, UnitClass, BattleSide, TargetType, LineOfFire,
-    StatusEffectType, DAMAGE_TYPE_NAMES
+    StatusEffectType, UnitBlocking, AttackDirection, DAMAGE_TYPE_NAMES
 )
 from .models import Position, Ability, Weapon, StatusEffect
 
@@ -111,10 +111,25 @@ class TargetingSystem:
             if distance < stats.min_range or distance > stats.max_range:
                 continue
 
-            # Check line of fire
-            if stats.line_of_fire == LineOfFire.DIRECT:
-                if not self._has_line_of_sight(attacker, target_unit, battle):
-                    continue
+            # Check attack direction
+            if not self.can_attack_direction(
+                attacker.position,
+                target_unit.position,
+                stats.attack_direction
+            ):
+                continue
+
+            # Check line of fire with blocking
+            block_result = self.check_line_of_fire(
+                attacker.position,
+                target_unit.position,
+                stats.line_of_fire,
+                attacker.battle_side,
+                target_units,
+                battle
+            )
+            if block_result["is_blocked"]:
+                continue
 
             targets.append(target_unit.position)
 
@@ -133,31 +148,84 @@ class TargetingSystem:
         col_diff = abs(attacker_pos.x - target_pos.x)
         return base_distance + col_diff // 2
 
-    def _has_line_of_sight(
+    def check_line_of_fire(
         self,
-        attacker: "BattleUnit",
-        target: "BattleUnit",
+        attacker_pos: Position,
+        target_pos: Position,
+        line_of_fire: int,
+        attacker_battle_side: BattleSide,
+        target_units: list["BattleUnit"],
         battle: "BattleState"
-    ) -> bool:
+    ) -> dict:
         """
-        Check if there's a clear line of sight.
+        Check if target is blocked by units in front based on line of fire.
 
-        Front row units block attacks to back row units in same column.
+        From TypeScript battleTargeting.ts:
+        - Indirect fire: Ignores all blocking
+        - Contact fire: Only hits closest row (checked in range logic)
+        - Direct fire: Blocked by Partial+ blocking (UnitBlocking >= 1)
+        - Precise fire: Blocked by Full+ blocking (UnitBlocking >= 2)
+
+        IMPORTANT: Blocking propagates - if a unit blocks at row Y,
+        all units at row Y+1, Y+2, etc. are also blocked.
+
+        Returns: dict with keys:
+            - is_blocked: bool
+            - blocked_by: Optional[BattleUnit]
+            - reason: Optional[str]
         """
-        if attacker.position.x != target.position.x:
-            return True  # Different columns, no blocking
+        # Indirect fire ignores all blocking
+        if line_of_fire == LineOfFire.INDIRECT:
+            return {"is_blocked": False}
 
-        # Check for blocking units in front of target
-        target_units = battle.enemy_units if attacker.battle_side == BattleSide.PLAYER_TEAM else battle.player_units
+        # Contact fire doesn't use blocking (row constraint handled in range check)
+        if line_of_fire == LineOfFire.CONTACT:
+            return {"is_blocked": False}
 
+        # Get units in the same column as target that could block
+        # For cross-grid attacks, "in front" means units at lower y (closer to attacker)
+        units_in_column = []
         for unit in target_units:
-            if unit == target or not unit.is_alive:
+            if not unit.is_alive or unit.position == target_pos:
                 continue
-            # Unit blocks if in same column and closer to attacker
-            if unit.position.x == target.position.x and unit.position.y < target.position.y:
-                return False
 
-        return True
+            # Must be in same column as target
+            if unit.position.x != target_pos.x:
+                continue
+
+            # Must be in front of target (lower y = closer to attacker)
+            if unit.position.y < target_pos.y:
+                units_in_column.append(unit)
+
+        # Sort by y (front to back - lowest y first)
+        units_in_column.sort(key=lambda u: u.position.y)
+
+        # Check each unit in path based on line of fire rules
+        # If ANY unit blocks, the target is blocked (blocking propagates)
+        for blocking_unit in units_in_column:
+            blocking_level = blocking_unit.template.stats.blocking
+
+            if line_of_fire == LineOfFire.DIRECT:
+                # Direct: Can fire PAST None blocking units
+                # Blocked by Partial (1), Full (2), God (3)
+                if blocking_level >= UnitBlocking.PARTIAL:
+                    return {
+                        "is_blocked": True,
+                        "blocked_by": blocking_unit,
+                        "reason": "Direct fire blocked by Partial+ blocking"
+                    }
+
+            elif line_of_fire == LineOfFire.PRECISE:
+                # Precise: Can fire past None and Partial blocking
+                # Blocked by Full (2), God (3)
+                if blocking_level >= UnitBlocking.FULL:
+                    return {
+                        "is_blocked": True,
+                        "blocked_by": blocking_unit,
+                        "reason": "Precise fire blocked by Full+ blocking"
+                    }
+
+        return {"is_blocked": False}
 
     def resolve_target_area(
         self,
@@ -249,6 +317,126 @@ class TargetingSystem:
 
         return results
 
+    def is_fixed_attack(self, ability: Ability) -> bool:
+        """
+        Check if ability is a fixed attack pattern (can't be aimed).
+
+        From TypeScript: Fixed attacks have target_type 1 (SINGLE) but have
+        multiple positions with non-zero offsets.
+        """
+        stats = ability.stats
+        if not stats.target_area:
+            return False
+
+        # Fixed if target_type is SINGLE/ALL_ENEMIES but has offset positions
+        if stats.target_area.target_type in (TargetType.SINGLE, TargetType.ALL_ENEMIES):
+            has_offsets = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.target_area.data
+            )
+            return has_offsets
+
+        return False
+
+    def is_single_target(self, ability: Ability) -> bool:
+        """
+        Check if ability is true single target (no AOE).
+
+        Single target = no target_area OR only center position with 100% damage.
+        Not single target if there's damage_area (splash).
+        """
+        stats = ability.stats
+
+        # If damage_area has splash (non-center positions), not single target
+        if stats.damage_area:
+            has_splash = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.damage_area
+            )
+            if has_splash:
+                return False
+
+        # If no target_area, it's single target
+        if not stats.target_area:
+            return True
+
+        # If target_area exists, check if it's just center position
+        if stats.target_area.target_type == TargetType.SINGLE:
+            has_offsets = any(
+                entry.pos.x != 0 or entry.pos.y != 0
+                for entry in stats.target_area.data
+            )
+            return not has_offsets
+
+        # ROW, COLUMN, ALL_ENEMIES are not single target
+        return False
+
+    def get_all_affected_positions(
+        self,
+        ability: Ability,
+        primary_target: Position,
+        rng: random.Random
+    ) -> list[tuple[Position, float]]:
+        """
+        Get all positions affected by an attack with damage percentages.
+
+        Combines target_area (where attack hits) with damage_area (splash).
+        Returns: List of (position, damage_percent) tuples
+        """
+        stats = ability.stats
+        all_positions = []
+
+        # Step 1: Resolve target_area to get impact points
+        if stats.target_area:
+            target_positions = self.resolve_target_area(ability, primary_target, None, rng)
+        else:
+            target_positions = [(primary_target, 100.0)]
+
+        # Step 2: For each impact point, apply damage_area (splash)
+        for impact_pos, target_damage_percent in target_positions:
+            if stats.damage_area:
+                # Apply splash around each impact point
+                for splash_entry in stats.damage_area:
+                    splash_pos = Position(
+                        impact_pos.x + splash_entry.pos.x,
+                        impact_pos.y + splash_entry.pos.y
+                    )
+                    # Combine damage percentages
+                    combined_percent = (target_damage_percent / 100.0) * splash_entry.damage_percent
+                    all_positions.append((splash_pos, combined_percent))
+            else:
+                # No splash, just the impact point
+                all_positions.append((impact_pos, target_damage_percent))
+
+        return all_positions
+
+    def can_attack_direction(
+        self,
+        attacker_pos: Position,
+        target_pos: Position,
+        attack_direction: AttackDirection
+    ) -> bool:
+        """
+        Check if attack direction allows hitting target.
+
+        From TypeScript:
+        - FORWARD (1): Can only attack units in front (attacker's y < target's y)
+        - BACKWARD (2): Can only attack units behind (attacker's y > target's y)
+        - ANY (0): Can attack in any direction
+        """
+        if attack_direction == AttackDirection.ANY:
+            return True
+
+        if attack_direction == AttackDirection.FORWARD:
+            # Forward means target is further back (higher y)
+            return target_pos.y > attacker_pos.y
+
+        if attack_direction == AttackDirection.BACKWARD:
+            # Backward means target is in front (lower y)
+            return target_pos.y < attacker_pos.y
+
+        return True
+
 
 class DamageCalculator:
     """Calculates damage for attacks."""
@@ -261,6 +449,37 @@ class DamageCalculator:
             class_damage_mods: Dict mapping attacker_class -> {defender_class -> multiplier}
         """
         self.class_damage_mods = class_damage_mods
+
+    @staticmethod
+    def calculate_damage_at_rank(base_damage: int, power: int) -> int:
+        """
+        Calculate damage at rank using power scaling.
+        Formula from TypeScript: Damage = BaseDamage * (1 + 2 * 0.01 * Power)
+
+        Args:
+            base_damage: Base weapon damage
+            power: Unit's power stat
+
+        Returns:
+            Scaled damage value
+        """
+        return int(base_damage * (1 + 2 * 0.01 * power))
+
+    @staticmethod
+    def calculate_dodge_chance(defender_defense: int, attacker_offense: int) -> float:
+        """
+        Calculate dodge chance.
+        Formula from TypeScript: max(0, Defense - Offense + 5)
+
+        Args:
+            defender_defense: Defender's defense stat
+            attacker_offense: Attacker's offense (accuracy + ability attack)
+
+        Returns:
+            Dodge chance percentage (0-100)
+        """
+        dodge_chance = defender_defense - attacker_offense + 5
+        return max(0.0, float(dodge_chance))
 
     def calculate_damage(
         self,
@@ -279,30 +498,33 @@ class DamageCalculator:
         stats = ability.stats
         weapon_stats = weapon.stats
 
-        # Check dodge first
-        dodge_chance = defender.template.stats.dodge - attacker.template.stats.accuracy
-        dodge_chance = max(0, min(95, dodge_chance))  # Cap at 0-95%
+        # Calculate offense for dodge calculation
+        offense = stats.attack + attacker.template.stats.accuracy
+        defense = defender.template.stats.defense
+
+        # Check dodge first - using correct TypeScript formula
+        dodge_chance = self.calculate_dodge_chance(defense, offense)
+        dodge_chance = min(95.0, dodge_chance)  # Cap at 95%
 
         if rng.random() * 100 < dodge_chance:
             return (0, False, True)
 
-        # Base damage from weapon (random within range)
+        # Base damage from weapon with rank scaling
+        # TypeScript applies power scaling to base damage
+        power = attacker.template.stats.power
         if weapon_stats.base_damage_max > weapon_stats.base_damage_min:
-            base_damage = rng.randint(weapon_stats.base_damage_min, weapon_stats.base_damage_max)
+            base_min = self.calculate_damage_at_rank(weapon_stats.base_damage_min, power)
+            base_max = self.calculate_damage_at_rank(weapon_stats.base_damage_max, power)
+            base_damage = rng.randint(base_min, base_max)
         else:
-            base_damage = weapon_stats.base_damage_min
+            base_damage = self.calculate_damage_at_rank(weapon_stats.base_damage_min, power)
 
-        # Add ability damage and attack stat contribution
+        # Start with base damage + ability damage
         damage = base_damage + stats.damage
 
-        # Attack stat contribution (attack vs defense)
-        attack_bonus = (
-            stats.attack * stats.attack_from_weapon +
-            weapon_stats.base_atk * stats.attack_from_unit +
-            attacker.template.stats.power
-        )
-        defense = defender.template.stats.defense
-        damage += max(0, attack_bonus - defense)
+        # Attack stat contribution (already included in offense but needs weapon scaling)
+        # Note: TypeScript uses offense which includes accuracy, not power
+        # The power was already applied to base damage above
 
         # Critical hit check
         crit_chance = (
@@ -339,15 +561,45 @@ class DamageCalculator:
         target: "BattleUnit",
         damage: int,
         damage_type: DamageType,
-        armor_piercing: float = 0.0
+        armor_piercing: float = 0.0,
+        environmental_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_armor_mods: Optional[dict[int, float]] = None,
+        bypass_armor_due_to_stun: bool = False
     ) -> int:
         """
-        Apply damage to a unit.
+        Apply damage to a unit using TypeScript-accurate armor mechanics.
 
-        Returns actual damage dealt.
+        NEW in Phase 4: Environmental & Status Effect Modifiers
+        - Environmental damage mods (e.g., Firemod terrain)
+        - Status effect damage mods (e.g., Freeze, Shatter)
+        - Status effect armor mods
+        - Stun armor bypass for Active armor units
+
+        Armor mechanics from TypeScript:
+        - EffectiveArmorCapacity = ArmorHP / ArmorMod
+        - If armorMod is 0.6 (60% damage taken), armor blocks more raw damage
+        - Armor piercing bypasses a percentage of damage directly to HP
+        - Overflow damage goes to HP with HP damage modifier
+
+        Returns actual damage dealt (sum of armor + HP damage).
         """
         if not target.is_alive:
             return 0
+
+        # PHASE 4: Apply environmental and status effect modifiers FIRST
+        # These modifiers apply to ALL damage before armor/HP mods
+        env_mod = 1.0
+        if environmental_damage_mods:
+            env_mod = environmental_damage_mods.get(damage_type, 1.0)
+
+        status_mod = 1.0
+        if status_effect_damage_mods:
+            status_mod = status_effect_damage_mods.get(damage_type, 1.0)
+
+        # Combine environmental and status effect modifiers
+        combined_mod = env_mod * status_mod
+        modified_damage = int(damage * combined_mod)
 
         # Get damage type modifier
         dtype_name = {
@@ -360,31 +612,91 @@ class DamageCalculator:
             DamageType.ELECTRIC: "electric",
         }.get(damage_type, "piercing")
 
-        damage_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
-        modified_damage = int(damage * damage_mod)
+        # Get modifiers
+        hp_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
+        armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
 
-        # Apply to armor first if present
-        if target.current_armor > 0 and armor_piercing < 1.0:
-            armor_damage = int(modified_damage * (1 - armor_piercing))
-            armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
-            armor_damage = int(armor_damage * armor_mod)
+        # PHASE 4: Stun armor bypass for Active armor units
+        # If unit has armor and is bypassing it due to stun, all damage goes to HP
+        if bypass_armor_due_to_stun and target.current_armor > 0:
+            hp_damage = int(modified_damage * hp_mod)
+            target.current_hp -= hp_damage
 
-            if armor_damage >= target.current_armor:
-                overflow = armor_damage - target.current_armor
-                target.current_armor = 0
-                target.current_hp -= overflow
-            else:
-                target.current_armor -= armor_damage
-                return armor_damage
+            # Check death
+            if target.current_hp <= 0:
+                target.current_hp = 0
+                target.is_alive = False
+
+            return hp_damage  # Armor bypassed, not damaged
+
+        # If no armor, damage goes straight to HP
+        if target.current_armor <= 0:
+            hp_damage = int(modified_damage * hp_mod)
+            target.current_hp -= hp_damage
+
+            # Check death
+            if target.current_hp <= 0:
+                target.current_hp = 0
+                target.is_alive = False
+
+            return hp_damage
+
+        # Split damage: armor piercing bypasses armor
+        piercing_damage = int(modified_damage * armor_piercing)
+        armorable_damage = modified_damage - piercing_damage
+
+        # PHASE 4: Apply status effect armor modifiers
+        # Combine base armor mods with status effect armor mods
+        if status_effect_armor_mods:
+            status_armor_mod = status_effect_armor_mods.get(damage_type, 1.0)
+            armor_mod = armor_mod * status_armor_mod
+
+        # Calculate effective armor capacity (TypeScript formula)
+        # If armor_mod is 0.6, armor can absorb more raw damage
+        effective_armor_capacity = int(target.current_armor / armor_mod) if armor_mod > 0 else target.current_armor
+
+        armor_damage_taken = 0
+        hp_damage_taken = piercing_damage  # Piercing damage goes directly to HP
+
+        if armorable_damage <= effective_armor_capacity:
+            # Armor absorbs all armorable damage
+            armor_damage_taken = int(armorable_damage * armor_mod)
+            target.current_armor -= armor_damage_taken
         else:
-            target.current_hp -= modified_damage
+            # Armor is depleted, overflow goes to HP
+            armor_damage_taken = target.current_armor
+            target.current_armor = 0
+            overflow_damage = armorable_damage - effective_armor_capacity
+            hp_damage_taken += overflow_damage
+
+        # Apply HP damage with HP modifier
+        hp_damage_final = int(hp_damage_taken * hp_mod)
+        target.current_hp -= hp_damage_final
 
         # Check death
         if target.current_hp <= 0:
             target.current_hp = 0
             target.is_alive = False
 
-        return modified_damage
+        return armor_damage_taken + hp_damage_final
+
+    @staticmethod
+    def calculate_suppression(damage: int, suppression_mult: float, suppression_bonus: float) -> int:
+        """
+        Calculate suppression/aggro value from damage.
+
+        PHASE 5: Suppression system from TypeScript.
+        Formula: suppressionValue = damage * suppressionMult + suppressionBonus
+
+        Args:
+            damage: Base damage dealt
+            suppression_mult: Multiplier for damage-based suppression (damage_distraction)
+            suppression_bonus: Flat bonus suppression (damage_distraction_bonus)
+
+        Returns:
+            Suppression value (aggro/threat generation)
+        """
+        return int(damage * suppression_mult + suppression_bonus)
 
 
 class StatusEffectSystem:
@@ -404,11 +716,17 @@ class StatusEffectSystem:
         target: "BattleUnit",
         effect_id: int,
         apply_chance: float,
-        source_damage: float,
+        actual_damage_dealt: float,  # HP + armor damage
+        environmental_damage_mods: Optional[dict[int, float]],
         rng: random.Random
     ) -> bool:
         """
         Try to apply a status effect to a unit.
+
+        UPDATED to match TypeScript (commit 80e3d25):
+        - DOT formula: (actualDamage + bonus) * envMod * mult
+        - Environmental mods are baked into DOT when applied
+        - Resistance is NOT applied here (applied when DOT ticks)
 
         Returns True if effect was applied.
         """
@@ -424,27 +742,58 @@ class StatusEffectSystem:
         if rng.random() * 100 >= apply_chance:
             return False
 
+        # Calculate DOT damage using NEW TypeScript formula
+        dot_damage = 0.0
+        if effect.effect_type == StatusEffectType.DOT:
+            # Formula: (actualDamage + bonus) * envMod * mult
+            dot_damage = actual_damage_dealt + effect.dot_bonus_damage
+
+            # Apply environmental damage mods (bake them in)
+            if environmental_damage_mods:
+                env_mod = environmental_damage_mods.get(effect.dot_damage_type, 1.0)
+                dot_damage = int(dot_damage * env_mod)
+
+            # Apply ability damage multiplier
+            dot_damage = int(dot_damage * effect.dot_ability_damage_mult)
+
         # Check if effect already exists (refresh duration)
         from .battle import ActiveStatusEffect
 
         for existing in target.status_effects:
             if existing.effect.id == effect_id:
-                # Refresh duration
+                # Refresh duration and update DOT damage
                 existing.remaining_turns = effect.duration
-                existing.source_damage = max(existing.source_damage, source_damage)
+                existing.original_dot_damage = max(existing.original_dot_damage, dot_damage)
+                existing.original_duration = effect.duration
+                existing.current_turn = 1  # Reset turn counter
+                existing.source_damage = max(existing.source_damage, actual_damage_dealt)  # Backward compat
                 return True
 
         # Apply new effect
         target.status_effects.append(ActiveStatusEffect(
             effect=effect,
             remaining_turns=effect.duration,
-            source_damage=source_damage
+            original_dot_damage=dot_damage,
+            original_duration=effect.duration,
+            current_turn=1,
+            source_damage=actual_damage_dealt  # Backward compat
         ))
         return True
 
-    def process_effects(self, unit: "BattleUnit", damage_calculator: DamageCalculator) -> int:
+    def process_effects(
+        self,
+        unit: "BattleUnit",
+        damage_calculator: DamageCalculator,
+        status_effect_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_armor_mods: Optional[dict[int, float]] = None
+    ) -> int:
         """
         Process all status effects on a unit at end of turn.
+
+        UPDATED to match TypeScript (commit 80e3d25):
+        - Decay formula: (duration - turn + 1) / duration if dot_diminishing
+        - Environmental mods already baked into originalDotDamage
+        - Apply resistance when ticking (not when applying)
 
         Returns total DOT damage dealt.
         """
@@ -457,17 +806,36 @@ class StatusEffectSystem:
         for status in unit.status_effects:
             effect = status.effect
 
-            if effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
-                dot_damage = int(status.source_damage * effect.dot_ability_damage_mult)
-                dot_damage += effect.dot_bonus_damage
+            if effect.effect_type == StatusEffectType.DOT and status.original_dot_damage > 0:
+                # Calculate decay multiplier (NEW - matches TypeScript)
+                decay_multiplier = 1.0
+                if effect.dot_diminishing:
+                    d = status.original_duration
+                    t = status.current_turn
+                    if d > 0:
+                        decay_multiplier = (d - t + 1) / d
 
-                if dot_damage > 0:
-                    # Apply DOT damage
+                # Environmental mods already baked into originalDotDamage
+                # Only apply the decay multiplier here
+                raw_dot_damage = int(status.original_dot_damage * decay_multiplier)
+
+                if raw_dot_damage > 0:
+                    # Apply DOT damage with resistance and status mods
+                    # NO environmental mods (already baked into originalDotDamage)
                     actual = damage_calculator.apply_damage(
-                        unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent
+                        unit,
+                        raw_dot_damage,
+                        effect.dot_damage_type,
+                        effect.dot_ap_percent,
+                        environmental_damage_mods=None,  # Already baked in!
+                        status_effect_damage_mods=status_effect_damage_mods,
+                        status_effect_armor_mods=status_effect_armor_mods,
+                        bypass_armor_due_to_stun=self.should_bypass_armor(unit)
                     )
                     total_dot += actual
+
+                # Increment turn counter
+                status.current_turn += 1
 
             # Decrement duration
             status.remaining_turns -= 1
@@ -486,7 +854,14 @@ class StatusEffectSystem:
         return False
 
     def get_damage_modifiers(self, unit: "BattleUnit") -> dict[int, float]:
-        """Get any damage modifiers from status effects."""
+        """
+        Get combined damage modifiers from all active status effects.
+
+        PHASE 4: Used for environmental/status effect damage mods.
+        These multiply together and apply before armor/HP mods.
+
+        Returns: dict mapping damage_type (int) -> multiplier (float)
+        """
         mods = {}
         for status in unit.status_effects:
             if status.effect.effect_type == StatusEffectType.STUN:
@@ -496,3 +871,38 @@ class StatusEffectSystem:
                     else:
                         mods[dtype] = mult
         return mods
+
+    def get_armor_damage_modifiers(self, unit: "BattleUnit") -> dict[int, float]:
+        """
+        Get combined armor damage modifiers from all active status effects.
+
+        PHASE 4: These multiply with base armor mods.
+        Example: Freeze effect might make armor more vulnerable to crushing damage.
+
+        Returns: dict mapping damage_type (int) -> multiplier (float)
+        """
+        mods = {}
+        for status in unit.status_effects:
+            if status.effect.effect_type == StatusEffectType.STUN:
+                for dtype, mult in status.effect.stun_armor_damage_mods.items():
+                    if dtype in mods:
+                        mods[dtype] *= mult
+                    else:
+                        mods[dtype] = mult
+        return mods
+
+    def should_bypass_armor(self, unit: "BattleUnit") -> bool:
+        """
+        Check if armor should be bypassed due to status effects.
+
+        PHASE 4: Active armor units bypass armor when stunned.
+        This is a special mechanic from TypeScript.
+
+        Returns: True if damage should bypass armor
+        """
+        # Check if unit has Active armor style (armor_def_style check)
+        # and is stunned
+        has_active_armor = unit.template.stats.armor_def_style == 1  # Assuming 1 = Active
+        is_stunned = self.is_stunned(unit)
+
+        return has_active_armor and is_stunned
