@@ -28,10 +28,14 @@ class BattleResult(Enum):
 
 @dataclass
 class ActiveStatusEffect:
-    """An active status effect on a unit."""
+    """An active status effect on a unit (updated to match TypeScript commit 80e3d25)."""
     effect: StatusEffect
     remaining_turns: int
-    source_damage: float = 0.0  # For DOT calculation
+    # DOT tracking - NEW formula matches TypeScript
+    original_dot_damage: float = 0.0  # DOT damage with env mods baked in
+    original_duration: int = 0         # For decay calculation
+    current_turn: int = 1              # Which turn of the effect (for decay)
+    source_damage: float = 0.0         # DEPRECATED: kept for backward compatibility
 
 
 @dataclass

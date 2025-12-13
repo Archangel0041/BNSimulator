@@ -716,11 +716,17 @@ class StatusEffectSystem:
         target: "BattleUnit",
         effect_id: int,
         apply_chance: float,
-        source_damage: float,
+        actual_damage_dealt: float,  # HP + armor damage
+        environmental_damage_mods: Optional[dict[int, float]],
         rng: random.Random
     ) -> bool:
         """
         Try to apply a status effect to a unit.
+
+        UPDATED to match TypeScript (commit 80e3d25):
+        - DOT formula: (actualDamage + bonus) * envMod * mult
+        - Environmental mods are baked into DOT when applied
+        - Resistance is NOT applied here (applied when DOT ticks)
 
         Returns True if effect was applied.
         """
@@ -736,27 +742,58 @@ class StatusEffectSystem:
         if rng.random() * 100 >= apply_chance:
             return False
 
+        # Calculate DOT damage using NEW TypeScript formula
+        dot_damage = 0.0
+        if effect.effect_type == StatusEffectType.DOT:
+            # Formula: (actualDamage + bonus) * envMod * mult
+            dot_damage = actual_damage_dealt + effect.dot_bonus_damage
+
+            # Apply environmental damage mods (bake them in)
+            if environmental_damage_mods:
+                env_mod = environmental_damage_mods.get(effect.dot_damage_type, 1.0)
+                dot_damage = int(dot_damage * env_mod)
+
+            # Apply ability damage multiplier
+            dot_damage = int(dot_damage * effect.dot_ability_damage_mult)
+
         # Check if effect already exists (refresh duration)
         from .battle import ActiveStatusEffect
 
         for existing in target.status_effects:
             if existing.effect.id == effect_id:
-                # Refresh duration
+                # Refresh duration and update DOT damage
                 existing.remaining_turns = effect.duration
-                existing.source_damage = max(existing.source_damage, source_damage)
+                existing.original_dot_damage = max(existing.original_dot_damage, dot_damage)
+                existing.original_duration = effect.duration
+                existing.current_turn = 1  # Reset turn counter
+                existing.source_damage = max(existing.source_damage, actual_damage_dealt)  # Backward compat
                 return True
 
         # Apply new effect
         target.status_effects.append(ActiveStatusEffect(
             effect=effect,
             remaining_turns=effect.duration,
-            source_damage=source_damage
+            original_dot_damage=dot_damage,
+            original_duration=effect.duration,
+            current_turn=1,
+            source_damage=actual_damage_dealt  # Backward compat
         ))
         return True
 
-    def process_effects(self, unit: "BattleUnit", damage_calculator: DamageCalculator) -> int:
+    def process_effects(
+        self,
+        unit: "BattleUnit",
+        damage_calculator: DamageCalculator,
+        status_effect_damage_mods: Optional[dict[int, float]] = None,
+        status_effect_armor_mods: Optional[dict[int, float]] = None
+    ) -> int:
         """
         Process all status effects on a unit at end of turn.
+
+        UPDATED to match TypeScript (commit 80e3d25):
+        - Decay formula: (duration - turn + 1) / duration if dot_diminishing
+        - Environmental mods already baked into originalDotDamage
+        - Apply resistance when ticking (not when applying)
 
         Returns total DOT damage dealt.
         """
@@ -769,17 +806,36 @@ class StatusEffectSystem:
         for status in unit.status_effects:
             effect = status.effect
 
-            if effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
-                dot_damage = int(status.source_damage * effect.dot_ability_damage_mult)
-                dot_damage += effect.dot_bonus_damage
+            if effect.effect_type == StatusEffectType.DOT and status.original_dot_damage > 0:
+                # Calculate decay multiplier (NEW - matches TypeScript)
+                decay_multiplier = 1.0
+                if effect.dot_diminishing:
+                    d = status.original_duration
+                    t = status.current_turn
+                    if d > 0:
+                        decay_multiplier = (d - t + 1) / d
 
-                if dot_damage > 0:
-                    # Apply DOT damage
+                # Environmental mods already baked into originalDotDamage
+                # Only apply the decay multiplier here
+                raw_dot_damage = int(status.original_dot_damage * decay_multiplier)
+
+                if raw_dot_damage > 0:
+                    # Apply DOT damage with resistance and status mods
+                    # NO environmental mods (already baked into originalDotDamage)
                     actual = damage_calculator.apply_damage(
-                        unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent
+                        unit,
+                        raw_dot_damage,
+                        effect.dot_damage_type,
+                        effect.dot_ap_percent,
+                        environmental_damage_mods=None,  # Already baked in!
+                        status_effect_damage_mods=status_effect_damage_mods,
+                        status_effect_armor_mods=status_effect_armor_mods,
+                        bypass_armor_due_to_stun=self.should_bypass_armor(unit)
                     )
                     total_dot += actual
+
+                # Increment turn counter
+                status.current_turn += 1
 
             # Decrement duration
             status.remaining_turns -= 1
