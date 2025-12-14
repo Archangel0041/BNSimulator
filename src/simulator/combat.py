@@ -495,12 +495,20 @@ class StatusEffectSystem:
             effect = status.effect
 
             if effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
-                dot_damage = int(status.source_damage * effect.dot_ability_damage_mult)
-                dot_damage += effect.dot_bonus_damage
+                # Calculate base DOT damage: (source_damage * multiplier) + bonus_damage
+                base_damage = status.source_damage * effect.dot_ability_damage_mult
+                base_damage += effect.dot_bonus_damage
+
+                # Apply diminishing if enabled: base_damage * (remaining_turns / duration)
+                if effect.dot_diminishing and effect.duration > 0:
+                    decay_factor = status.remaining_turns / effect.duration
+                    base_damage *= decay_factor
+
+                dot_damage = int(base_damage)
 
                 if dot_damage > 0:
-                    # Apply DOT damage - IS affected by environmental status modifiers
+                    # Apply DoT damage with armor/HP resistances and environmental modifiers
+                    # Environmental status effects (e.g., firemod) affect this damage
                     actual = damage_calculator.apply_damage(
                         unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent,
                         apply_status_mods=True

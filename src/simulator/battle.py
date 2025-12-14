@@ -209,14 +209,20 @@ class BattleUnit:
 
         for status in self.status_effects:
             if status.effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage for this specific effect
+                # Calculate base DOT damage: (source_damage * multiplier) + bonus_damage
                 base_damage = status.source_damage * status.effect.dot_ability_damage_mult
                 base_damage += status.effect.dot_bonus_damage
+
+                # Apply diminishing if enabled: base_damage * (remaining_turns / duration)
+                if status.effect.dot_diminishing and status.effect.duration > 0:
+                    decay_factor = status.remaining_turns / status.effect.duration
+                    base_damage *= decay_factor
+
                 dot_damage = int(base_damage)
 
                 if dot_damage > 0:
-                    # Apply DoT damage using the effect's specific damage type and armor piercing
-                    # DoT IS affected by environmental status modifiers (e.g., firemod sets fire resist to 2.2)
+                    # Apply DoT damage with armor/HP resistances and environmental modifiers
+                    # Environmental status effects (e.g., firemod) affect this damage
                     actual_damage = self.take_damage(
                         dot_damage,
                         status.effect.dot_damage_type,
