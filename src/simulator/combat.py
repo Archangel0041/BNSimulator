@@ -339,10 +339,18 @@ class DamageCalculator:
         target: "BattleUnit",
         damage: int,
         damage_type: DamageType,
-        armor_piercing: float = 0.0
+        armor_piercing: float = 0.0,
+        apply_status_mods: bool = True
     ) -> int:
         """
         Apply damage to a unit.
+
+        Args:
+            target: Unit taking damage
+            damage: Base damage to apply
+            damage_type: Type of damage
+            armor_piercing: Armor piercing percentage (0.0-1.0)
+            apply_status_mods: Whether to apply status effect damage modifiers (False for DoT)
 
         Returns actual damage dealt.
         """
@@ -360,13 +368,42 @@ class DamageCalculator:
             DamageType.ELECTRIC: "electric",
         }.get(damage_type, "piercing")
 
+        # Apply damage modifiers from template
         damage_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
+
+        # Apply status effect damage modifiers (e.g., firemod) only for non-DoT damage
+        if apply_status_mods:
+            # Pick the highest modifier from all active status effects
+            status_mod = 1.0
+            for status in target.status_effects:
+                if status.effect.effect_type == StatusEffectType.STUN:
+                    dtype_int = damage_type.value
+                    if dtype_int in status.effect.stun_damage_mods:
+                        status_mod = max(status_mod, status.effect.stun_damage_mods[dtype_int])
+
+            # Apply status modifier after template modifier
+            damage_mod *= status_mod
+
         modified_damage = int(damage * damage_mod)
 
         # Apply to armor first if present
         if target.current_armor > 0 and armor_piercing < 1.0:
             armor_damage = int(modified_damage * (1 - armor_piercing))
             armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
+
+            # Apply status effect armor damage modifiers only for non-DoT damage
+            if apply_status_mods:
+                # Pick the highest modifier from all active status effects
+                armor_status_mod = 1.0
+                for status in target.status_effects:
+                    if status.effect.effect_type == StatusEffectType.STUN:
+                        dtype_int = damage_type.value
+                        if dtype_int in status.effect.stun_armor_damage_mods:
+                            armor_status_mod = max(armor_status_mod, status.effect.stun_armor_damage_mods[dtype_int])
+
+                # Apply status modifier after template modifier
+                armor_mod *= armor_status_mod
+
             armor_damage = int(armor_damage * armor_mod)
 
             if armor_damage >= target.current_armor:
@@ -463,9 +500,10 @@ class StatusEffectSystem:
                 dot_damage += effect.dot_bonus_damage
 
                 if dot_damage > 0:
-                    # Apply DOT damage
+                    # Apply DOT damage - should NOT be affected by environmental status modifiers
                     actual = damage_calculator.apply_damage(
-                        unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent
+                        unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent,
+                        apply_status_mods=False
                     )
                     total_dot += actual
 
