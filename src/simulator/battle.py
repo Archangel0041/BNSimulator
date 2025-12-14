@@ -203,28 +203,34 @@ class BattleUnit:
                 self.weapon_cooldowns[weapon_id] -= 1
 
     def tick_status_effects(self) -> int:
-        """Process status effects. Returns DOT damage taken."""
-        dot_damage = 0
+        """Process status effects. Returns total DOT damage taken."""
+        total_dot_damage = 0
         remaining_effects = []
 
         for status in self.status_effects:
             if status.effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
+                # Calculate DOT damage for this specific effect
                 base_damage = status.source_damage * status.effect.dot_ability_damage_mult
                 base_damage += status.effect.dot_bonus_damage
-                dot_damage += int(base_damage)
+                dot_damage = int(base_damage)
+
+                if dot_damage > 0:
+                    # Apply DoT damage using the effect's specific damage type and armor piercing
+                    # DoT damage should NOT be affected by environmental status modifiers like firemod
+                    actual_damage = self.take_damage(
+                        dot_damage,
+                        status.effect.dot_damage_type,
+                        armor_piercing=status.effect.dot_ap_percent / 100.0,
+                        apply_status_mods=False
+                    )
+                    total_dot_damage += actual_damage
 
             status.remaining_turns -= 1
             if status.remaining_turns > 0:
                 remaining_effects.append(status)
 
         self.status_effects = remaining_effects
-
-        if dot_damage > 0:
-            # DoT damage should NOT be affected by environmental status modifiers like firemod
-            self.take_damage(dot_damage, DamageType.FIRE, armor_piercing=0.0, apply_status_mods=False)
-
-        return dot_damage
+        return total_dot_damage
 
 
 @dataclass
