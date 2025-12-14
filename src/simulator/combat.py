@@ -364,13 +364,16 @@ class DamageCalculator:
         damage_mod = target.template.stats.damage_mods.get(dtype_name, 1.0)
 
         # Apply status effect damage modifiers (e.g., firemod)
+        # Pick the highest modifier from all active status effects
+        status_mod = 1.0
         for status in target.status_effects:
             if status.effect.effect_type == StatusEffectType.STUN:
-                # Check if this status effect modifies this damage type
                 dtype_int = damage_type.value
                 if dtype_int in status.effect.stun_damage_mods:
-                    damage_mod *= status.effect.stun_damage_mods[dtype_int]
+                    status_mod = max(status_mod, status.effect.stun_damage_mods[dtype_int])
 
+        # Apply status modifier after template modifier
+        damage_mod *= status_mod
         modified_damage = int(damage * damage_mod)
 
         # Apply to armor first if present
@@ -379,12 +382,16 @@ class DamageCalculator:
             armor_mod = target.template.stats.armor_damage_mods.get(dtype_name, 1.0)
 
             # Apply status effect armor damage modifiers
+            # Pick the highest modifier from all active status effects
+            armor_status_mod = 1.0
             for status in target.status_effects:
                 if status.effect.effect_type == StatusEffectType.STUN:
                     dtype_int = damage_type.value
                     if dtype_int in status.effect.stun_armor_damage_mods:
-                        armor_mod *= status.effect.stun_armor_damage_mods[dtype_int]
+                        armor_status_mod = max(armor_status_mod, status.effect.stun_armor_damage_mods[dtype_int])
 
+            # Apply status modifier after template modifier
+            armor_mod *= armor_status_mod
             armor_damage = int(armor_damage * armor_mod)
 
             if armor_damage >= target.current_armor:
