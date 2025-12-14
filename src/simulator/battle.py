@@ -74,8 +74,16 @@ class BattleUnit:
         max_hp = self.template.stats.hp
         return (self.current_hp / max_hp * 100) if max_hp > 0 else 0
 
-    def take_damage(self, damage: int, damage_type: DamageType, armor_piercing: float = 0.0) -> int:
-        """Apply damage to unit. Returns actual damage dealt."""
+    def take_damage(self, damage: int, damage_type: DamageType, armor_piercing: float = 0.0, apply_status_mods: bool = True) -> int:
+        """
+        Apply damage to unit. Returns actual damage dealt.
+
+        Args:
+            damage: Base damage to apply
+            damage_type: Type of damage
+            armor_piercing: Armor piercing percentage (0.0-1.0)
+            apply_status_mods: Whether to apply status effect damage modifiers (False for DoT)
+        """
         if not self.is_alive:
             return 0
 
@@ -91,17 +99,19 @@ class BattleUnit:
         # Apply damage modifiers from template
         damage_mod = self.template.stats.damage_mods.get(dtype_name, 1.0)
 
-        # Apply status effect damage modifiers (e.g., firemod)
-        # Pick the highest modifier from all active status effects
-        status_mod = 1.0
-        for status in self.status_effects:
-            if status.effect.effect_type == StatusEffectType.STUN:
-                dtype_int = damage_type.value
-                if dtype_int in status.effect.stun_damage_mods:
-                    status_mod = max(status_mod, status.effect.stun_damage_mods[dtype_int])
+        # Apply status effect damage modifiers (e.g., firemod) only for non-DoT damage
+        if apply_status_mods:
+            # Pick the highest modifier from all active status effects
+            status_mod = 1.0
+            for status in self.status_effects:
+                if status.effect.effect_type == StatusEffectType.STUN:
+                    dtype_int = damage_type.value
+                    if dtype_int in status.effect.stun_damage_mods:
+                        status_mod = max(status_mod, status.effect.stun_damage_mods[dtype_int])
 
-        # Apply status modifier after template modifier
-        damage_mod *= status_mod
+            # Apply status modifier after template modifier
+            damage_mod *= status_mod
+
         modified_damage = int(damage * damage_mod)
 
         # Apply to armor first (if present)
@@ -109,17 +119,19 @@ class BattleUnit:
             armor_damage = int(modified_damage * (1 - armor_piercing))
             armor_mod = self.template.stats.armor_damage_mods.get(dtype_name, 1.0)
 
-            # Apply status effect armor damage modifiers
-            # Pick the highest modifier from all active status effects
-            armor_status_mod = 1.0
-            for status in self.status_effects:
-                if status.effect.effect_type == StatusEffectType.STUN:
-                    dtype_int = damage_type.value
-                    if dtype_int in status.effect.stun_armor_damage_mods:
-                        armor_status_mod = max(armor_status_mod, status.effect.stun_armor_damage_mods[dtype_int])
+            # Apply status effect armor damage modifiers only for non-DoT damage
+            if apply_status_mods:
+                # Pick the highest modifier from all active status effects
+                armor_status_mod = 1.0
+                for status in self.status_effects:
+                    if status.effect.effect_type == StatusEffectType.STUN:
+                        dtype_int = damage_type.value
+                        if dtype_int in status.effect.stun_armor_damage_mods:
+                            armor_status_mod = max(armor_status_mod, status.effect.stun_armor_damage_mods[dtype_int])
 
-            # Apply status modifier after template modifier
-            armor_mod *= armor_status_mod
+                # Apply status modifier after template modifier
+                armor_mod *= armor_status_mod
+
             armor_damage = int(armor_damage * armor_mod)
 
             if armor_damage >= self.current_armor:
@@ -209,7 +221,8 @@ class BattleUnit:
         self.status_effects = remaining_effects
 
         if dot_damage > 0:
-            self.take_damage(dot_damage, DamageType.FIRE)  # DOT is typically fire
+            # DoT damage should NOT be affected by environmental status modifiers like firemod
+            self.take_damage(dot_damage, DamageType.FIRE, armor_piercing=0.0, apply_status_mods=False)
 
         return dot_damage
 
