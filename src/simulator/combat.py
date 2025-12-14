@@ -500,10 +500,10 @@ class StatusEffectSystem:
                 dot_damage += effect.dot_bonus_damage
 
                 if dot_damage > 0:
-                    # Apply DOT damage - should NOT be affected by environmental status modifiers
+                    # Apply DOT damage - IS affected by environmental status modifiers
                     actual = damage_calculator.apply_damage(
                         unit, dot_damage, effect.dot_damage_type, effect.dot_ap_percent,
-                        apply_status_mods=False
+                        apply_status_mods=True
                     )
                     total_dot += actual
 

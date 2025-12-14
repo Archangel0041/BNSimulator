@@ -216,12 +216,12 @@ class BattleUnit:
 
                 if dot_damage > 0:
                     # Apply DoT damage using the effect's specific damage type and armor piercing
-                    # DoT damage should NOT be affected by environmental status modifiers like firemod
+                    # DoT IS affected by environmental status modifiers (e.g., firemod sets fire resist to 2.2)
                     actual_damage = self.take_damage(
                         dot_damage,
                         status.effect.dot_damage_type,
                         armor_piercing=status.effect.dot_ap_percent / 100.0,
-                        apply_status_mods=False
+                        apply_status_mods=True
                     )
                     total_dot_damage += actual_damage
 
