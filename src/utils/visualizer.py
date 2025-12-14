@@ -1,8 +1,10 @@
 """Interactive battle visualizer for debugging and verification."""
 from __future__ import annotations
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, List, Dict, Any
 import sys
 from pathlib import Path
+from dataclasses import dataclass, field
+from datetime import datetime
 
 if TYPE_CHECKING:
     from src.simulator.battle import BattleState, BattleUnit, Action
@@ -29,6 +31,187 @@ class Colors:
     BG_CYAN = "\033[46m"
 
 
+@dataclass
+class BattleAction:
+    """Represents a single action in battle."""
+    action_type: str  # attack, dodge, crit, death, status_applied, status_tick, skip
+    turn: int
+    attacker_name: Optional[str] = None
+    attacker_grid_id: Optional[int] = None
+    target_name: Optional[str] = None
+    target_grid_id: Optional[int] = None
+    ability_name: Optional[str] = None
+    hp_damage: int = 0
+    armor_damage: int = 0
+    status_effect_name: Optional[str] = None
+    hit_count: int = 1
+    message: str = ""
+    is_player_turn: bool = True
+
+
+@dataclass
+class TurnSummary:
+    """Summary statistics for a turn."""
+    turn_number: int
+    is_player_turn: bool
+    total_hp_damage: int = 0
+    total_armor_damage: int = 0
+    crits: int = 0
+    dodges: int = 0
+    status_effects_applied: int = 0
+    kills: int = 0
+
+
+class BattleLog:
+    """Tracks and displays battle history."""
+
+    def __init__(self, max_actions: int = 100):
+        self.actions: List[BattleAction] = []
+        self.turn_summaries: Dict[int, TurnSummary] = {}
+        self.max_actions = max_actions
+        self.current_turn = 0
+
+    def start_turn(self, turn_number: int, is_player_turn: bool):
+        """Start tracking a new turn."""
+        self.current_turn = turn_number
+        if turn_number not in self.turn_summaries:
+            self.turn_summaries[turn_number] = TurnSummary(
+                turn_number=turn_number,
+                is_player_turn=is_player_turn
+            )
+
+    def add_action(self, action: BattleAction):
+        """Add an action to the log."""
+        self.actions.append(action)
+
+        # Update turn summary
+        if action.turn in self.turn_summaries:
+            summary = self.turn_summaries[action.turn]
+            summary.total_hp_damage += action.hp_damage
+            summary.total_armor_damage += action.armor_damage
+
+            if action.action_type == "crit":
+                summary.crits += 1
+            elif action.action_type == "dodge":
+                summary.dodges += 1
+            elif action.action_type == "status_applied":
+                summary.status_effects_applied += 1
+            elif action.action_type == "death":
+                summary.kills += 1
+
+        # Limit log size
+        if len(self.actions) > self.max_actions:
+            self.actions = self.actions[-self.max_actions:]
+
+    def get_action_icon(self, action_type: str) -> str:
+        """Get icon for action type."""
+        icons = {
+            "attack": "⚔️",
+            "dodge": "💨",
+            "crit": "🎯",
+            "death": "💀",
+            "status_applied": "⚡",
+            "status_tick": "🔥",
+            "skip": "🛡️"
+        }
+        return icons.get(action_type, "•")
+
+    def render_recent(self, n: int = 15) -> str:
+        """Render the last N actions."""
+        lines = [f"\n{Colors.BOLD}=== Battle Log (Last {n} actions) ==={Colors.RESET}"]
+
+        if not self.actions:
+            lines.append(f"{Colors.CYAN}No actions yet{Colors.RESET}")
+            return "\n".join(lines)
+
+        recent = self.actions[-n:]
+        current_turn = None
+
+        for action in recent:
+            # Turn header
+            if action.turn != current_turn:
+                current_turn = action.turn
+                turn_color = Colors.GREEN if action.is_player_turn else Colors.RED
+                turn_label = "PLAYER" if action.is_player_turn else "ENEMY"
+                lines.append(f"\n{turn_color}[Turn {action.turn} - {turn_label}]{Colors.RESET}")
+
+                # Show turn summary if turn is complete
+                if current_turn in self.turn_summaries and current_turn < self.current_turn:
+                    summary = self.turn_summaries[current_turn]
+                    if summary.total_hp_damage > 0 or summary.kills > 0:
+                        stats = []
+                        if summary.total_hp_damage > 0:
+                            stats.append(f"{Colors.RED}{summary.total_hp_damage} HP dmg{Colors.RESET}")
+                        if summary.total_armor_damage > 0:
+                            stats.append(f"{Colors.CYAN}{summary.total_armor_damage} armor dmg{Colors.RESET}")
+                        if summary.crits > 0:
+                            stats.append(f"{Colors.YELLOW}{summary.crits} crit(s){Colors.RESET}")
+                        if summary.dodges > 0:
+                            stats.append(f"{Colors.BLUE}{summary.dodges} dodge(s){Colors.RESET}")
+                        if summary.kills > 0:
+                            stats.append(f"{Colors.RED}{summary.kills} kill(s){Colors.RESET}")
+                        if stats:
+                            lines.append(f"  📊 {', '.join(stats)}")
+
+            # Action line
+            icon = self.get_action_icon(action.action_type)
+            line_parts = [f"  {icon}"]
+
+            # Format based on action type
+            if action.action_type == "attack":
+                line_parts.append(f"{action.attacker_name}({action.attacker_grid_id})")
+                if action.ability_name:
+                    line_parts.append(f"→ {Colors.MAGENTA}{action.ability_name}{Colors.RESET}")
+                line_parts.append(f"→ {action.target_name}({action.target_grid_id}):")
+
+                dmg_parts = []
+                if action.hp_damage > 0:
+                    dmg_parts.append(f"{Colors.RED}{action.hp_damage} HP{Colors.RESET}")
+                if action.armor_damage > 0:
+                    dmg_parts.append(f"{Colors.CYAN}{action.armor_damage} armor{Colors.RESET}")
+
+                if action.hit_count > 1:
+                    line_parts.append(f"{Colors.MAGENTA}[{action.hit_count}x]{Colors.RESET}")
+
+                if dmg_parts:
+                    line_parts.append(", ".join(dmg_parts))
+
+            elif action.action_type == "dodge":
+                line_parts.append(f"{action.target_name}({action.target_grid_id})")
+                line_parts.append(f"{Colors.BLUE}dodged!{Colors.RESET}")
+
+            elif action.action_type == "crit":
+                line_parts.append(f"{Colors.YELLOW}Critical hit!{Colors.RESET}")
+
+            elif action.action_type == "death":
+                line_parts.append(f"{action.target_name}({action.target_grid_id})")
+                line_parts.append(f"{Colors.RED}defeated!{Colors.RESET}")
+                if action.status_effect_name:
+                    line_parts.append(f"(by {action.status_effect_name})")
+
+            elif action.action_type == "status_applied":
+                line_parts.append(f"{action.target_name}({action.target_grid_id})")
+                line_parts.append(f"→ {Colors.MAGENTA}{action.status_effect_name}{Colors.RESET} applied")
+
+            elif action.action_type == "status_tick":
+                line_parts.append(f"{action.target_name}({action.target_grid_id})")
+                line_parts.append(f"→ {Colors.MAGENTA}{action.status_effect_name}{Colors.RESET}:")
+                dmg_parts = []
+                if action.hp_damage > 0:
+                    dmg_parts.append(f"{Colors.RED}{action.hp_damage} HP{Colors.RESET}")
+                if action.armor_damage > 0:
+                    dmg_parts.append(f"{Colors.CYAN}{action.armor_damage} armor{Colors.RESET}")
+                if dmg_parts:
+                    line_parts.append(", ".join(dmg_parts))
+
+            elif action.action_type == "skip":
+                line_parts.append(f"{action.attacker_name}({action.attacker_grid_id}) skipped turn")
+
+            lines.append(" ".join(line_parts))
+
+        return "\n".join(lines)
+
+
 class BattleVisualizer:
     """
     Terminal-based battle visualizer with interactive controls.
@@ -50,6 +233,7 @@ class BattleVisualizer:
         self.selected_weapon_idx: Optional[int] = None
         self.highlighted_targets: set[tuple[int, int]] = set()
         self.aoe_pattern: dict[tuple[int, int], float] = {}
+        self.battle_log = BattleLog()
 
         # Initialize localization
         self.loc = None
@@ -308,6 +492,132 @@ class BattleVisualizer:
         self.highlighted_targets.clear()
         self.aoe_pattern.clear()
 
+    def show_damage_preview(self, unit_idx: int, weapon_id: int, target_x: int, target_y: int) -> str:
+        """
+        Show damage preview for an attack.
+
+        This matches TypeScript functionality showing:
+        - Min/Max HP damage
+        - Min/Max Armor damage
+        - Dodge chance
+        - Critical chance
+        - Status effects that will be applied
+        - Blocking information
+        """
+        from src.simulator.combat import DamageCalculator
+
+        lines = [f"\n{Colors.BOLD}=== Damage Preview ==={Colors.RESET}"]
+
+        # Get attacker unit
+        unit = self.battle.current_side_units[unit_idx]
+        weapon = unit.template.weapons.get(weapon_id)
+
+        if not weapon:
+            lines.append(f"{Colors.RED}Invalid weapon{Colors.RESET}")
+            return "\n".join(lines)
+
+        # Get target unit
+        target_units = self.battle.enemy_units if self.battle.is_player_turn else self.battle.player_units
+        target_unit = None
+        for u in target_units:
+            if u.position.x == target_x and u.position.y == target_y and u.is_alive:
+                target_unit = u
+                break
+
+        if not target_unit:
+            lines.append(f"{Colors.YELLOW}No target at ({target_x}, {target_y}){Colors.RESET}")
+            return "\n".join(lines)
+
+        # Get weapon abilities
+        if not weapon.abilities:
+            lines.append(f"{Colors.RED}Weapon has no abilities{Colors.RESET}")
+            return "\n".join(lines)
+
+        ability_id = weapon.abilities[0]  # Use first ability
+        ability = self.battle.data_loader.get_ability(ability_id)
+
+        if not ability:
+            lines.append(f"{Colors.RED}Invalid ability{Colors.RESET}")
+            return "\n".join(lines)
+
+        # Header
+        attacker_name = self._get_localized(unit.template.name)
+        target_name = self._get_localized(target_unit.template.name)
+        ability_name = self._get_localized(ability.name)
+
+        lines.append(f"{Colors.CYAN}{attacker_name}{Colors.RESET} → {Colors.MAGENTA}{ability_name}{Colors.RESET} → {Colors.YELLOW}{target_name}{Colors.RESET}")
+        lines.append("")
+
+        # Calculate damage using rank
+        stats = ability.stats
+        min_damage = stats.base_damage_min
+        max_damage = stats.base_damage_max
+
+        # Apply rank scaling
+        calculator = DamageCalculator()
+        power = unit.template.stats.power
+        min_damage_scaled = calculator.calculate_damage_at_rank(min_damage, power)
+        max_damage_scaled = calculator.calculate_damage_at_rank(max_damage, power)
+
+        # Calculate dodge chance
+        dodge_chance = calculator.calculate_dodge_chance(
+            target_unit.template.stats.defense,
+            stats.offense
+        )
+
+        # Get multi-hit info
+        shots_per_attack = stats.shots_per_attack or 1
+        attacks_per_use = 1  # From ability config
+        total_shots = shots_per_attack * attacks_per_use
+
+        # Display damage
+        if total_shots > 1:
+            total_min = min_damage_scaled * total_shots
+            total_max = max_damage_scaled * total_shots
+            lines.append(f"Damage: {Colors.RED}{min_damage_scaled}-{max_damage_scaled}{Colors.RESET} x {Colors.MAGENTA}{total_shots} hits{Colors.RESET} = {Colors.RED}{total_min}-{total_max} total{Colors.RESET}")
+        else:
+            lines.append(f"Damage: {Colors.RED}{min_damage_scaled}-{max_damage_scaled} HP{Colors.RESET}")
+
+        # Display target HP/Armor
+        target_hp = target_unit.current_hp
+        target_armor = target_unit.current_armor
+
+        lines.append(f"Target HP: {Colors.GREEN}{target_hp}/{target_unit.template.stats.hp}{Colors.RESET}")
+        if target_armor > 0:
+            lines.append(f"Target Armor: {Colors.CYAN}{target_armor}/{target_unit.template.stats.armor_hp}{Colors.RESET}")
+
+        # Calculate remaining HP (rough estimate)
+        min_hp_remaining = max(0, target_hp - (max_damage_scaled * total_shots))
+        max_hp_remaining = max(0, target_hp - (min_damage_scaled * total_shots))
+
+        if min_hp_remaining == max_hp_remaining:
+            lines.append(f"Remaining HP: {Colors.GREEN}{min_hp_remaining}{Colors.RESET}")
+        else:
+            lines.append(f"Remaining HP: {Colors.GREEN}{min_hp_remaining}-{max_hp_remaining}{Colors.RESET}")
+
+        lines.append("")
+
+        # Display chances
+        crit_chance = unit.template.stats.critical + (stats.critical_hit_percent or 0)
+        lines.append(f"Dodge Chance: {Colors.YELLOW if dodge_chance > 0 else Colors.GREEN}{dodge_chance}%{Colors.RESET}")
+        lines.append(f"Crit Chance: {Colors.YELLOW if crit_chance > 0 else Colors.GREEN}{crit_chance}%{Colors.RESET}")
+
+        # Display status effects
+        if stats.status_effects:
+            lines.append("")
+            lines.append(f"{Colors.BOLD}Status Effects:{Colors.RESET}")
+            for effect_id, chance in stats.status_effects.items():
+                effect = self.battle.data_loader.get_status_effect(effect_id)
+                if effect:
+                    effect_name = effect.family.name if hasattr(effect, 'family') else f"Effect {effect_id}"
+                    duration = effect.duration if hasattr(effect, 'duration') else "?"
+                    lines.append(f"  {Colors.MAGENTA}{effect_name}{Colors.RESET}: {chance}% chance, {duration} turns")
+
+        # Check blocking
+        # TODO: Implement blocking check when available in battle system
+
+        return "\n".join(lines)
+
     def show_legal_actions(self) -> str:
         """Show all legal actions for current turn."""
         actions = self.battle.get_legal_actions()
@@ -358,8 +668,10 @@ class InteractiveBattleSession:
         print("  g - Show grid")
         print("  u <idx> - Show unit info (e.g., 'u 0' for player unit 0)")
         print("  t <unit> <weapon> - Highlight targets (e.g., 't 0 1')")
+        print("  p <unit> <weapon> <x> <y> - Preview damage")
         print("  a <unit> <weapon> <x> <y> - Execute action")
         print("  l - Show legal actions")
+        print("  log [n] - Show battle log (last N actions, default 15)")
         print("  n - Next turn (skip)")
         print("  r - Random action")
         print("  c - Clear highlights")
@@ -391,6 +703,12 @@ class InteractiveBattleSession:
                     targets = self.viz.highlight_valid_targets(unit_idx, weapon_id)
                     print(f"Valid targets: {targets}")
                     print(self.viz.render_grid())
+                elif command == 'p' and len(parts) >= 5:
+                    unit_idx = int(parts[1])
+                    weapon_id = int(parts[2])
+                    x = int(parts[3])
+                    y = int(parts[4])
+                    print(self.viz.show_damage_preview(unit_idx, weapon_id, x, y))
                 elif command == 'a' and len(parts) >= 5:
                     unit_idx = int(parts[1])
                     weapon_id = int(parts[2])
@@ -399,6 +717,15 @@ class InteractiveBattleSession:
                     self._execute_action(unit_idx, weapon_id, x, y)
                 elif command == 'l':
                     print(self.viz.show_legal_actions())
+                elif command == 'log':
+                    # Show battle log
+                    n = 15
+                    if len(parts) >= 2:
+                        try:
+                            n = int(parts[1])
+                        except ValueError:
+                            pass
+                    print(self.viz.battle_log.render_recent(n))
                 elif command == 'n':
                     self.battle.end_turn()
                     print("Turn ended.")
@@ -423,6 +750,17 @@ class InteractiveBattleSession:
         from src.simulator.battle import Action
         from src.simulator.models import Position
 
+        # Start tracking this turn
+        self.viz.battle_log.start_turn(
+            self.battle.turn_number,
+            self.battle.is_player_turn
+        )
+
+        # Get unit and target info for logging
+        unit = self.battle.current_side_units[unit_idx]
+        attacker_name = unit.template.class_type.name
+        attacker_grid_id = unit.position.x + unit.position.y * 5
+
         action = Action(
             unit_index=unit_idx,
             weapon_id=weapon_id,
@@ -431,6 +769,62 @@ class InteractiveBattleSession:
 
         result = self.battle.execute_action(action)
         if result.success:
+            # Log the action
+            target_unit = None
+            for u in self.battle.enemy_units if self.battle.is_player_turn else self.battle.player_units:
+                if u.position.x == x and u.position.y == y and u.is_alive:
+                    target_unit = u
+                    break
+
+            if target_unit:
+                target_name = target_unit.template.class_type.name
+                target_grid_id = x + y * 5
+
+                # Get weapon/ability info
+                weapon = unit.template.weapons.get(weapon_id)
+                ability_name = weapon.name if weapon else f"Weapon {weapon_id}"
+
+                # Log attack action
+                battle_action = BattleAction(
+                    action_type="attack",
+                    turn=self.battle.turn_number,
+                    attacker_name=attacker_name,
+                    attacker_grid_id=attacker_grid_id,
+                    target_name=target_name,
+                    target_grid_id=target_grid_id,
+                    ability_name=ability_name,
+                    hp_damage=result.damage_dealt.get("hp", 0),
+                    armor_damage=result.damage_dealt.get("armor", 0),
+                    hit_count=result.damage_dealt.get("hits", 1),
+                    is_player_turn=self.battle.is_player_turn
+                )
+                self.viz.battle_log.add_action(battle_action)
+
+                # Log kills
+                if result.kills:
+                    for kill in result.kills:
+                        death_action = BattleAction(
+                            action_type="death",
+                            turn=self.battle.turn_number,
+                            target_name=target_name,
+                            target_grid_id=target_grid_id,
+                            is_player_turn=self.battle.is_player_turn
+                        )
+                        self.viz.battle_log.add_action(death_action)
+
+                # Log status effects
+                if result.status_applied:
+                    for status_id in result.status_applied:
+                        status_action = BattleAction(
+                            action_type="status_applied",
+                            turn=self.battle.turn_number,
+                            target_name=target_name,
+                            target_grid_id=target_grid_id,
+                            status_effect_name=f"Effect {status_id}",
+                            is_player_turn=self.battle.is_player_turn
+                        )
+                        self.viz.battle_log.add_action(status_action)
+
             print(f"Action executed!")
             print(f"  Damage dealt: {result.damage_dealt}")
             if result.kills:
