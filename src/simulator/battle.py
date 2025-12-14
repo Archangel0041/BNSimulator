@@ -88,14 +88,31 @@ class BattleUnit:
             DamageType.COLD: "cold",
         }.get(damage_type, "piercing")
 
-        # Apply damage modifiers
+        # Apply damage modifiers from template
         damage_mod = self.template.stats.damage_mods.get(dtype_name, 1.0)
+
+        # Apply status effect damage modifiers (e.g., firemod)
+        for status in self.status_effects:
+            if status.effect.effect_type == StatusEffectType.STUN:
+                # Check if this status effect modifies this damage type
+                dtype_int = damage_type.value
+                if dtype_int in status.effect.stun_damage_mods:
+                    damage_mod *= status.effect.stun_damage_mods[dtype_int]
+
         modified_damage = int(damage * damage_mod)
 
         # Apply to armor first (if present)
         if self.current_armor > 0 and armor_piercing < 1.0:
             armor_damage = int(modified_damage * (1 - armor_piercing))
             armor_mod = self.template.stats.armor_damage_mods.get(dtype_name, 1.0)
+
+            # Apply status effect armor damage modifiers
+            for status in self.status_effects:
+                if status.effect.effect_type == StatusEffectType.STUN:
+                    dtype_int = damage_type.value
+                    if dtype_int in status.effect.stun_armor_damage_mods:
+                        armor_mod *= status.effect.stun_armor_damage_mods[dtype_int]
+
             armor_damage = int(armor_damage * armor_mod)
 
             if armor_damage >= self.current_armor:
