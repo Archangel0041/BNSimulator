@@ -18,18 +18,18 @@ def basic_unit_template():
     stats = UnitStats(
         hp=100,
         armor_hp=50,
-        attack=10,
         defense=5,
         dodge=10,
         accuracy=10,
-        critical=5,
-        speed=5
+        critical=5.0,
+        power=10,
+        bravery=5
     )
     return UnitTemplate(
         id=1,
         name="Test Unit",
         class_type=UnitClass.SOLDIER,
-        side=Side.ATTACKER,
+        side=Side.PLAYER,
         stats=stats
     )
 
@@ -40,7 +40,7 @@ def battle_unit(basic_unit_template):
     return BattleUnit(
         template=basic_unit_template,
         position=Position(0, 0),
-        battle_side=BattleSide.PLAYER
+        battle_side=BattleSide.PLAYER_TEAM
     )
 
 
@@ -190,6 +190,7 @@ class TestDOTApplication:
     def test_apply_single_dot_to_unit(self, battle_unit, diminishing_dot_effect):
         """Test applying a single DOT effect to a unit."""
         initial_hp = battle_unit.current_hp
+        initial_armor = battle_unit.current_armor
 
         # Add a DOT effect (100 damage, 3 turns, diminishing)
         status = ActiveStatusEffect(
@@ -202,12 +203,14 @@ class TestDOTApplication:
         # Apply DOT (should do 100 damage on first turn)
         DOTHandler.apply_dot_to_unit(battle_unit)
 
-        # HP should be reduced by 100
-        assert battle_unit.current_hp == initial_hp - 100
+        # With 50 armor: 50 damage to armor, 50 damage to HP
+        assert battle_unit.current_armor == 0
+        assert battle_unit.current_hp == initial_hp - 50
 
     def test_apply_multiple_dot_effects(self, battle_unit, diminishing_dot_effect, constant_dot_effect):
         """Test applying multiple DOT effects to a unit."""
         initial_hp = battle_unit.current_hp
+        initial_armor = battle_unit.current_armor
 
         # Add two DOT effects
         status1 = ActiveStatusEffect(
@@ -222,11 +225,12 @@ class TestDOTApplication:
         )
         battle_unit.status_effects.extend([status1, status2])
 
-        # Apply DOT (should do 50 + 30 = 80 damage on first turn)
+        # Apply DOT (should do 50 + 30 = 80 damage total)
         DOTHandler.apply_dot_to_unit(battle_unit)
 
-        # HP should be reduced by 80
-        assert battle_unit.current_hp == initial_hp - 80
+        # With 50 armor: 50 damage to armor (depleted), 30 damage to HP
+        assert battle_unit.current_armor == 0
+        assert battle_unit.current_hp == initial_hp - 30
 
     def test_apply_dot_with_armor(self, battle_unit, diminishing_dot_effect):
         """Test that DOT respects armor and damage types."""
