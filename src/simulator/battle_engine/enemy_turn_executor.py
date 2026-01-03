@@ -145,19 +145,34 @@ class EnemyTurnExecutor:
 
     def _calculate_dot_damage_for_effect(self, status: 'ActiveStatusEffect') -> float:
         """
-        Calculate DOT damage for a single status effect.
+        Calculate DOT damage for a single status effect with decay.
 
-        Formula: base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
+        Formula: actual_damage = base_damage * (d - r_t + 1) / d
+        Where:
+        - base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
+        - d = effect.duration (from config)
+        - r_t = remaining_turns
+
+        This makes DOT stronger as it progresses (builds up over time).
 
         Args:
             status: The active status effect
 
         Returns:
-            Base DOT damage (before armor/modifiers)
+            Actual DOT damage for this turn (before armor/modifiers)
         """
+        # Calculate base DOT damage from source damage
         base_damage = status.source_damage * status.effect.dot_ability_damage_mult
         base_damage += status.effect.dot_bonus_damage
-        return base_damage
+
+        # Apply decay formula using duration from config
+        duration = status.effect.duration
+        if duration > 0:
+            decay_factor = (duration - status.remaining_turns + 1) / duration
+            return base_damage * decay_factor
+        else:
+            # No decay if duration is 0 or invalid
+            return base_damage
 
     def _decay_status_effects(self, unit: 'BattleUnit') -> None:
         """

@@ -31,7 +31,7 @@ class ActiveStatusEffect:
     """An active status effect on a unit."""
     effect: StatusEffect
     remaining_turns: int
-    source_damage: float = 0.0  # For DOT calculation
+    source_damage: float = 0.0  # Damage that caused this effect (for DOT calculation)
 
 
 @dataclass
