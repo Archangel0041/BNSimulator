@@ -123,9 +123,71 @@ class EnemyTurnExecutor:
 
         Iterates through all enemy units and applies DOT damage from
         active status effects.
+
+        Sub-steps for each unit:
+        1. Calculate base DOT damage for each valid DOT effect
+        2. Decay the status effect duration
+        3. Apply armor/modifiers to damage
+        4. Apply the final damage to the unit
         """
-        # TODO: Implement DOT application
-        pass
+        from ..enums import StatusEffectType
+
+        for unit in self.battle.enemy_units:
+            if not unit.is_alive:
+                continue
+
+            # Sub-step 1: Calculate base DOT damage for all DOT effects on this unit
+            total_dot_damage = 0
+            for status in unit.status_effects:
+                if status.effect.effect_type == StatusEffectType.DOT:
+                    # Calculate DOT damage for this effect
+                    base_dot = self._calculate_dot_damage_for_effect(status)
+                    total_dot_damage += base_dot
+
+            # Sub-step 2: Decay status effect durations and remove expired effects
+            self._decay_status_effects(unit)
+
+            # Sub-step 3: Apply armor/modifiers to damage
+            # Sub-step 4: Apply the final damage to the unit
+            # (Both handled by take_damage: applies type modifiers, armor reduction, and HP damage)
+            if total_dot_damage > 0:
+                # DOT is typically fire damage
+                unit.take_damage(int(total_dot_damage), DamageType.FIRE)
+
+    def _calculate_dot_damage_for_effect(self, status: 'ActiveStatusEffect') -> float:
+        """
+        Calculate DOT damage for a single status effect.
+
+        Formula: base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
+
+        Args:
+            status: The active status effect
+
+        Returns:
+            Base DOT damage (before armor/modifiers)
+        """
+        base_damage = status.source_damage * status.effect.dot_ability_damage_mult
+        base_damage += status.effect.dot_bonus_damage
+        return base_damage
+
+    def _decay_status_effects(self, unit: 'BattleUnit') -> None:
+        """
+        Decrement duration of all status effects and remove expired ones.
+
+        Args:
+            unit: The unit whose status effects to decay
+        """
+        remaining_effects = []
+        for status in unit.status_effects:
+            # Decrement duration
+            status.remaining_turns -= 1
+
+            # Keep effect if still active
+            if status.remaining_turns > 0:
+                remaining_effects.append(status)
+
+        # Update unit's status effects list
+        unit.status_effects = remaining_effects
 
     # =========================================================================
     # Step 2: Check if all enemy units dead
