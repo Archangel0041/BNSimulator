@@ -11,6 +11,7 @@ from .battle_types import (
     TurnResult, BattleResult, HitResult, DamageResult,
     Position, ActionCandidate
 )
+from .dot_handler import DOTHandler
 from ..enums import DamageType
 
 if TYPE_CHECKING:
@@ -130,101 +131,16 @@ class EnemyTurnExecutor:
         3. Apply armor/modifiers to damage
         4. Apply the final damage to the unit
         """
-        from ..enums import StatusEffectType
-
         for unit in self.battle.enemy_units:
             if not unit.is_alive:
                 continue
 
             # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
             # (Must be done per-effect since each can have different damage type)
-            self._apply_dot_damage_to_unit(unit)
+            DOTHandler.apply_dot_to_unit(unit)
 
             # Sub-step 2: Decay status effect durations and remove expired effects
-            self._decay_status_effects(unit)
-
-    def _calculate_dot_damage_for_effect(self, status: 'ActiveStatusEffect') -> float:
-        """
-        Calculate DOT damage for a single status effect.
-
-        If effect.dot_diminishing is True:
-            Formula: actual_damage = base_damage * (d - r_t + 1) / d
-            Where:
-            - base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
-            - d = effect.duration (from config)
-            - r_t = remaining_turns
-            This makes DOT stronger as it progresses (builds up over time).
-
-        If effect.dot_diminishing is False:
-            Formula: actual_damage = base_damage (constant each turn)
-
-        Args:
-            status: The active status effect
-
-        Returns:
-            Actual DOT damage for this turn (before armor/modifiers)
-        """
-        # Calculate base DOT damage from source damage
-        base_damage = status.source_damage * status.effect.dot_ability_damage_mult
-        base_damage += status.effect.dot_bonus_damage
-
-        # Check if this DOT diminishes (decays) or stays constant
-        if status.effect.dot_diminishing:
-            # Apply decay formula - damage builds up over time
-            duration = status.effect.duration
-            if duration > 0:
-                decay_factor = (duration - status.remaining_turns + 1) / duration
-                return base_damage * decay_factor
-            else:
-                # Invalid duration, use constant damage
-                return base_damage
-        else:
-            # Constant DOT damage each turn
-            return base_damage
-
-    def _decay_status_effects(self, unit: 'BattleUnit') -> None:
-        """
-        Decrement duration of all status effects and remove expired ones.
-
-        Args:
-            unit: The unit whose status effects to decay
-        """
-        remaining_effects = []
-        for status in unit.status_effects:
-            # Decrement duration
-            status.remaining_turns -= 1
-
-            # Keep effect if still active
-            if status.remaining_turns > 0:
-                remaining_effects.append(status)
-
-        # Update unit's status effects list
-        unit.status_effects = remaining_effects
-
-    def _apply_dot_damage_to_unit(self, unit: 'BattleUnit') -> None:
-        """
-        Apply DOT damage to a unit from all active DOT effects.
-
-        Each effect is applied separately since they can have different damage types.
-
-        Args:
-            unit: The unit to apply DOT damage to
-        """
-        from ..enums import StatusEffectType
-
-        for status in unit.status_effects:
-            if status.effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage for this effect
-                dot_damage = self._calculate_dot_damage_for_effect(status)
-
-                if dot_damage > 0:
-                    # Apply damage with the effect's specific damage type
-                    # take_damage handles armor/modifiers automatically
-                    unit.take_damage(
-                        int(dot_damage),
-                        status.effect.dot_damage_type,  # Use the effect's damage type
-                        armor_piercing=status.effect.dot_ap_percent
-                    )
+            DOTHandler.decay_status_effects(unit)
 
     # =========================================================================
     # Step 2: Check if all enemy units dead
