@@ -145,15 +145,18 @@ class EnemyTurnExecutor:
 
     def _calculate_dot_damage_for_effect(self, status: 'ActiveStatusEffect') -> float:
         """
-        Calculate DOT damage for a single status effect with decay.
+        Calculate DOT damage for a single status effect.
 
-        Formula: actual_damage = base_damage * (d - r_t + 1) / d
-        Where:
-        - base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
-        - d = effect.duration (from config)
-        - r_t = remaining_turns
+        If effect.dot_diminishing is True:
+            Formula: actual_damage = base_damage * (d - r_t + 1) / d
+            Where:
+            - base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
+            - d = effect.duration (from config)
+            - r_t = remaining_turns
+            This makes DOT stronger as it progresses (builds up over time).
 
-        This makes DOT stronger as it progresses (builds up over time).
+        If effect.dot_diminishing is False:
+            Formula: actual_damage = base_damage (constant each turn)
 
         Args:
             status: The active status effect
@@ -165,13 +168,18 @@ class EnemyTurnExecutor:
         base_damage = status.source_damage * status.effect.dot_ability_damage_mult
         base_damage += status.effect.dot_bonus_damage
 
-        # Apply decay formula using duration from config
-        duration = status.effect.duration
-        if duration > 0:
-            decay_factor = (duration - status.remaining_turns + 1) / duration
-            return base_damage * decay_factor
+        # Check if this DOT diminishes (decays) or stays constant
+        if status.effect.dot_diminishing:
+            # Apply decay formula - damage builds up over time
+            duration = status.effect.duration
+            if duration > 0:
+                decay_factor = (duration - status.remaining_turns + 1) / duration
+                return base_damage * decay_factor
+            else:
+                # Invalid duration, use constant damage
+                return base_damage
         else:
-            # No decay if duration is 0 or invalid
+            # Constant DOT damage each turn
             return base_damage
 
     def _decay_status_effects(self, unit: 'BattleUnit') -> None:
