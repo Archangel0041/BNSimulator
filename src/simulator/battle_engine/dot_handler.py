@@ -4,6 +4,7 @@ DOT (Damage Over Time) Handler.
 Handles all DOT-related calculations and application.
 """
 
+import math
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -73,7 +74,7 @@ class DOTHandler:
                     # Apply damage with the effect's specific damage type
                     # take_damage handles armor/modifiers automatically
                     unit.take_damage(
-                        int(dot_damage),
+                        math.floor(dot_damage),
                         status.effect.dot_damage_type,
                         armor_piercing=status.effect.dot_ap_percent
                     )
