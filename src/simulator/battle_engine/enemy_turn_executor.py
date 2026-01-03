@@ -136,23 +136,12 @@ class EnemyTurnExecutor:
             if not unit.is_alive:
                 continue
 
-            # Sub-step 1: Calculate base DOT damage for all DOT effects on this unit
-            total_dot_damage = 0
-            for status in unit.status_effects:
-                if status.effect.effect_type == StatusEffectType.DOT:
-                    # Calculate DOT damage for this effect
-                    base_dot = self._calculate_dot_damage_for_effect(status)
-                    total_dot_damage += base_dot
+            # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
+            # (Must be done per-effect since each can have different damage type)
+            self._apply_dot_damage_to_unit(unit)
 
             # Sub-step 2: Decay status effect durations and remove expired effects
             self._decay_status_effects(unit)
-
-            # Sub-step 3: Apply armor/modifiers to damage
-            # Sub-step 4: Apply the final damage to the unit
-            # (Both handled by take_damage: applies type modifiers, armor reduction, and HP damage)
-            if total_dot_damage > 0:
-                # DOT is typically fire damage
-                unit.take_damage(int(total_dot_damage), DamageType.FIRE)
 
     def _calculate_dot_damage_for_effect(self, status: 'ActiveStatusEffect') -> float:
         """
@@ -188,6 +177,31 @@ class EnemyTurnExecutor:
 
         # Update unit's status effects list
         unit.status_effects = remaining_effects
+
+    def _apply_dot_damage_to_unit(self, unit: 'BattleUnit') -> None:
+        """
+        Apply DOT damage to a unit from all active DOT effects.
+
+        Each effect is applied separately since they can have different damage types.
+
+        Args:
+            unit: The unit to apply DOT damage to
+        """
+        from ..enums import StatusEffectType
+
+        for status in unit.status_effects:
+            if status.effect.effect_type == StatusEffectType.DOT:
+                # Calculate DOT damage for this effect
+                dot_damage = self._calculate_dot_damage_for_effect(status)
+
+                if dot_damage > 0:
+                    # Apply damage with the effect's specific damage type
+                    # take_damage handles armor/modifiers automatically
+                    unit.take_damage(
+                        int(dot_damage),
+                        status.effect.dot_damage_type,  # Use the effect's damage type
+                        armor_piercing=status.effect.dot_ap_percent
+                    )
 
     # =========================================================================
     # Step 2: Check if all enemy units dead
