@@ -19,12 +19,12 @@ class DOTHandler:
         Calculate DOT damage for a single status effect.
 
         If effect.dot_diminishing is True:
-            Formula: actual_damage = base_damage * (d - r_t + 1) / d
+            Formula: actual_damage = base_damage * (r_t / d)
             Where:
-            - base_damage = source_damage * dot_ability_damage_mult + dot_bonus_damage
+            - base_damage = pre-calculated (stored in status.base_dot_damage)
             - d = effect.duration (from config)
             - r_t = remaining_turns
-            This makes DOT stronger as it progresses (builds up over time).
+            This makes DOT weaker as time progresses (diminishes).
 
         If effect.dot_diminishing is False:
             Formula: actual_damage = base_damage (constant each turn)
@@ -35,16 +35,15 @@ class DOTHandler:
         Returns:
             Actual DOT damage for this turn (before armor/modifiers)
         """
-        # Calculate base DOT damage from source damage
-        base_damage = status.source_damage * status.effect.dot_ability_damage_mult
-        base_damage += status.effect.dot_bonus_damage
+        # Use pre-calculated base DOT damage
+        base_damage = status.base_dot_damage
 
-        # Check if this DOT diminishes (decays) or stays constant
+        # Check if this DOT diminishes (gets weaker) or stays constant
         if status.effect.dot_diminishing:
-            # Apply decay formula - damage builds up over time
+            # Apply diminishing formula - damage gets weaker over time
             duration = status.effect.duration
             if duration > 0:
-                decay_factor = (duration - status.remaining_turns + 1) / duration
+                decay_factor = status.remaining_turns / duration
                 return base_damage * decay_factor
             else:
                 # Invalid duration, use constant damage
