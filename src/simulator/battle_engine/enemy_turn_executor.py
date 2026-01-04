@@ -12,6 +12,7 @@ from .battle_types import (
     Position, ActionCandidate
 )
 from .dot_handler import DOTHandler
+from .death_handler import DeathHandler
 from ..enums import DamageType
 
 if TYPE_CHECKING:
@@ -45,18 +46,21 @@ class EnemyTurnExecutor:
         # Step 1: Apply DOT to enemy units
         self._step_apply_dot_to_enemy()
 
-        # Step 2: Check if all enemy units dead -> end battle with victory
+        # Step 2: Check for dead enemy units (from DOT)
+        self._step_check_for_dead_enemy_units()
+
+        # Step 3: Check if all enemy units dead -> end battle with victory
         if self._step_check_all_enemy_units_dead():
             self.battle.result = BattleResult.PLAYER_WIN
             return TurnResult.BATTLE_ENDED
 
-        # Step 3: Collapse 1 row if no units on front row
+        # Step 4: Collapse 1 row if no units on front row
         self._step_collapse_enemy_front_row()
 
-        # Step 4: Reduce cooldowns (unit must not be stunned)
+        # Step 5: Reduce cooldowns (unit must not be stunned)
         self._step_reduce_enemy_cooldowns()
 
-        # Step 5: Make list of all alive units and abilities
+        # Step 6: Make list of all alive units and abilities
         all_possible_actions = self._step_list_all_alive_units_and_abilities()
 
         # Step 6: Filter all units which are stunned/frozen
@@ -98,8 +102,8 @@ class EnemyTurnExecutor:
         # Step 13: Deal damage
         self._step_deal_damage(action, final_damage)
 
-        # Step 14: Check for dead units
-        self._step_check_for_dead_units()
+        # Step 14: Check for dead player units (from damage)
+        self._step_check_for_dead_player_units()
 
         # Check if all player units dead -> end battle with loss
         if self._step_check_all_player_units_dead():
@@ -131,10 +135,7 @@ class EnemyTurnExecutor:
         3. Apply armor/modifiers to damage
         4. Apply the final damage to the unit
         """
-        for unit in self.battle.enemy_units:
-            if not unit.is_alive:
-                continue
-
+        for unit in self.battle.enemy_units.values():
             # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
             # (Must be done per-effect since each can have different damage type)
             DOTHandler.apply_dot_to_unit(unit)
@@ -143,7 +144,20 @@ class EnemyTurnExecutor:
             DOTHandler.decay_status_effects(unit)
 
     # =========================================================================
-    # Step 2: Check if all enemy units dead
+    # Step 2: Check for dead enemy units (from DOT)
+    # =========================================================================
+
+    def _step_check_for_dead_enemy_units(self) -> None:
+        """
+        Step 2: Check for dead enemy units after DOT application.
+
+        Removes enemy units with HP <= 0 from the working copy.
+        """
+        from ..enums import BattleSide
+        DeathHandler.check_for_dead_units(self.battle, BattleSide.ENEMY_TEAM)
+
+    # =========================================================================
+    # Step 3: Check if all enemy units dead
     # =========================================================================
 
     def _step_check_all_enemy_units_dead(self) -> bool:
@@ -153,11 +167,11 @@ class EnemyTurnExecutor:
         Returns:
             True if all enemy units are dead (ignoring unimportant units)
         """
-        # TODO: Implement death check
-        return False
+        from ..enums import BattleSide
+        return DeathHandler.check_all_units_dead(self.battle, BattleSide.ENEMY_TEAM)
 
     # =========================================================================
-    # Step 3: Collapse enemy front row
+    # Step 4: Collapse enemy front row
     # =========================================================================
 
     def _step_collapse_enemy_front_row(self) -> None:
@@ -171,7 +185,7 @@ class EnemyTurnExecutor:
         pass
 
     # =========================================================================
-    # Step 4: Reduce enemy cooldowns
+    # Step 5: Reduce enemy cooldowns
     # =========================================================================
 
     def _step_reduce_enemy_cooldowns(self) -> None:
@@ -401,17 +415,17 @@ class EnemyTurnExecutor:
         pass
 
     # =========================================================================
-    # Step 15: Check for dead units
+    # Step 14: Check for dead player units (from damage)
     # =========================================================================
 
-    def _step_check_for_dead_units(self) -> None:
+    def _step_check_for_dead_player_units(self) -> None:
         """
-        Step 14: Check for dead units.
+        Step 14: Check for dead player units after damage application.
 
-        Updates is_alive status for any units that have 0 HP.
+        Removes player units with HP <= 0 from the working copy.
         """
-        # TODO: Implement death check
-        pass
+        from ..enums import BattleSide
+        DeathHandler.check_for_dead_units(self.battle, BattleSide.PLAYER_TEAM)
 
     # =========================================================================
     # Step 16: Apply status effects
@@ -461,5 +475,5 @@ class EnemyTurnExecutor:
         Returns:
             True if all player units are dead (ignoring unimportant units)
         """
-        # TODO: Implement death check
-        return False
+        from ..enums import BattleSide
+        return DeathHandler.check_all_units_dead(self.battle, BattleSide.PLAYER_TEAM)

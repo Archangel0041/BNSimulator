@@ -130,9 +130,17 @@ class BattleEnv(gym.Env):
 
         legal_actions = self.battle.get_legal_actions()
 
+        # Create a mapping from unit positions to indices for action encoding
+        unit_positions = list(self.battle.player_units.keys())
+        
         for action in legal_actions:
+            # Get unit position and map to index
+            if action.unit_position not in unit_positions:
+                continue
+            unit_idx = unit_positions.index(action.unit_position)
+            
             # Map weapon_id to weapon_idx (0-based)
-            unit = self.battle.player_units[action.unit_index]
+            unit = self.battle.player_units[action.unit_position]
             weapon_ids = list(unit.template.weapons.keys())
             if action.weapon_id in weapon_ids:
                 weapon_idx = weapon_ids.index(action.weapon_id)
@@ -142,7 +150,7 @@ class BattleEnv(gym.Env):
             target_idx = self._position_to_target_idx(action.target_position)
 
             flat_action = self._encode_action(
-                action.unit_index,
+                unit_idx,
                 weapon_idx,
                 target_idx
             )
@@ -156,10 +164,13 @@ class BattleEnv(gym.Env):
         """Convert environment action to battle Action."""
         unit_idx, weapon_idx, target_idx = self._decode_action(action)
 
-        if unit_idx >= len(self.battle.player_units):
+        # Get unit position from index
+        unit_positions = list(self.battle.player_units.keys())
+        if unit_idx >= len(unit_positions):
             return None
 
-        unit = self.battle.player_units[unit_idx]
+        unit_pos = unit_positions[unit_idx]
+        unit = self.battle.player_units[unit_pos]
         weapon_ids = list(unit.template.weapons.keys())
 
         if weapon_idx >= len(weapon_ids):
@@ -169,7 +180,7 @@ class BattleEnv(gym.Env):
         target_pos = self._target_idx_to_position(target_idx)
 
         return Action(
-            unit_index=unit_idx,
+            unit_position=unit_pos,
             weapon_id=weapon_id,
             target_position=target_pos
         )
@@ -300,7 +311,7 @@ class BattleEnv(gym.Env):
                 # Validate action
                 legal_actions = self.battle.get_legal_actions()
                 is_legal = any(
-                    a.unit_index == battle_action.unit_index and
+                    a.unit_position == battle_action.unit_position and
                     a.weapon_id == battle_action.weapon_id and
                     a.target_position == battle_action.target_position
                     for a in legal_actions
@@ -484,19 +495,18 @@ class MultiWaveBattleEnv(BattleEnv):
                 # Carry over surviving player units' HP
                 surviving_hp = {}
                 if self.battle:
-                    for i, unit in enumerate(self.battle.player_units):
-                        if unit.is_alive:
-                            surviving_hp[i] = (unit.current_hp, unit.current_armor)
+                    for pos, unit in self.battle.player_units.items():
+                        surviving_hp[pos] = (unit.current_hp, unit.current_armor)
 
                 # Reset for next wave
                 obs, _ = super().reset()
 
                 # Restore HP state
                 if self.battle:
-                    for i, (hp, armor) in surviving_hp.items():
-                        if i < len(self.battle.player_units):
-                            self.battle.player_units[i].current_hp = hp
-                            self.battle.player_units[i].current_armor = armor
+                    for pos, (hp, armor) in surviving_hp.items():
+                        if pos in self.battle.player_units:
+                            self.battle.player_units[pos].current_hp = hp
+                            self.battle.player_units[pos].current_armor = armor
 
                 terminated = False
                 truncated = False

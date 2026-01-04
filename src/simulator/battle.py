@@ -5,6 +5,7 @@ from typing import Optional, Iterator
 from enum import Enum
 import random
 import numpy as np
+from copy import deepcopy
 
 from .enums import (
     DamageType, UnitClass, Side, BattleSide, CellType, TargetType,
@@ -193,7 +194,7 @@ class BattleUnit:
 @dataclass
 class Action:
     """A battle action (unit uses ability on target)."""
-    unit_index: int
+    unit_position: Position  # Position of the unit performing the action
     weapon_id: int
     target_position: Position
 
@@ -202,9 +203,9 @@ class Action:
 class ActionResult:
     """Result of executing an action."""
     success: bool
-    damage_dealt: dict[int, int] = field(default_factory=dict)  # unit_index -> damage
-    kills: list[int] = field(default_factory=list)  # indices of killed units
-    status_applied: list[tuple[int, int]] = field(default_factory=list)  # (unit_idx, effect_id)
+    damage_dealt: dict[Position, int] = field(default_factory=dict)  # unit_position -> damage
+    kills: list[Position] = field(default_factory=list)  # positions of killed units
+    status_applied: list[tuple[Position, int]] = field(default_factory=list)  # (unit_position, effect_id)
     message: str = ""
 
 
@@ -221,9 +222,25 @@ class BattleState:
     ):
         self.data_loader = data_loader
         self.layout = layout
-        self.player_units = player_units
-        self.enemy_units = enemy_units
         self.player_is_attacker = player_is_attacker
+
+        # Store original copies as dictionaries (immutable reference from battle start)
+        # Key: Position, Value: BattleUnit
+        self._original_player_units: dict[Position, BattleUnit] = {
+            unit.position: unit for unit in player_units
+        }
+        self._original_enemy_units: dict[Position, BattleUnit] = {
+            unit.position: unit for unit in enemy_units
+        }
+
+        # Create deep copies for working copies (where changes are applied)
+        # Use dictionaries keyed by position for efficient lookup and removal
+        self.player_units: dict[Position, BattleUnit] = {
+            unit.position: deepcopy(unit) for unit in player_units
+        }
+        self.enemy_units: dict[Position, BattleUnit] = {
+            unit.position: deepcopy(unit) for unit in enemy_units
+        }
 
         # Turn tracking
         self.turn_number = 0
@@ -243,24 +260,34 @@ class BattleState:
         self.rng.seed(seed)
 
     @property
-    def current_side_units(self) -> list[BattleUnit]:
+    def current_side_units(self) -> dict[Position, BattleUnit]:
         """Get units for the current turn's side."""
         return self.player_units if self.is_player_turn else self.enemy_units
 
     @property
-    def opposing_side_units(self) -> list[BattleUnit]:
+    def opposing_side_units(self) -> dict[Position, BattleUnit]:
         """Get units for the opposing side."""
         return self.enemy_units if self.is_player_turn else self.player_units
 
+    @property
+    def original_player_units(self) -> dict[Position, BattleUnit]:
+        """Get the original player units from battle start (immutable reference)."""
+        return self._original_player_units
+
+    @property
+    def original_enemy_units(self) -> dict[Position, BattleUnit]:
+        """Get the original enemy units from battle start (immutable reference)."""
+        return self._original_enemy_units
+
     def get_unit_at_position(self, pos: Position, side: Optional[Side] = None) -> Optional[BattleUnit]:
         """Get unit at a specific position."""
-        units = (self.player_units + self.enemy_units) if side is None else (
-            self.player_units if side == Side.PLAYER else self.enemy_units
-        )
-        for unit in units:
-            if unit.is_alive and unit.position == pos:
-                return unit
-        return None
+        if side is None:
+            # Check both sides
+            return self.player_units.get(pos) or self.enemy_units.get(pos)
+        elif side == Side.PLAYER:
+            return self.player_units.get(pos)
+        else:
+            return self.enemy_units.get(pos)
 
     def get_valid_targets(self, attacker: BattleUnit, weapon_id: int) -> list[Position]:
         """Get all valid target positions for a weapon."""
@@ -280,15 +307,12 @@ class BattleState:
         # Determine which side to target
         target_units = self.opposing_side_units
 
-        for target_unit in target_units:
-            if not target_unit.is_alive:
-                continue
-
+        for target_pos, target_unit in target_units.items():
             # Check if unit can be targeted by this ability
             if not self._can_target_unit(attacker, target_unit, stats):
                 continue
 
-            valid_targets.append(target_unit.position)
+            valid_targets.append(target_pos)
 
         return valid_targets
 
@@ -369,7 +393,7 @@ class BattleState:
             for y in range(min_y + 1, max_y):
                 blocking_pos = Position(attacker_pos.x, y)
                 blocking_unit = self.get_unit_at_position(blocking_pos)
-                if blocking_unit and blocking_unit.is_alive:
+                if blocking_unit:  # Unit exists in dict, so it's alive
                     return False
         return True
 
@@ -378,7 +402,7 @@ class BattleState:
         actions = []
         units = self.current_side_units
 
-        for unit_idx, unit in enumerate(units):
+        for unit_pos, unit in units.items():
             if not unit.can_act():
                 continue
 
@@ -386,7 +410,7 @@ class BattleState:
                 valid_targets = self.get_valid_targets(unit, weapon_id)
                 for target_pos in valid_targets:
                     actions.append(Action(
-                        unit_index=unit_idx,
+                        unit_position=unit_pos,
                         weapon_id=weapon_id,
                         target_position=target_pos
                     ))
@@ -396,10 +420,10 @@ class BattleState:
     def execute_action(self, action: Action) -> ActionResult:
         """Execute a battle action."""
         units = self.current_side_units
-        if action.unit_index >= len(units):
-            return ActionResult(success=False, message="Invalid unit index")
-
-        unit = units[action.unit_index]
+        unit = units.get(action.unit_position)
+        if unit is None:
+            return ActionResult(success=False, message="Unit not found at position")
+        
         if not unit.can_act():
             return ActionResult(success=False, message="Unit cannot act")
 
@@ -448,9 +472,6 @@ class BattleState:
         targets = self._get_aoe_targets(target_pos, stats)
 
         for target_unit, damage_percent in targets:
-            if not target_unit.is_alive:
-                continue
-
             # Calculate damage
             damage = self._calculate_damage(attacker, target_unit, weapon, ability, damage_percent)
 
@@ -473,11 +494,8 @@ class BattleState:
             )
 
             # Track in result
-            target_idx = self._get_unit_index(target_unit)
-            result.damage_dealt[target_idx] = result.damage_dealt.get(target_idx, 0) + actual_damage
-
-            if not target_unit.is_alive:
-                result.kills.append(target_idx)
+            target_pos = target_unit.position
+            result.damage_dealt[target_pos] = result.damage_dealt.get(target_pos, 0) + actual_damage
 
             # Apply status effects
             for effect_id, apply_chance in stats.status_effects.items():
@@ -489,7 +507,7 @@ class BattleState:
                             remaining_turns=effect.duration,
                             source_damage=damage
                         ))
-                        result.status_applied.append((target_idx, effect_id))
+                        result.status_applied.append((target_unit.position, effect_id))
 
         return result
 
@@ -499,7 +517,7 @@ class BattleState:
 
         # Primary target
         primary = self.get_unit_at_position(target_pos)
-        if primary and primary.is_alive:
+        if primary:  # Unit exists in dict, so it's alive
             targets.append((primary, 100.0))
 
         # AOE splash from damage_area
@@ -512,7 +530,7 @@ class BattleState:
                 target_pos.y + area.pos.y
             )
             splash_unit = self.get_unit_at_position(splash_pos)
-            if splash_unit and splash_unit.is_alive:
+            if splash_unit:  # Unit exists in dict, so it's alive
                 targets.append((splash_unit, area.damage_percent))
 
         return targets
@@ -583,19 +601,24 @@ class BattleState:
 
         return base_crit + ability_crit + bonus_crit
 
-    def _get_unit_index(self, unit: BattleUnit) -> int:
-        """Get the index of a unit in its team list."""
-        if unit.battle_side == BattleSide.PLAYER_TEAM:
-            return self.player_units.index(unit) if self.player_is_attacker else self.enemy_units.index(unit)
-        else:
-            return self.enemy_units.index(unit) if self.player_is_attacker else self.player_units.index(unit)
 
     def end_turn(self) -> None:
         """End the current turn and switch sides."""
         # Tick cooldowns for current side
-        for unit in self.current_side_units:
+        for unit in self.current_side_units.values():
             unit.tick_cooldowns()
             unit.tick_status_effects()
+
+        # Remove any units that died from status effects during tick_status_effects()
+        # This must happen before _check_battle_end() which assumes dead units are removed
+        from .battle_engine.death_handler import DeathHandler
+        from .enums import BattleSide
+        
+        # Remove dead units from the side that just ended their turn
+        if self.is_player_turn:
+            DeathHandler.check_for_dead_units(self, BattleSide.PLAYER_TEAM)
+        else:
+            DeathHandler.check_for_dead_units(self, BattleSide.ENEMY_TEAM)
 
         # Switch turns
         self.is_player_turn = not self.is_player_turn
@@ -607,10 +630,18 @@ class BattleState:
         # Check win/loss conditions
         self._check_battle_end()
 
+
     def _check_battle_end(self) -> None:
         """Check if battle has ended."""
-        player_alive = any(u.is_alive and not u.template.unimportant for u in self.player_units)
-        enemy_alive = any(u.is_alive and not u.template.unimportant for u in self.enemy_units)
+        # Check if any important units are still alive (units in dict are alive by definition)
+        player_alive = any(
+            not unit.template.unimportant
+            for unit in self.player_units.values()
+        )
+        enemy_alive = any(
+            not unit.template.unimportant
+            for unit in self.enemy_units.values()
+        )
 
         if not enemy_alive:
             self.result = BattleResult.PLAYER_WIN
@@ -633,13 +664,13 @@ class BattleState:
         idx = 0
 
         # Player units
-        for i, unit in enumerate(self.player_units[:MAX_UNITS]):
+        for i, unit in enumerate(list(self.player_units.values())[:MAX_UNITS]):
             state[idx] = unit.current_hp / max(1, unit.template.stats.hp)
             state[idx + 1] = unit.current_armor / max(1, unit.template.stats.armor_hp) if unit.template.stats.armor_hp > 0 else 0
             state[idx + 2] = unit.position.x / 5
             state[idx + 3] = unit.position.y / 3
             state[idx + 4] = unit.template.class_type.value / 15
-            state[idx + 5] = 1.0 if unit.is_alive else 0.0
+            state[idx + 5] = 1.0  # Unit exists in dict, so it's alive
             state[idx + 6] = 1.0 if unit.can_act() else 0.0
             state[idx + 7] = len(unit.get_available_weapons()) / 2
             state[idx + 8] = unit.global_cooldown / 5
@@ -649,13 +680,13 @@ class BattleState:
         idx = MAX_UNITS * UNIT_FEATURES
 
         # Enemy units
-        for i, unit in enumerate(self.enemy_units[:MAX_UNITS]):
+        for i, unit in enumerate(list(self.enemy_units.values())[:MAX_UNITS]):
             state[idx] = unit.current_hp / max(1, unit.template.stats.hp)
             state[idx + 1] = unit.current_armor / max(1, unit.template.stats.armor_hp) if unit.template.stats.armor_hp > 0 else 0
             state[idx + 2] = unit.position.x / 5
             state[idx + 3] = unit.position.y / 3
             state[idx + 4] = unit.template.class_type.value / 15
-            state[idx + 5] = 1.0 if unit.is_alive else 0.0
+            state[idx + 5] = 1.0  # Unit exists in dict, so it's alive
             state[idx + 6] = 1.0 if unit.can_act() else 0.0
             state[idx + 7] = len(unit.get_available_weapons()) / 2
             state[idx + 8] = unit.global_cooldown / 5
@@ -666,10 +697,10 @@ class BattleState:
         idx = MAX_UNITS * UNIT_FEATURES * 2
         state[idx] = self.turn_number / 50
         state[idx + 1] = 1.0 if self.is_player_turn else 0.0
-        state[idx + 2] = sum(1 for u in self.player_units if u.is_alive) / MAX_UNITS
-        state[idx + 3] = sum(1 for u in self.enemy_units if u.is_alive) / MAX_UNITS
-        state[idx + 4] = sum(u.current_hp for u in self.player_units) / max(1, sum(u.template.stats.hp for u in self.player_units))
-        state[idx + 5] = sum(u.current_hp for u in self.enemy_units) / max(1, sum(u.template.stats.hp for u in self.enemy_units))
+        state[idx + 2] = len(self.player_units) / MAX_UNITS
+        state[idx + 3] = len(self.enemy_units) / MAX_UNITS
+        state[idx + 4] = sum(u.current_hp for u in self.player_units.values()) / max(1, sum(u.template.stats.hp for u in self.player_units.values()))
+        state[idx + 5] = sum(u.current_hp for u in self.enemy_units.values()) / max(1, sum(u.template.stats.hp for u in self.enemy_units.values()))
 
         return state
 
@@ -838,7 +869,7 @@ class BattleSimulator:
     def _action_matches_legal(self, action: Action, legal_actions: list[Action]) -> bool:
         """Check if action matches any legal action."""
         for legal in legal_actions:
-            if (action.unit_index == legal.unit_index and
+            if (action.unit_position == legal.unit_position and
                 action.weapon_id == legal.weapon_id and
                 action.target_position == legal.target_position):
                 return True

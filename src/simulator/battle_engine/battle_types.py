@@ -73,7 +73,7 @@ class ActionCandidate:
     Represents a potential action during enemy turn.
     Used for filtering and target calculation.
     """
-    unit_index: int
+    unit_position: Position  # Position of the unit
     ability_index: int
     # Will be populated during target calculation
     valid_targets: List[Position] = None
