@@ -11,7 +11,7 @@ from .battle_types import (
     TurnResult, BattleResult, HitResult, DamageResult,
     Position, ActionCandidate
 )
-from .dot_handler import DOTHandler
+from .status_effect_handler import StatusEffectHandler
 from .death_handler import DeathHandler
 from ..enums import DamageType
 
@@ -43,50 +43,33 @@ class EnemyTurnExecutor:
         Returns:
             TurnResult indicating the outcome of the turn
         """
-        # Step 1: Apply DOT to enemy units
-        self._step_apply_dot_to_enemy()
-
-        # Step 2: Check for dead enemy units (from DOT)
-        self._step_check_for_dead_enemy_units()
-
-        # Step 3: Check if all enemy units dead -> end battle with victory
-        if self._step_check_all_enemy_units_dead():
-            self.battle.result = BattleResult.PLAYER_WIN
-            return TurnResult.BATTLE_ENDED
-
-        # Step 4: Collapse 1 row if no units on front row
-        self._step_collapse_enemy_front_row()
-
-        # Step 5: Reduce cooldowns (unit must not be stunned)
-        self._step_reduce_enemy_cooldowns()
-
-        # Step 6: Make list of all alive units and abilities
+        # Step 1: Make list of all alive units and abilities
         all_possible_actions = self._step_list_all_alive_units_and_abilities()
 
-        # Step 6: Filter all units which are stunned/frozen
+        # Step 2: Filter all units which are stunned/frozen
         filtered_actions = self._step_filter_stunned_units(all_possible_actions)
 
-        # Step 7: Filter abilities on cooldown
+        # Step 3: Filter abilities on cooldown
         filtered_actions = self._step_filter_cooldown_abilities(filtered_actions)
 
-        # Step 8: Calculate valid targets for each ability
+        # Step 4: Calculate valid targets for each ability
         # (empty locations & targets that will not take damage are not valid)
         actions_with_targets = self._step_calculate_valid_targets(filtered_actions)
 
-        # Step 9: Filter abilities with no valid target
+        # Step 5: Filter abilities with no valid target
         valid_actions = self._step_filter_no_valid_targets(actions_with_targets)
 
         # No valid actions - skip turn
         if not valid_actions:
             return TurnResult.NO_VALID_ACTIONS
 
-        # Select action using AI policy
+        # Step 6: Select action using AI policy
         action = self._step_select_action(valid_actions)
 
-        # Step 10: Calculate base damage
+        # Step 7: Calculate base damage
         base_damage = self._step_calculate_base_damage(action)
 
-        # Step 11: Check for dodges/misses/etc
+        # Step 8: Check for dodges/misses/etc
         hit_result = self._step_check_hit(action)
         if not hit_result.hit:
             self._step_update_cooldown_and_ammo(action)
@@ -96,13 +79,13 @@ class EnemyTurnExecutor:
         if hit_result.is_critical:
             base_damage *= 1.5
 
-        # Step 12: Apply modifiers & armor
+        # Step 9: Apply modifiers & armor
         final_damage = self._step_apply_modifiers_and_armor(action, base_damage)
 
-        # Step 13: Deal damage
+        # Step 10: Deal damage
         self._step_deal_damage(action, final_damage)
 
-        # Step 14: Check for dead player units (from damage)
+        # Step 11: Check for dead player units (from damage)
         self._step_check_for_dead_player_units()
 
         # Check if all player units dead -> end battle with loss
@@ -110,11 +93,31 @@ class EnemyTurnExecutor:
             self.battle.result = BattleResult.ENEMY_WIN
             return TurnResult.BATTLE_ENDED
 
-        # Step 15: Apply DOT status effects
+        # Step 12: Apply DOT status effects
         self._step_apply_status_effects(action, final_damage)
 
-        # Step 16: Update cooldown and ammo
+        # Step 13: Update cooldown and ammo
         self._step_update_cooldown_and_ammo(action)
+
+        # Step 14: Apply DOT to player units (opposing side that was attacked)
+        self._step_apply_dot_to_player_units()
+
+        # Step 15: Check for dead player units (from DOT)
+        self._step_check_for_dead_player_units()
+
+        # Step 16: Check if all player units dead -> end battle with loss
+        if self._step_check_all_player_units_dead():
+            self.battle.result = BattleResult.ENEMY_WIN
+            return TurnResult.BATTLE_ENDED
+
+        # Step 17: Collapse 1 row if no units on front row (player side)
+        self._step_collapse_player_front_row()
+
+        # Step 18: Reduce cooldowns (unit must not be stunned) (player side)
+        self._step_reduce_player_cooldowns()
+
+        # Step 19: Decay stun/freeze effects (enemy side) - after turn completes
+        self._step_decay_stun_effects_enemy()
 
         return TurnResult.SUCCESS
 
@@ -138,10 +141,37 @@ class EnemyTurnExecutor:
         for unit in self.battle.enemy_units.values():
             # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
             # (Must be done per-effect since each can have different damage type)
-            DOTHandler.apply_dot_to_unit(unit)
+            StatusEffectHandler.apply_dot_to_unit(unit)
 
-            # Sub-step 2: Decay status effect durations and remove expired effects
-            DOTHandler.decay_status_effects(unit)
+            # Sub-step 2: Decay DOT status effect durations and remove expired effects
+            # (Only DOT effects decay here; stun/freeze decay at end of turn)
+            StatusEffectHandler.decay_dot_effects(unit)
+
+    # =========================================================================
+    # Apply DOT to player units (opposing side)
+    # =========================================================================
+
+    def _step_apply_dot_to_player_units(self) -> None:
+        """
+        Apply DOT to all player units (opposing side that was attacked).
+
+        Iterates through all player units and applies DOT damage from
+        active status effects.
+
+        Sub-steps for each unit:
+        1. Calculate base DOT damage for each valid DOT effect
+        2. Decay the status effect duration
+        3. Apply armor/modifiers to damage
+        4. Apply the final damage to the unit
+        """
+        for unit in self.battle.player_units.values():
+            # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
+            # (Must be done per-effect since each can have different damage type)
+            StatusEffectHandler.apply_dot_to_unit(unit)
+
+            # Sub-step 2: Decay DOT status effect durations and remove expired effects
+            # (Only DOT effects decay here; stun/freeze decay at end of turn)
+            StatusEffectHandler.decay_dot_effects(unit)
 
     # =========================================================================
     # Step 2: Check for dead enemy units (from DOT)
@@ -171,18 +201,110 @@ class EnemyTurnExecutor:
         return DeathHandler.check_all_units_dead(self.battle, BattleSide.ENEMY_TEAM)
 
     # =========================================================================
+    # Collapse player front row (opposing side)
+    # =========================================================================
+
+    def _step_collapse_player_front_row(self) -> None:
+        """
+        Collapse 1 row if front row is empty (player side).
+
+        If row 0 (front row, y=0) has no alive units, move all units forward
+        by one row (decrease y by 1). Only collapses ONE row per turn.
+        Increments the player_rows_collapsed counter.
+        """
+        from ..models import Position
+        
+        # Check if row 0 (y=0) has any units
+        has_front_row_units = any(
+            pos.y == 0 for pos in self.battle.player_units.keys()
+        )
+        
+        # If front row has units, no collapse needed
+        if has_front_row_units:
+            return
+        
+        # Front row is empty - move all units forward by 1 row
+        # Need to collect all units first, then update positions
+        # (can't modify dict while iterating)
+        units_to_move = list(self.battle.player_units.items())
+        
+        # Clear the dictionary
+        self.battle.player_units.clear()
+        
+        # Move each unit forward by 1 row (decrease y by 1)
+        for old_pos, unit in units_to_move:
+            # Create new position with y decreased by 1
+            new_pos = Position(x=old_pos.x, y=old_pos.y - 1)
+            
+            # Update unit's position attribute
+            unit.position = new_pos
+            
+            # Add to dictionary with new position as key
+            self.battle.player_units[new_pos] = unit
+        
+        # Increment collapse counter (tracks how many times collapse occurred)
+        self.battle.player_rows_collapsed += 1
+
+    # =========================================================================
     # Step 4: Collapse enemy front row
     # =========================================================================
 
     def _step_collapse_enemy_front_row(self) -> None:
         """
-        Step 3: Collapse 1 row if front row is empty.
+        Step 4: Collapse 1 row if front row is empty.
 
-        If row 0 (front row) has no alive units, move all units forward
-        by one row. Only collapses ONE row per turn.
+        If row 0 (front row, y=0) has no alive units, move all units forward
+        by one row (decrease y by 1). Only collapses ONE row per turn.
+        Increments the enemy_rows_collapsed counter.
         """
-        # TODO: Implement row collapse
-        pass
+        from ..models import Position
+        
+        # Check if row 0 (y=0) has any units
+        has_front_row_units = any(
+            pos.y == 0 for pos in self.battle.enemy_units.keys()
+        )
+        
+        # If front row has units, no collapse needed
+        if has_front_row_units:
+            return
+        
+        # Front row is empty - move all units forward by 1 row
+        # Need to collect all units first, then update positions
+        # (can't modify dict while iterating)
+        units_to_move = list(self.battle.enemy_units.items())
+        
+        # Clear the dictionary
+        self.battle.enemy_units.clear()
+        
+        # Move each unit forward by 1 row (decrease y by 1)
+        for old_pos, unit in units_to_move:
+            # Create new position with y decreased by 1
+            new_pos = Position(x=old_pos.x, y=old_pos.y - 1)
+            
+            # Update unit's position attribute
+            unit.position = new_pos
+            
+            # Add to dictionary with new position as key
+            self.battle.enemy_units[new_pos] = unit
+        
+        # Increment collapse counter (tracks how many times collapse occurred)
+        self.battle.enemy_rows_collapsed += 1
+
+    # =========================================================================
+    # Reduce player cooldowns (opposing side)
+    # =========================================================================
+
+    def _step_reduce_player_cooldowns(self) -> None:
+        """
+        Reduce cooldowns for non-stunned units (player side).
+
+        For each alive player unit that can act (not stunned):
+        - Decrement weapon cooldowns
+        - Decrement global cooldown
+        """
+        from ..enums import BattleSide
+        from .cooldown_handler import CooldownHandler
+        CooldownHandler.reduce_cooldowns_for_side(self.battle, BattleSide.PLAYER_TEAM)
 
     # =========================================================================
     # Step 5: Reduce enemy cooldowns
@@ -194,10 +316,26 @@ class EnemyTurnExecutor:
 
         For each alive enemy unit that can act (not stunned):
         - Decrement weapon cooldowns
-        - Decrement status effect durations
+        - Decrement global cooldown
         """
-        # TODO: Implement cooldown reduction
-        pass
+        from ..enums import BattleSide
+        from .cooldown_handler import CooldownHandler
+        CooldownHandler.reduce_cooldowns_for_side(self.battle, BattleSide.ENEMY_TEAM)
+
+    # =========================================================================
+    # Step 19: Decay stun/freeze effects (enemy side)
+    # =========================================================================
+
+    def _step_decay_stun_effects_enemy(self) -> None:
+        """
+        Decay stun/freeze status effects for enemy units (after turn completes).
+
+        Stun/freeze effects should only decay at the end of the turn, not when
+        DOT ticks. This ensures that if a unit is stunned, it remains stunned
+        for the full turn and can't act that turn.
+        """
+        for unit in self.battle.enemy_units.values():
+            StatusEffectHandler.decay_stun_effects(unit)
 
     # =========================================================================
     # Step 5: List all alive units and abilities
@@ -233,8 +371,13 @@ class EnemyTurnExecutor:
         Returns:
             Filtered list of action candidates
         """
-        # TODO: Implement stunned filtering
-        return actions
+        from .cooldown_handler import CooldownHandler
+        filtered = []
+        for action_candidate in actions:
+            unit = self.battle.enemy_units.get(action_candidate.unit_position)
+            if unit is not None and not CooldownHandler.is_unit_stunned(unit):
+                filtered.append(action_candidate)
+        return filtered
 
     # =========================================================================
     # Step 7: Filter abilities on cooldown

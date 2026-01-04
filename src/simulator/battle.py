@@ -246,6 +246,11 @@ class BattleState:
         self.turn_number = 0
         self.is_player_turn = True  # Player always goes first
 
+        # Row collapse tracking (how many rows have been collapsed for each side)
+        # Only collapses 1 row per turn, so this counts how many times collapse occurred
+        self.player_rows_collapsed = 0
+        self.enemy_rows_collapsed = 0
+
         # Battle result
         self.result = BattleResult.IN_PROGRESS
 
