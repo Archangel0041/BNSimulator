@@ -444,6 +444,31 @@ class TestRowCollapseEdgeCases:
         - After enemy executes attack, player side should collapse
         """
         from src.simulator.battle import Action
+        from src.simulator.models import Weapon, WeaponStats, Ability, AbilityStats
+        from src.simulator.enums import LineOfFire
+        from unittest.mock import Mock
+        
+        # Create a weapon and ability for the units
+        ability = Ability(
+            id=1,
+            name="Test Ability",
+            stats=AbilityStats(
+                min_range=1,
+                max_range=5,
+                line_of_fire=LineOfFire.INDIRECT,
+                damage=10
+            )
+        )
+        weapon = Weapon(
+            id=0,
+            name="Test Weapon",
+            abilities=[1],
+            stats=WeaponStats()
+        )
+        
+        # Add weapon to template
+        basic_unit_template.weapons[0] = weapon
+        mock_data_loader.get_ability = Mock(return_value=ability)
         
         # Create player unit on row 1 (y=1)
         player_unit = BattleUnit(
@@ -468,6 +493,7 @@ class TestRowCollapseEdgeCases:
         )
         
         # Verify initial state: both units on row 1, front row empty
+        
         assert any(pos.y == 0 for pos in battle.player_units.keys()) is False
         assert any(pos.y == 1 for pos in battle.player_units.keys()) is True
         assert any(pos.y == 0 for pos in battle.enemy_units.keys()) is False
@@ -485,8 +511,7 @@ class TestRowCollapseEdgeCases:
         player_pos = next(iter(battle.player_units.keys()))
         enemy_pos = next(iter(battle.enemy_units.keys()))
         
-        # Create a simple action (weapon_id=0 is a placeholder)
-        # Action uses Position from models (x, y)
+        # Create action with valid weapon_id
         action = Action(
             unit_position=Position(x=player_pos.x, y=player_pos.y),
             weapon_id=0,

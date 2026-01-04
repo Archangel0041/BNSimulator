@@ -438,18 +438,18 @@ class TestDifferentDamageTypes:
 class TestCooldownReduction:
     """Tests for cooldown reduction functionality."""
 
-    def test_reduce_weapon_cooldowns(self, basic_unit_template, mock_data_loader, mock_layout):
-        """Test that weapon cooldowns are reduced for non-stunned units."""
+    def test_reduce_ability_cooldowns(self, basic_unit_template, mock_data_loader, mock_layout):
+        """Test that ability cooldowns are reduced for non-stunned units."""
         unit = BattleUnit(
             template=basic_unit_template,
             position=Position(0, 0),
             battle_side=BattleSide.PLAYER_TEAM
         )
         
-        # Set up cooldowns
-        unit.weapon_cooldowns[0] = 3
-        unit.weapon_cooldowns[1] = 2
-        unit.global_cooldown = 1
+        # Set up cooldowns (using ability IDs)
+        unit.ability_cooldowns[1] = 3
+        unit.ability_cooldowns[2] = 2
+        unit.global_cooldowns[0] = 1  # weapon_id 0
         
         battle = BattleState(
             data_loader=mock_data_loader,
@@ -466,9 +466,9 @@ class TestCooldownReduction:
         battle_unit = next(iter(battle.player_units.values()))
         
         # Cooldowns should be reduced by 1
-        assert battle_unit.weapon_cooldowns[0] == 2
-        assert battle_unit.weapon_cooldowns[1] == 1
-        assert battle_unit.global_cooldown == 0
+        assert battle_unit.ability_cooldowns[1] == 2
+        assert battle_unit.ability_cooldowns[2] == 1
+        assert battle_unit.global_cooldowns.get(0, 0) == 0
 
     def test_cooldown_removed_when_reaches_zero(self, basic_unit_template, mock_data_loader, mock_layout):
         """Test that cooldowns are removed from dict when they reach 0."""
@@ -479,7 +479,7 @@ class TestCooldownReduction:
         )
         
         # Set up cooldown at 1 (should be removed after reduction)
-        unit.weapon_cooldowns[0] = 1
+        unit.ability_cooldowns[1] = 1
         
         battle = BattleState(
             data_loader=mock_data_loader,
@@ -496,8 +496,8 @@ class TestCooldownReduction:
         battle_unit = next(iter(battle.player_units.values()))
         
         # Cooldown should be removed from dict
-        assert 0 not in battle_unit.weapon_cooldowns
-        assert len(battle_unit.weapon_cooldowns) == 0
+        assert 1 not in battle_unit.ability_cooldowns
+        assert len(battle_unit.ability_cooldowns) == 0
 
     def test_stunned_units_dont_reduce_cooldowns(self, basic_unit_template, mock_data_loader, mock_layout, stun_effect):
         """Test that stunned units do not have their cooldowns reduced."""
@@ -508,8 +508,8 @@ class TestCooldownReduction:
         )
         
         # Set up cooldowns
-        unit.weapon_cooldowns[0] = 3
-        unit.global_cooldown = 2
+        unit.ability_cooldowns[1] = 3
+        unit.global_cooldowns[0] = 2
         
         # Add stun effect
         stun_status = ActiveStatusEffect(
@@ -534,8 +534,8 @@ class TestCooldownReduction:
         battle_unit = next(iter(battle.player_units.values()))
         
         # Cooldowns should NOT be reduced (unit is stunned)
-        assert battle_unit.weapon_cooldowns[0] == 3
-        assert battle_unit.global_cooldown == 2
+        assert battle_unit.ability_cooldowns[1] == 3
+        assert battle_unit.global_cooldowns.get(0, 0) == 2
 
     def test_reduce_enemy_cooldowns(self, basic_unit_template, mock_data_loader, mock_layout):
         """Test reducing cooldowns for enemy units."""
@@ -546,8 +546,8 @@ class TestCooldownReduction:
         )
         
         # Set up cooldowns
-        unit.weapon_cooldowns[0] = 2
-        unit.global_cooldown = 1
+        unit.ability_cooldowns[1] = 2
+        unit.global_cooldowns[0] = 1
         
         battle = BattleState(
             data_loader=mock_data_loader,
@@ -564,8 +564,8 @@ class TestCooldownReduction:
         battle_unit = next(iter(battle.enemy_units.values()))
         
         # Cooldowns should be reduced
-        assert battle_unit.weapon_cooldowns[0] == 1
-        assert battle_unit.global_cooldown == 0
+        assert battle_unit.ability_cooldowns[1] == 1
+        assert battle_unit.global_cooldowns.get(0, 0) == 0
 
     def test_reduce_multiple_units_cooldowns(self, basic_unit_template, mock_data_loader, mock_layout):
         """Test reducing cooldowns for multiple units."""
@@ -580,10 +580,10 @@ class TestCooldownReduction:
             battle_side=BattleSide.PLAYER_TEAM
         )
         
-        unit1.weapon_cooldowns[0] = 2
-        unit1.global_cooldown = 1
-        unit2.weapon_cooldowns[0] = 3
-        unit2.global_cooldown = 2
+        unit1.ability_cooldowns[1] = 2
+        unit1.global_cooldowns[0] = 1  # weapon_id 0
+        unit2.ability_cooldowns[1] = 3
+        unit2.global_cooldowns[0] = 2  # weapon_id 0
         
         battle = BattleState(
             data_loader=mock_data_loader,
@@ -602,10 +602,10 @@ class TestCooldownReduction:
         battle_unit2 = battle_units[1]
         
         # Both units should have cooldowns reduced
-        assert battle_unit1.weapon_cooldowns[0] == 1
-        assert battle_unit1.global_cooldown == 0
-        assert battle_unit2.weapon_cooldowns[0] == 2
-        assert battle_unit2.global_cooldown == 1
+        assert battle_unit1.ability_cooldowns[1] == 1
+        assert battle_unit1.global_cooldowns.get(0, 0) == 0
+        assert battle_unit2.ability_cooldowns[1] == 2
+        assert battle_unit2.global_cooldowns.get(0, 0) == 1
 
     def test_mixed_stunned_and_non_stunned_units(self, basic_unit_template, mock_data_loader, mock_layout, stun_effect):
         """Test cooldown reduction with mix of stunned and non-stunned units."""
@@ -620,11 +620,11 @@ class TestCooldownReduction:
             battle_side=BattleSide.PLAYER_TEAM
         )
         
-        unit1.weapon_cooldowns[0] = 2
-        unit1.global_cooldown = 1
+        unit1.ability_cooldowns[1] = 2
+        unit1.global_cooldowns[0] = 1  # weapon_id 0
         
-        unit2.weapon_cooldowns[0] = 2
-        unit2.global_cooldown = 1
+        unit2.ability_cooldowns[1] = 2
+        unit2.global_cooldowns[0] = 1  # weapon_id 0
         
         # Stun unit2
         stun_status = ActiveStatusEffect(
@@ -651,10 +651,10 @@ class TestCooldownReduction:
         battle_unit2 = battle.player_units.get(Position(1, 0))
         
         # Unit1 (not stunned) should have cooldowns reduced
-        assert battle_unit1.weapon_cooldowns[0] == 1
-        assert battle_unit1.global_cooldown == 0
+        assert battle_unit1.ability_cooldowns[1] == 1
+        assert battle_unit1.global_cooldowns.get(0, 0) == 0
         
         # Unit2 (stunned) should NOT have cooldowns reduced
-        assert battle_unit2.weapon_cooldowns[0] == 2
-        assert battle_unit2.global_cooldown == 1
+        assert battle_unit2.ability_cooldowns[1] == 2
+        assert battle_unit2.global_cooldowns.get(0, 0) == 1
 

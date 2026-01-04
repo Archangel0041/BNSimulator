@@ -51,17 +51,21 @@ class CooldownHandler:
         """
         # Only reduce cooldowns if unit is not stunned
         if not CooldownHandler.is_unit_stunned(unit):
-            # Reduce weapon cooldowns
-            for weapon_id in list(unit.weapon_cooldowns.keys()):
-                if unit.weapon_cooldowns[weapon_id] > 0:
-                    unit.weapon_cooldowns[weapon_id] -= 1
+            # Reduce ability-specific cooldowns
+            for ability_id in list(unit.ability_cooldowns.keys()):
+                if unit.ability_cooldowns[ability_id] > 0:
+                    unit.ability_cooldowns[ability_id] -= 1
                     # Remove cooldown if it reaches 0
-                    if unit.weapon_cooldowns[weapon_id] == 0:
-                        del unit.weapon_cooldowns[weapon_id]
+                    if unit.ability_cooldowns[ability_id] == 0:
+                        del unit.ability_cooldowns[ability_id]
             
-            # Reduce global cooldown
-            if unit.global_cooldown > 0:
-                unit.global_cooldown -= 1
+            # Reduce weapon-specific global cooldowns
+            for weapon_id in list(unit.global_cooldowns.keys()):
+                if unit.global_cooldowns[weapon_id] > 0:
+                    unit.global_cooldowns[weapon_id] -= 1
+                    # Remove cooldown if it reaches 0
+                    if unit.global_cooldowns[weapon_id] == 0:
+                        del unit.global_cooldowns[weapon_id]
 
     @staticmethod
     def reduce_cooldowns_for_side(battle: 'BattleState', side: 'BattleSide') -> None:

@@ -154,11 +154,9 @@ class StatusEffectFamily(IntEnum):
 
 class TargetType(IntEnum):
     """Target area types (game logic - for ability targeting patterns)."""
-    SELF = 0
-    ALL_ENEMIES = 1
-    SINGLE = 2
-    ROW = 3
-    COLUMN = 4
+    NONE = 0  # Non-reticle attacks
+    WEAPON = 1  # Non-reticle system hitting every position in attack pattern
+    TARGET = 2  # Reticle-based attack with target validity check
 
 
 class AttackDirection(IntEnum):
@@ -170,10 +168,10 @@ class AttackDirection(IntEnum):
 
 class LineOfFire(IntEnum):
     """Line of fire requirements."""
-    NONE = 0
-    DIRECT = 1
-    INDIRECT = 2
-    ANY = 3
+    CONTACT = 0  # Can only hit first valid target, units behind blocked
+    DIRECT = 1  # Can hit past units with None blocking
+    PRECISE = 2  # Can target any units unless Full/God blocking in front
+    INDIRECT = 3  # Can hit any unit on field within range
 
 
 class Side(IntEnum):

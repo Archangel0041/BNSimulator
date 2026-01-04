@@ -212,38 +212,9 @@ class EnemyTurnExecutor:
         by one row (decrease y by 1). Only collapses ONE row per turn.
         Increments the player_rows_collapsed counter.
         """
-        from ..models import Position
-        
-        # Check if row 0 (y=0) has any units
-        has_front_row_units = any(
-            pos.y == 0 for pos in self.battle.player_units.keys()
-        )
-        
-        # If front row has units, no collapse needed
-        if has_front_row_units:
-            return
-        
-        # Front row is empty - move all units forward by 1 row
-        # Need to collect all units first, then update positions
-        # (can't modify dict while iterating)
-        units_to_move = list(self.battle.player_units.items())
-        
-        # Clear the dictionary
-        self.battle.player_units.clear()
-        
-        # Move each unit forward by 1 row (decrease y by 1)
-        for old_pos, unit in units_to_move:
-            # Create new position with y decreased by 1
-            new_pos = Position(x=old_pos.x, y=old_pos.y - 1)
-            
-            # Update unit's position attribute
-            unit.position = new_pos
-            
-            # Add to dictionary with new position as key
-            self.battle.player_units[new_pos] = unit
-        
-        # Increment collapse counter (tracks how many times collapse occurred)
-        self.battle.player_rows_collapsed += 1
+        from ..enums import BattleSide
+        from .row_collapse_handler import RowCollapseHandler
+        RowCollapseHandler.collapse_front_row(self.battle, BattleSide.PLAYER_TEAM)
 
     # =========================================================================
     # Step 4: Collapse enemy front row
@@ -257,38 +228,9 @@ class EnemyTurnExecutor:
         by one row (decrease y by 1). Only collapses ONE row per turn.
         Increments the enemy_rows_collapsed counter.
         """
-        from ..models import Position
-        
-        # Check if row 0 (y=0) has any units
-        has_front_row_units = any(
-            pos.y == 0 for pos in self.battle.enemy_units.keys()
-        )
-        
-        # If front row has units, no collapse needed
-        if has_front_row_units:
-            return
-        
-        # Front row is empty - move all units forward by 1 row
-        # Need to collect all units first, then update positions
-        # (can't modify dict while iterating)
-        units_to_move = list(self.battle.enemy_units.items())
-        
-        # Clear the dictionary
-        self.battle.enemy_units.clear()
-        
-        # Move each unit forward by 1 row (decrease y by 1)
-        for old_pos, unit in units_to_move:
-            # Create new position with y decreased by 1
-            new_pos = Position(x=old_pos.x, y=old_pos.y - 1)
-            
-            # Update unit's position attribute
-            unit.position = new_pos
-            
-            # Add to dictionary with new position as key
-            self.battle.enemy_units[new_pos] = unit
-        
-        # Increment collapse counter (tracks how many times collapse occurred)
-        self.battle.enemy_rows_collapsed += 1
+        from ..enums import BattleSide
+        from .row_collapse_handler import RowCollapseHandler
+        RowCollapseHandler.collapse_front_row(self.battle, BattleSide.ENEMY_TEAM)
 
     # =========================================================================
     # Reduce player cooldowns (opposing side)

@@ -47,9 +47,10 @@ class BattleUnit:
     current_armor: int = 0
     is_alive: bool = True
 
-    # Cooldowns: weapon_id -> turns remaining
-    weapon_cooldowns: dict[int, int] = field(default_factory=dict)
-    global_cooldown: int = 0
+    # Cooldowns: ability_id -> turns remaining (ability-specific)
+    ability_cooldowns: dict[int, int] = field(default_factory=dict)
+    # Global cooldowns: weapon_id -> turns remaining (weapon-specific, applies to all abilities on that weapon)
+    global_cooldowns: dict[int, int] = field(default_factory=dict)
 
     # Ammo tracking: weapon_id -> current ammo
     ammo: dict[int, int] = field(default_factory=dict)
@@ -60,6 +61,14 @@ class BattleUnit:
     # Charging ability (if any)
     charging_weapon: Optional[int] = None
     charge_turns_remaining: int = 0
+
+    # Track when unit entered the field (for charge_time/prep time)
+    # This is the turn number when the unit entered the current wave/field
+    turn_entered_field: int = 0
+    
+    # Track when each ability became available (for ability-specific charge_time)
+    # Key: ability_id, Value: turn number when ability becomes available
+    ability_available_turn: dict[int, int] = field(default_factory=dict)
 
     def __post_init__(self):
         self.current_hp = self.template.stats.hp
@@ -141,16 +150,27 @@ class BattleUnit:
 
     def get_available_weapons(self) -> list[int]:
         """Get list of weapon IDs that can be used this turn."""
-        if self.global_cooldown > 0:
-            return []
-
         available = []
         for weapon_id, weapon in self.template.weapons.items():
-            # Check cooldown
-            if self.weapon_cooldowns.get(weapon_id, 0) > 0:
+            # Check weapon-specific global cooldown (blocks all abilities on this weapon)
+            if self.global_cooldowns.get(weapon_id, 0) > 0:
                 continue
 
-            # Check ammo
+            # Check if any ability on this weapon is available
+            has_available_ability = False
+            for ability_id in weapon.abilities:
+                # Check ability-specific cooldown
+                if self.ability_cooldowns.get(ability_id, 0) > 0:
+                    continue
+                # If we get here, at least one ability is available
+                has_available_ability = True
+                break
+
+            if not has_available_ability:
+                continue
+
+            # Check ammo - need to check if any ability has sufficient ammo
+            # For now, check if weapon has any ammo (detailed check happens in validator)
             if weapon.stats.ammo >= 0 and self.ammo.get(weapon_id, 0) <= 0:
                 continue
 
@@ -160,12 +180,21 @@ class BattleUnit:
 
     def tick_cooldowns(self) -> None:
         """Reduce all cooldowns by 1 at end of turn."""
-        if self.global_cooldown > 0:
-            self.global_cooldown -= 1
+        # Reduce weapon-specific global cooldowns
+        for weapon_id in list(self.global_cooldowns.keys()):
+            if self.global_cooldowns[weapon_id] > 0:
+                self.global_cooldowns[weapon_id] -= 1
+                # Remove cooldown if it reaches 0
+                if self.global_cooldowns[weapon_id] == 0:
+                    del self.global_cooldowns[weapon_id]
 
-        for weapon_id in self.weapon_cooldowns:
-            if self.weapon_cooldowns[weapon_id] > 0:
-                self.weapon_cooldowns[weapon_id] -= 1
+        # Reduce ability-specific cooldowns
+        for ability_id in list(self.ability_cooldowns.keys()):
+            if self.ability_cooldowns[ability_id] > 0:
+                self.ability_cooldowns[ability_id] -= 1
+                # Remove cooldown if it reaches 0
+                if self.ability_cooldowns[ability_id] == 0:
+                    del self.ability_cooldowns[ability_id]
 
     def tick_status_effects(self) -> int:
         """Process status effects. Returns DOT damage taken."""
@@ -174,10 +203,8 @@ class BattleUnit:
 
         for status in self.status_effects:
             if status.effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
-                base_damage = status.source_damage * status.effect.dot_ability_damage_mult
-                base_damage += status.effect.dot_bonus_damage
-                dot_damage += int(base_damage)
+                # Use pre-calculated base DOT damage
+                dot_damage += int(status.base_dot_damage)
 
             status.remaining_turns -= 1
             if status.remaining_turns > 0:
@@ -241,6 +268,9 @@ class BattleState:
         self.enemy_units: dict[Position, BattleUnit] = {
             unit.position: deepcopy(unit) for unit in enemy_units
         }
+        
+        # Initialize ability availability for all units based on charge_time
+        self._initialize_ability_availability()
 
         # Turn tracking
         self.turn_number = 0
@@ -259,6 +289,24 @@ class BattleState:
 
         # RNG state (for reproducibility)
         self.rng = random.Random()
+
+    def _initialize_ability_availability(self) -> None:
+        """
+        Initialize ability availability for all units based on charge_time.
+        
+        For each unit, for each weapon, for each ability:
+        - Set ability_available_turn[ability_id] = turn_entered_field + ability.charge_time
+        - If ability has no charge_time (0), it's available immediately (turn_entered_field)
+        """
+        for unit in list(self.player_units.values()) + list(self.enemy_units.values()):
+            for weapon_id, weapon in unit.template.weapons.items():
+                for ability_id in weapon.abilities:
+                    ability = self.data_loader.get_ability(ability_id)
+                    if ability:
+                        charge_time = ability.stats.charge_time
+                        # Ability becomes available at turn_entered_field + charge_time
+                        # If charge_time is 0, available immediately (turn_entered_field)
+                        unit.ability_available_turn[ability_id] = unit.turn_entered_field + charge_time
 
     def seed(self, seed: int) -> None:
         """Set RNG seed for reproducibility."""
@@ -448,10 +496,10 @@ class BattleState:
         # Execute the attack
         result = self._execute_attack(unit, weapon, ability, action.target_position)
 
-        # Apply cooldowns
-        unit.weapon_cooldowns[action.weapon_id] = ability.stats.ability_cooldown
+        # Apply cooldowns (ability-specific for ability_cooldown, weapon-specific for global_cooldown)
+        unit.ability_cooldowns[ability_id] = ability.stats.ability_cooldown
         if ability.stats.global_cooldown > 0:
-            unit.global_cooldown = ability.stats.global_cooldown
+            unit.global_cooldowns[action.weapon_id] = ability.stats.global_cooldown
 
         # Consume ammo
         if weapon.stats.ammo >= 0:
@@ -507,10 +555,12 @@ class BattleState:
                 if self.rng.random() * 100 < apply_chance:
                     effect = self.data_loader.status_effects.get(effect_id)
                     if effect and effect_id not in target_unit.template.stats.status_effect_immunities:
+                        # Calculate base DOT damage: source_damage * mult + bonus
+                        base_dot_damage = damage * effect.dot_ability_damage_mult + effect.dot_bonus_damage
                         target_unit.status_effects.append(ActiveStatusEffect(
                             effect=effect,
                             remaining_turns=effect.duration,
-                            source_damage=damage
+                            base_dot_damage=base_dot_damage
                         ))
                         result.status_applied.append((target_unit.position, effect_id))
 
@@ -678,7 +728,9 @@ class BattleState:
             state[idx + 5] = 1.0  # Unit exists in dict, so it's alive
             state[idx + 6] = 1.0 if unit.can_act() else 0.0
             state[idx + 7] = len(unit.get_available_weapons()) / 2
-            state[idx + 8] = unit.global_cooldown / 5
+            # Use max global cooldown across all weapons (for state representation)
+            max_global_cooldown = max(unit.global_cooldowns.values()) if unit.global_cooldowns else 0
+            state[idx + 8] = max_global_cooldown / 5
             state[idx + 9] = len(unit.status_effects) / 3
             idx += UNIT_FEATURES
 
@@ -694,7 +746,9 @@ class BattleState:
             state[idx + 5] = 1.0  # Unit exists in dict, so it's alive
             state[idx + 6] = 1.0 if unit.can_act() else 0.0
             state[idx + 7] = len(unit.get_available_weapons()) / 2
-            state[idx + 8] = unit.global_cooldown / 5
+            # Use max global cooldown across all weapons (for state representation)
+            max_global_cooldown = max(unit.global_cooldowns.values()) if unit.global_cooldowns else 0
+            state[idx + 8] = max_global_cooldown / 5
             state[idx + 9] = len(unit.status_effects) / 3
             idx += UNIT_FEATURES
 
@@ -755,7 +809,8 @@ class BattleSimulator:
                 player_units.append(BattleUnit(
                     template=template_with_rank,
                     position=pos,
-                    battle_side=BattleSide.PLAYER_TEAM
+                    battle_side=BattleSide.PLAYER_TEAM,
+                    turn_entered_field=0  # Units start at turn 0
                 ))
 
         # Create enemy units with their ranks from encounter
@@ -774,7 +829,8 @@ class BattleSimulator:
                 enemy_units.append(BattleUnit(
                     template=template_with_rank,
                     position=pos,
-                    battle_side=BattleSide.ENEMY_TEAM
+                    battle_side=BattleSide.ENEMY_TEAM,
+                    turn_entered_field=0  # Units start at turn 0
                 ))
 
         return BattleState(
@@ -816,7 +872,8 @@ class BattleSimulator:
                 player_units.append(BattleUnit(
                     template=template_with_rank,
                     position=pos,
-                    battle_side=BattleSide.PLAYER_TEAM
+                    battle_side=BattleSide.PLAYER_TEAM,
+                    turn_entered_field=0  # Units start at turn 0
                 ))
 
         # Create enemy units
@@ -829,7 +886,8 @@ class BattleSimulator:
                 enemy_units.append(BattleUnit(
                     template=template_with_rank,
                     position=pos,
-                    battle_side=BattleSide.ENEMY_TEAM
+                    battle_side=BattleSide.ENEMY_TEAM,
+                    turn_entered_field=0  # Units start at turn 0
                 ))
 
         return BattleState(
