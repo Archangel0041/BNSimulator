@@ -69,9 +69,10 @@ class EnemyTargetValidator:
         """
         Check if a target is valid for an enemy unit.
 
-        This is similar to PlayerTargetValidator.is_action_valid() but:
-        - Targets player units instead of enemy units
-        - Assumes cooldowns/ammo already checked in filtering step
+        For enemy AI, stricter rules apply:
+        - Must target units that match tag requirements
+        - Cannot place reticles on empty spots for TargetType.TARGET
+        - The reticle position itself must be a valid target by tags
 
         Args:
             action: The action to validate
@@ -100,14 +101,88 @@ class EnemyTargetValidator:
         if target_area:
             target_type = target_area.target_type
 
-        # Check if target position has alive unit (only for NONE type)
-        if target_type == TargetType.NONE:
-            # Enemy is attacking player units
-            target_unit = battle.get_unit_at_position(action.target_position, BattleSide.PLAYER_TEAM)
+        # Get target unit at the position
+        target_unit = battle.get_unit_at_position(action.target_position, BattleSide.PLAYER_TEAM)
+
+        # For TargetType.NONE or TARGET: Enemy AI MUST target a valid unit
+        # (cannot place reticle on empty spots)
+        if target_type in (TargetType.NONE, TargetType.TARGET):
             if target_unit is None or target_unit.current_hp <= 0:
                 return False
 
-        # For now, simplified validation - just check if there's a valid target
-        # Full validation (range, LOS, blocking) can be added later if needed
+            # Validate tag requirements
+            if not EnemyTargetValidator._can_target_by_tags(
+                ability_targets=stats.targets,
+                unit_tags=target_unit.template.tags,
+                battle=battle
+            ):
+                return False
+
+        # For TargetType.WEAPON: Enemy AI can target empty spots,
+        # but in practice we still validate if there are any valid targets nearby
+        # For now, allow it (simplified)
+
         return True
+
+    @staticmethod
+    def _can_target_by_tags(
+        ability_targets: list[int],
+        unit_tags: list[int],
+        battle: 'BattleState'
+    ) -> bool:
+        """
+        Check if an ability with given target tags can hit a unit with given tags.
+
+        Uses tag hierarchy: if ability targets a parent tag, it can target all
+        descendants.
+
+        Args:
+            ability_targets: Tags the ability can target
+            unit_tags: Tags the unit has
+            battle: The battle state (for accessing tag hierarchy)
+
+        Returns:
+            True if the unit can be targeted
+        """
+        from ..enums import UnitTag
+
+        if not ability_targets:
+            return True  # No restrictions = can target anything
+
+        # UNIT tag matches everything
+        if UnitTag.UNIT in ability_targets:
+            return True
+
+        # Expand all ability target tags to include all descendants recursively
+        valid_tags = set()
+        for tag in ability_targets:
+            valid_tags.add(tag)
+            EnemyTargetValidator._expand_tag_recursive(
+                tag, valid_tags, battle.data_loader.config.tag_hierarchy
+            )
+
+        # Check if unit has any valid tag
+        return bool(valid_tags.intersection(set(unit_tags)))
+
+    @staticmethod
+    def _expand_tag_recursive(
+        tag: int,
+        result_set: set,
+        tag_hierarchy: dict[int, list[int]]
+    ) -> None:
+        """
+        Recursively expand a tag to include all its descendants in the hierarchy.
+
+        Args:
+            tag: The tag to expand
+            result_set: Set to add expanded tags to (modified in place)
+            tag_hierarchy: The tag hierarchy dictionary (parent -> list of children)
+        """
+        # Get children of this tag
+        children = tag_hierarchy.get(tag, [])
+        for child in children:
+            if child not in result_set:
+                result_set.add(child)
+                # Recursively expand this child
+                EnemyTargetValidator._expand_tag_recursive(child, result_set, tag_hierarchy)
 
