@@ -180,7 +180,7 @@ class TargetingSystem:
 
         target_type = target_area.target_type
 
-        if target_type == TargetType.ALL_ENEMIES:
+        if target_type == TargetType.WEAPON:
             # Hit all positions in the pattern
             results = []
             for entry in target_area.data:
@@ -191,7 +191,7 @@ class TargetingSystem:
                 results.append((pos, entry.damage_percent))
             return results
 
-        elif target_type == TargetType.SINGLE:
+        elif target_type == TargetType.TARGET:
             if target_area.random and target_area.data:
                 # Weighted random selection
                 weights = [getattr(entry, 'weight', 100) for entry in target_area.data]
@@ -429,16 +429,20 @@ class StatusEffectSystem:
 
         for existing in target.status_effects:
             if existing.effect.id == effect_id:
-                # Refresh duration
+                # Refresh duration and update base_dot_damage if higher
                 existing.remaining_turns = effect.duration
-                existing.source_damage = max(existing.source_damage, source_damage)
+                # Calculate base DOT damage: source_damage * mult + bonus
+                new_base_dot_damage = source_damage * effect.dot_ability_damage_mult + effect.dot_bonus_damage
+                existing.base_dot_damage = max(existing.base_dot_damage, new_base_dot_damage)
                 return True
 
         # Apply new effect
+        # Calculate base DOT damage: source_damage * mult + bonus
+        base_dot_damage = source_damage * effect.dot_ability_damage_mult + effect.dot_bonus_damage
         target.status_effects.append(ActiveStatusEffect(
             effect=effect,
             remaining_turns=effect.duration,
-            source_damage=source_damage
+            base_dot_damage=base_dot_damage
         ))
         return True
 
@@ -458,9 +462,8 @@ class StatusEffectSystem:
             effect = status.effect
 
             if effect.effect_type == StatusEffectType.DOT:
-                # Calculate DOT damage
-                dot_damage = int(status.source_damage * effect.dot_ability_damage_mult)
-                dot_damage += effect.dot_bonus_damage
+                # Use pre-calculated base DOT damage
+                dot_damage = int(status.base_dot_damage)
 
                 if dot_damage > 0:
                     # Apply DOT damage

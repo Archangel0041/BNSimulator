@@ -6,6 +6,7 @@ import random
 import numpy as np
 
 from src.simulator.battle import BattleState, Action, BattleResult
+from src.simulator.models import Position
 
 
 class BaseAgent(ABC):
@@ -88,45 +89,47 @@ class FocusFireAgent(BaseAgent):
     """Agent that focuses fire on single targets until dead."""
 
     def __init__(self):
-        self.current_target: Optional[int] = None
+        self.current_target: Optional[Position] = None
 
     def select_action(self, battle: BattleState) -> Optional[Action]:
         legal_actions = battle.get_legal_actions()
         if not legal_actions:
             return None
 
-        # Group actions by target
+        # Group actions by target position
         targets = {}
         for action in legal_actions:
             target = battle.get_unit_at_position(action.target_position)
-            if target and target.is_alive:
-                target_idx = battle.opposing_side_units.index(target)
-                if target_idx not in targets:
-                    targets[target_idx] = []
-                targets[target_idx].append(action)
+            if target:
+                target_pos = target.position
+                if target_pos not in targets:
+                    targets[target_pos] = []
+                targets[target_pos].append(action)
 
         if not targets:
             return random.choice(legal_actions)
 
         # Check if current target is still valid
         if self.current_target is not None and self.current_target in targets:
-            target_idx = self.current_target
+            target_pos = self.current_target
         else:
             # Select new target (prefer lowest HP)
-            target_idx = min(
+            target_pos = min(
                 targets.keys(),
-                key=lambda i: battle.opposing_side_units[i].current_hp
+                key=lambda pos: battle.opposing_side_units[pos].current_hp
             )
-            self.current_target = target_idx
+            self.current_target = target_pos
 
         # Select best action against target
-        target_actions = targets[target_idx]
+        target_actions = targets[target_pos]
         return max(target_actions, key=lambda a: self._action_damage_estimate(battle, a))
 
     def _action_damage_estimate(self, battle: BattleState, action: Action) -> float:
         """Estimate damage from an action."""
         units = battle.current_side_units
-        unit = units[action.unit_index]
+        unit = units.get(action.unit_position)
+        if unit is None:
+            return 0
         weapon = unit.template.weapons.get(action.weapon_id)
         if not weapon:
             return 0
@@ -149,7 +152,7 @@ class HeuristicAgent(BaseAgent):
     """
 
     def __init__(self):
-        self.current_target: Optional[int] = None
+        self.current_target: Optional[Position] = None
         self.priority_targets: list[int] = []
 
     def select_action(self, battle: BattleState) -> Optional[Action]:
@@ -172,7 +175,9 @@ class HeuristicAgent(BaseAgent):
     def _score_action(self, battle: BattleState, action: Action) -> float:
         """Score an action based on heuristics."""
         units = battle.current_side_units
-        unit = units[action.unit_index]
+        unit = units.get(action.unit_position)
+        if unit is None:
+            return -1000
         weapon = unit.template.weapons.get(action.weapon_id)
         if not weapon:
             return -1000
@@ -203,11 +208,8 @@ class HeuristicAgent(BaseAgent):
 
         # Focus fire bonus (same target as before)
         if self.current_target is not None:
-            try:
-                if battle.opposing_side_units.index(target) == self.current_target:
-                    score += 20
-            except (ValueError, IndexError):
-                pass
+            if target.position == self.current_target:
+                score += 20
 
         # HP-based targeting (prefer low HP)
         hp_ratio = target.current_hp / target.template.stats.hp

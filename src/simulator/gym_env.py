@@ -130,19 +130,39 @@ class BattleEnv(gym.Env):
 
         legal_actions = self.battle.get_legal_actions()
 
+        # Create a mapping from unit positions to indices for action encoding
+        unit_positions = list(self.battle.player_units.keys())
+        
         for action in legal_actions:
-            # Map weapon_id to weapon_idx (0-based)
-            unit = self.battle.player_units[action.unit_index]
-            weapon_ids = list(unit.template.weapons.keys())
-            if action.weapon_id in weapon_ids:
-                weapon_idx = weapon_ids.index(action.weapon_id)
+            # Get unit position and map to index
+            if action.unit_position not in unit_positions:
+                continue
+            unit_idx = unit_positions.index(action.unit_position)
+            
+            # Map ability_id to ability_idx (0-based)
+            # We need to collect all abilities across all weapons for this unit
+            unit = self.battle.player_units[action.unit_position]
+            all_ability_ids = []
+            for weapon in unit.template.weapons.values():
+                all_ability_ids.extend(weapon.abilities)
+            
+            if action.ability_id in all_ability_ids:
+                ability_idx = all_ability_ids.index(action.ability_id)
             else:
                 continue
+            
+            # For backward compatibility, we'll still encode weapon_idx
+            # Find which weapon contains this ability
+            weapon_id = self.battle.get_weapon_id_for_ability(unit, action.ability_id)
+            if weapon_id is None:
+                continue
+            weapon_ids = list(unit.template.weapons.keys())
+            weapon_idx = weapon_ids.index(weapon_id)
 
             target_idx = self._position_to_target_idx(action.target_position)
 
             flat_action = self._encode_action(
-                action.unit_index,
+                unit_idx,
                 weapon_idx,
                 target_idx
             )
@@ -156,21 +176,32 @@ class BattleEnv(gym.Env):
         """Convert environment action to battle Action."""
         unit_idx, weapon_idx, target_idx = self._decode_action(action)
 
-        if unit_idx >= len(self.battle.player_units):
+        # Get unit position from index
+        unit_positions = list(self.battle.player_units.keys())
+        if unit_idx >= len(unit_positions):
             return None
 
-        unit = self.battle.player_units[unit_idx]
+        unit_pos = unit_positions[unit_idx]
+        unit = self.battle.player_units[unit_pos]
         weapon_ids = list(unit.template.weapons.keys())
 
         if weapon_idx >= len(weapon_ids):
             return None
 
         weapon_id = weapon_ids[weapon_idx]
+        weapon = unit.template.weapons[weapon_id]
+        
+        # Use first ability of the weapon (for backward compatibility)
+        # TODO: Could be enhanced to support multiple abilities per weapon
+        if not weapon.abilities:
+            return None
+        
+        ability_id = weapon.abilities[0]
         target_pos = self._target_idx_to_position(target_idx)
 
         return Action(
-            unit_index=unit_idx,
-            weapon_id=weapon_id,
+            unit_position=unit_pos,
+            ability_id=ability_id,
             target_position=target_pos
         )
 
@@ -300,22 +331,22 @@ class BattleEnv(gym.Env):
                 # Validate action
                 legal_actions = self.battle.get_legal_actions()
                 is_legal = any(
-                    a.unit_index == battle_action.unit_index and
-                    a.weapon_id == battle_action.weapon_id and
+                    a.unit_position == battle_action.unit_position and
+                    a.ability_id == battle_action.ability_id and
                     a.target_position == battle_action.target_position
                     for a in legal_actions
                 )
                 if is_legal:
-                    self.battle.execute_action(battle_action)
+                    # Use execute_turn which handles turn switching internally
+                    self.battle.execute_turn(battle_action)
+                else:
+                    # Invalid action, pass turn
+                    self.battle.execute_turn(None)
 
-            self.battle.end_turn()
-
-        # Execute enemy turn (simple random policy)
-        while not self.battle.is_player_turn and self.battle.result == BattleResult.IN_PROGRESS:
-            enemy_action = self._get_random_enemy_action()
-            if enemy_action:
-                self.battle.execute_action(enemy_action)
-            self.battle.end_turn()
+        # Execute enemy turn using the new battle engine
+        # The enemy executor handles action selection internally
+        if not self.battle.is_player_turn and self.battle.result == BattleResult.IN_PROGRESS:
+            self.battle.execute_turn(None)  # Enemy executor selects action internally
 
         # Calculate reward
         reward = self._calculate_reward()
@@ -484,19 +515,18 @@ class MultiWaveBattleEnv(BattleEnv):
                 # Carry over surviving player units' HP
                 surviving_hp = {}
                 if self.battle:
-                    for i, unit in enumerate(self.battle.player_units):
-                        if unit.is_alive:
-                            surviving_hp[i] = (unit.current_hp, unit.current_armor)
+                    for pos, unit in self.battle.player_units.items():
+                        surviving_hp[pos] = (unit.current_hp, unit.current_armor)
 
                 # Reset for next wave
                 obs, _ = super().reset()
 
                 # Restore HP state
                 if self.battle:
-                    for i, (hp, armor) in surviving_hp.items():
-                        if i < len(self.battle.player_units):
-                            self.battle.player_units[i].current_hp = hp
-                            self.battle.player_units[i].current_armor = armor
+                    for pos, (hp, armor) in surviving_hp.items():
+                        if pos in self.battle.player_units:
+                            self.battle.player_units[pos].current_hp = hp
+                            self.battle.player_units[pos].current_armor = armor
 
                 terminated = False
                 truncated = False

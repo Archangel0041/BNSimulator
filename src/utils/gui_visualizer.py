@@ -63,8 +63,8 @@ class BattleGUIVisualizer:
         self.hp_bar_height = 8
 
         # Selection state
-        self.selected_unit_idx: Optional[int] = None
-        self.selected_weapon_id: Optional[int] = None
+        self.selected_unit_position: Optional[Position] = None
+        self.selected_ability_id: Optional[int] = None
         self.selected_is_player: bool = True
         self.valid_targets: list[Position] = []
         self.aoe_pattern: dict[tuple[int, int], float] = {}
@@ -298,7 +298,7 @@ class BattleGUIVisualizer:
 
         # Create unit lookup
         unit_at = {}
-        for unit in units:
+        for position, unit in units.items():
             unit_at[(unit.position.x, unit.position.y)] = unit
 
         # Draw cells
@@ -318,9 +318,8 @@ class BattleGUIVisualizer:
                 cell_color = COLORS['empty_cell']
 
                 # Check if this cell is part of selection/targeting
-                if self.selected_unit_idx is not None and self.selected_is_player == is_player:
-                    selected_unit = units[self.selected_unit_idx]
-                    if selected_unit.position.x == col and selected_unit.position.y == row:
+                if self.selected_unit_position is not None and self.selected_is_player == is_player:
+                    if self.selected_unit_position.x == col and self.selected_unit_position.y == row:
                         cell_color = COLORS['selected_unit']
 
                 # Check if valid target
@@ -446,7 +445,7 @@ class BattleGUIVisualizer:
 
         # Check if clicking on a valid target
         target_pos = Position(cell_info.x, cell_info.y)
-        if target_pos in self.valid_targets and self.selected_weapon_id is not None:
+        if target_pos in self.valid_targets and self.selected_ability_id is not None:
             self._execute_action(target_pos)
 
     def _on_canvas_hover(self, event):
@@ -466,7 +465,7 @@ class BattleGUIVisualizer:
 
         # Show AOE pattern if hovering over a valid target
         target_pos = Position(cell_info.x, cell_info.y)
-        if target_pos in self.valid_targets and self.selected_weapon_id is not None:
+        if target_pos in self.valid_targets and self.selected_ability_id is not None:
             self._show_aoe_pattern(target_pos)
         else:
             self.aoe_pattern.clear()
@@ -511,7 +510,7 @@ class BattleGUIVisualizer:
 
         # Find unit at this position
         unit = None
-        for u in units:
+        for position, u in units.items():
             if u.position.x == cell_x and u.position.y == cell_y and u.is_alive:
                 unit = u
                 break
@@ -520,21 +519,18 @@ class BattleGUIVisualizer:
 
     def _select_unit(self, cell_info: CellInfo):
         """Select a unit and show its weapons."""
-        units = self.battle.player_units if cell_info.is_player_side else self.battle.enemy_units
+        if cell_info.unit is None:
+            return
+        
+        self.selected_unit_position = cell_info.unit.position
+        self.selected_is_player = cell_info.is_player_side
+        self.selected_ability_id = None
+        self.valid_targets.clear()
+        self.aoe_pattern.clear()
 
-        # Find unit index
-        for idx, unit in enumerate(units):
-            if unit == cell_info.unit:
-                self.selected_unit_idx = idx
-                self.selected_is_player = cell_info.is_player_side
-                self.selected_weapon_id = None
-                self.valid_targets.clear()
-                self.aoe_pattern.clear()
-
-                self._update_unit_info(cell_info.unit)
-                self._update_weapon_panel(cell_info.unit)
-                self._draw_grid()
-                return
+        self._update_unit_info(cell_info.unit)
+        self._update_weapon_panel(cell_info.unit)
+        self._draw_grid()
 
     def _get_localized(self, key: str) -> str:
         """Get localized text for a key, or return the key if localization unavailable."""
@@ -572,8 +568,10 @@ WEAPONS: {len(unit.template.weapons)}
 """
 
         for wid, weapon in unit.template.weapons.items():
-            cd = unit.weapon_cooldowns.get(wid, 0)
-            cd_str = f"[CD: {cd}]" if cd > 0 else "[Ready]"
+            # Get global cooldown for this weapon
+            global_cd = unit.global_cooldowns.get(wid, 0)
+            global_cd_str = f"[Global CD: {global_cd}]" if global_cd > 0 else ""
+            
             ammo_str = ""
             if weapon.stats.ammo >= 0:
                 ammo_str = f" ({unit.ammo.get(wid, 0)}/{weapon.stats.ammo})"
@@ -581,8 +579,18 @@ WEAPONS: {len(unit.template.weapons)}
             # Get localized weapon name
             weapon_name = self._get_localized(weapon.name)
 
-            info += f"\n  [{wid}] {weapon_name}{ammo_str} {cd_str}"
+            info += f"\n  [{wid}] {weapon_name}{ammo_str} {global_cd_str}"
             info += f"\n      DMG: {weapon.stats.base_damage_min}-{weapon.stats.base_damage_max}"
+            
+            # Show ability cooldowns
+            if weapon.abilities:
+                info += f"\n      Abilities:"
+                for ability_id in weapon.abilities:
+                    ability_cd = unit.ability_cooldowns.get(ability_id, 0)
+                    ability = self.battle.data_loader.get_ability(ability_id)
+                    ability_name = ability.name if ability else f"Ability {ability_id}"
+                    cd_str = f"[CD: {ability_cd}]" if ability_cd > 0 else "[Ready]"
+                    info += f"\n        - {ability_name} {cd_str}"
 
         if unit.status_effects:
             info += f"\n\nSTATUS EFFECTS: {len(unit.status_effects)}"
@@ -659,31 +667,45 @@ WEAPONS: {len(unit.template.weapons)}
 
     def _select_weapon(self, weapon_id: int):
         """Select a weapon and show valid targets."""
-        self.selected_weapon_id = weapon_id
-
-        # Get valid targets
+        if self.selected_unit_position is None:
+            return
+        
+        # Get the unit
         units = self.battle.player_units if self.selected_is_player else self.battle.enemy_units
-        unit = units[self.selected_unit_idx]
+        unit = units.get(self.selected_unit_position)
+        if unit is None:
+            return
+        
+        # Get first ability from weapon (for backward compatibility)
+        weapon = unit.template.weapons.get(weapon_id)
+        if weapon is None or not weapon.abilities:
+            return
+        
+        ability_id = weapon.abilities[0]
+        self.selected_ability_id = ability_id
 
-        self.valid_targets = self.battle.get_valid_targets(unit, weapon_id)
+        # Get valid targets by checking all legal actions for this unit+ability
+        legal_actions = self.battle.get_legal_actions()
+        self.valid_targets = [
+            action.target_position 
+            for action in legal_actions 
+            if action.unit_position == self.selected_unit_position and action.ability_id == ability_id
+        ]
         self.aoe_pattern.clear()
 
         self._draw_grid()
 
     def _show_aoe_pattern(self, target_pos: Position):
         """Show AOE damage pattern for the selected target."""
-        if self.selected_weapon_id is None or self.selected_unit_idx is None:
+        if self.selected_ability_id is None or self.selected_unit_position is None:
             return
 
         units = self.battle.player_units if self.selected_is_player else self.battle.enemy_units
-        unit = units[self.selected_unit_idx]
-        weapon = unit.template.weapons.get(self.selected_weapon_id)
-
-        if not weapon or not weapon.abilities:
+        unit = units.get(self.selected_unit_position)
+        if unit is None:
             return
 
-        ability_id = weapon.abilities[0]
-        ability = self.battle.data_loader.get_ability(ability_id)
+        ability = self.battle.data_loader.get_ability(self.selected_ability_id)
         if not ability:
             return
 
@@ -700,14 +722,15 @@ WEAPONS: {len(unit.template.weapons)}
 
     def _execute_action(self, target_pos: Position):
         """Execute an attack action."""
-        if self.selected_unit_idx is None or self.selected_weapon_id is None:
+        if self.selected_unit_position is None or self.selected_ability_id is None:
             return
 
         from src.simulator.battle import Action
+        from src.simulator.battle_engine.battle_types import TurnResult
 
         action = Action(
-            unit_index=self.selected_unit_idx,
-            weapon_id=self.selected_weapon_id,
+            unit_position=self.selected_unit_position,
+            ability_id=self.selected_ability_id,
             target_position=target_pos
         )
 
@@ -716,10 +739,15 @@ WEAPONS: {len(unit.template.weapons)}
             result = self.on_action_callback(action)
             self._show_action_result(action, result)
         else:
-            # Execute directly
-            result = self.battle.execute_action(action)
+            # Execute directly using execute_turn
+            turn_result = self.battle.execute_turn(action)
+            # Create a simple result for display
+            from src.simulator.battle import ActionResult
+            result = ActionResult(
+                success=(turn_result == TurnResult.SUCCESS),
+                message=turn_result.value if turn_result != TurnResult.SUCCESS else ""
+            )
             self._show_action_result(action, result)
-            self.battle.end_turn()
 
         # Clear selection
         self._clear_selection()
@@ -752,14 +780,14 @@ WEAPONS: {len(unit.template.weapons)}
 
     def _end_turn(self):
         """End the current turn."""
-        self.battle.end_turn()
+        self.battle.execute_turn(None)  # Pass turn
         self._clear_selection()
         self._update_display()
 
     def _clear_selection(self):
         """Clear current selection."""
-        self.selected_unit_idx = None
-        self.selected_weapon_id = None
+        self.selected_unit_position = None
+        self.selected_ability_id = None
         self.valid_targets.clear()
         self.aoe_pattern.clear()
         self.hovered_cell = None

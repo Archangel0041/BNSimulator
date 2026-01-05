@@ -40,15 +40,15 @@ class StepByStepBattle:
         print(f"{Colors.BOLD}{'=' * 70}{Colors.RESET}\n")
 
         print(f"{Colors.GREEN}Player Forces:{Colors.RESET}")
-        for i, unit in enumerate(self.battle.player_units):
-            print(f"  [{i}] {unit.template.class_type.name} - HP: {unit.current_hp}/{unit.template.stats.hp} - "
+        for pos, unit in self.battle.player_units.items():
+            print(f"  [{pos.x},{pos.y}] {unit.template.class_type.name} - HP: {unit.current_hp}/{unit.template.stats.hp} - "
                   f"Position: ({unit.position.x}, {unit.position.y})")
             for wid, weapon in unit.template.weapons.items():
                 print(f"      • {weapon.name} (DMG: {weapon.stats.base_damage_min}-{weapon.stats.base_damage_max})")
 
         print(f"\n{Colors.RED}Enemy Forces:{Colors.RESET}")
-        for i, unit in enumerate(self.battle.enemy_units):
-            print(f"  [{i}] {unit.template.class_type.name} - HP: {unit.current_hp}/{unit.template.stats.hp} - "
+        for pos, unit in self.battle.enemy_units.items():
+            print(f"  [{pos.x},{pos.y}] {unit.template.class_type.name} - HP: {unit.current_hp}/{unit.template.stats.hp} - "
                   f"Position: ({unit.position.x}, {unit.position.y})")
             for wid, weapon in unit.template.weapons.items():
                 print(f"      • {weapon.name} (DMG: {weapon.stats.base_damage_min}-{weapon.stats.base_damage_max})")
@@ -61,6 +61,8 @@ class StepByStepBattle:
 
     def execute_turn(self):
         """Execute one complete turn (one side's action)."""
+        from src.simulator.battle_engine.battle_types import TurnResult
+        
         self.turn_count += 1
 
         # Determine whose turn it is
@@ -71,40 +73,44 @@ class StepByStepBattle:
         print(f"{side_color}{Colors.BOLD}TURN {self.turn_count}: {current_side} PHASE{Colors.RESET}")
         print(f"{Colors.BOLD}{'=' * 70}{Colors.RESET}\n")
 
-        # Get legal actions
-        legal_actions = self.battle.get_legal_actions()
-
-        if not legal_actions:
-            print(f"{Colors.YELLOW}No valid actions available. Turn skipped.{Colors.RESET}")
-            self.battle.end_turn()
-            return
-
-        # Choose action based on agent
+        # Execute turn using new battle engine
         if self.battle.is_player_turn:
-            action = self.player_agent.select_action(self.battle)
+            # Get action from agent
+            legal_actions = self.battle.get_legal_actions()
+            if not legal_actions:
+                print(f"{Colors.YELLOW}No valid actions available. Turn skipped.{Colors.RESET}")
+                # Use execute_turn with None to pass
+                turn_result = self.battle.execute_turn(None)
+            else:
+                action = self.player_agent.select_action(self.battle)
+                
+                # Validate action
+                if action not in legal_actions:
+                    # Try to find a matching action
+                    action = self._find_matching_action(action, legal_actions)
+                    if action is None:
+                        print(f"{Colors.YELLOW}Agent selected invalid action. Using random action.{Colors.RESET}")
+                        import random
+                        action = random.choice(legal_actions)
+                
+                # Show action details
+                self._show_action_details(action)
+                
+                # Execute turn
+                turn_result = self.battle.execute_turn(action)
         else:
-            action = self.enemy_agent.select_action(self.battle)
+            # Enemy turn - executor handles action selection internally
+            turn_result = self.battle.execute_turn(None)
 
-        # Validate action
-        if action not in legal_actions:
-            # Try to find a matching action
-            action = self._find_matching_action(action, legal_actions)
-            if action is None:
-                print(f"{Colors.YELLOW}Agent selected invalid action. Using random action.{Colors.RESET}")
-                import random
-                action = random.choice(legal_actions)
-
-        # Show action details
-        self._show_action_details(action)
-
-        # Execute action
-        result = self.battle.execute_action(action)
-
-        # Show results
-        self._show_action_results(action, result)
-
-        # End turn
-        self.battle.end_turn()
+        # Show results based on turn result
+        if turn_result == TurnResult.SUCCESS:
+            print(f"{Colors.GREEN}✓ Action executed successfully{Colors.RESET}")
+        elif turn_result == TurnResult.PASSED:
+            print(f"{Colors.YELLOW}Turn passed (no action taken){Colors.RESET}")
+        elif turn_result == TurnResult.INVALID_ACTION:
+            print(f"{Colors.RED}✗ Invalid action{Colors.RESET}")
+        elif turn_result == TurnResult.BATTLE_ENDED:
+            print(f"{Colors.BOLD}Battle ended!{Colors.RESET}")
 
         # Show updated grid
         print(f"\n{Colors.CYAN}Updated Battlefield:{Colors.RESET}")
@@ -114,6 +120,9 @@ class StepByStepBattle:
         if self.battle.result != BattleResult.IN_PROGRESS:
             return False
 
+        # Switch turns manually for step-by-step execution
+        self.battle.is_player_turn = not self.battle.is_player_turn
+
         # Pause for user to see the results
         if not self.auto_mode:
             input(f"\n{Colors.YELLOW}Press Enter to continue to next turn...{Colors.RESET}")
@@ -122,7 +131,7 @@ class StepByStepBattle:
     def _find_matching_action(self, action, legal_actions):
         """Find a legal action that matches the given action."""
         for legal in legal_actions:
-            if (action.unit_index == legal.unit_index and
+            if (action.unit_position == legal.unit_position and
                 action.weapon_id == legal.weapon_id and
                 action.target_position == legal.target_position):
                 return legal
@@ -130,11 +139,17 @@ class StepByStepBattle:
 
     def _show_action_details(self, action):
         """Show details about the action being taken."""
-        units = self.battle.current_side_units
-        unit = units[action.unit_index]
+        from src.simulator.enums import BattleSide
+        
+        # Get unit from player units (since this is for player turns)
+        unit = self.battle.player_units.get(action.unit_position)
+        if unit is None:
+            print(f"{Colors.RED}Unit not found at position{Colors.RESET}")
+            return
+            
         weapon = unit.template.weapons.get(action.weapon_id)
 
-        target_unit = self.battle.get_unit_at_position(action.target_position)
+        target_unit = self.battle.get_unit_at_position(action.target_position, BattleSide.ENEMY_TEAM)
         target_name = target_unit.template.class_type.name if target_unit else "Empty Space"
 
         print(f"{Colors.BOLD}Action:{Colors.RESET}")
@@ -223,10 +238,10 @@ class StepByStepBattle:
         print(f"  Total Turns: {self.battle.turn_number}")
         print(f"  Total Actions: {len(self.battle.action_history)}")
 
-        player_alive = sum(1 for u in self.battle.player_units if u.is_alive)
-        enemy_alive = sum(1 for u in self.battle.enemy_units if u.is_alive)
-        print(f"  Player Units Remaining: {player_alive}/{len(self.battle.player_units)}")
-        print(f"  Enemy Units Remaining: {enemy_alive}/{len(self.battle.enemy_units)}")
+        player_alive = len(self.battle.player_units)
+        enemy_alive = len(self.battle.enemy_units)
+        print(f"  Player Units Remaining: {player_alive}")
+        print(f"  Enemy Units Remaining: {enemy_alive}")
 
         print(f"\n{Colors.CYAN}Final Battlefield:{Colors.RESET}")
         print(self.viz.render_grid())
