@@ -3,6 +3,7 @@ import pytest
 
 from src.simulator.battle import BattleUnit, ActiveStatusEffect, BattleState
 from src.simulator.battle_engine.cooldown_handler import CooldownHandler
+from src.simulator.battle_engine.status_effect_handler import StatusEffectHandler
 from src.simulator.models import (
     Position, UnitTemplate, UnitStats, StatusEffect
 )
@@ -82,7 +83,7 @@ class TestIsUnitStunned:
 
     def test_unit_not_stunned(self, battle_unit):
         """Test that a unit with no status effects is not stunned."""
-        assert not CooldownHandler.is_unit_stunned(battle_unit)
+        assert not StatusEffectHandler.is_unit_stunned(battle_unit)
 
     def test_unit_with_dot_not_stunned(self, battle_unit, data_loader):
         """Test that a unit with only DOT effects is not stunned."""
@@ -94,7 +95,7 @@ class TestIsUnitStunned:
         )
         battle_unit.status_effects.append(status)
         
-        assert not CooldownHandler.is_unit_stunned(battle_unit)
+        assert not StatusEffectHandler.is_unit_stunned(battle_unit)
 
     def test_unit_with_stun_effect_is_stunned(self, battle_unit, stun_effect):
         """Test that a unit with a stun effect that blocks action is stunned."""
@@ -105,7 +106,7 @@ class TestIsUnitStunned:
         )
         battle_unit.status_effects.append(status)
         
-        assert CooldownHandler.is_unit_stunned(battle_unit)
+        assert StatusEffectHandler.is_unit_stunned(battle_unit)
 
     def test_unit_with_non_blocking_stun_not_stunned(self, battle_unit, data_loader):
         """Test that a unit with a stun effect that doesn't block action is not stunned."""
@@ -118,7 +119,7 @@ class TestIsUnitStunned:
         )
         battle_unit.status_effects.append(status)
         
-        assert not CooldownHandler.is_unit_stunned(battle_unit)
+        assert not StatusEffectHandler.is_unit_stunned(battle_unit)
 
     def test_unit_with_multiple_effects_stunned(self, battle_unit, data_loader, stun_effect):
         """Test that a unit with multiple effects including a blocking stun is stunned."""
@@ -139,7 +140,7 @@ class TestIsUnitStunned:
         )
         battle_unit.status_effects.append(stun_status)
         
-        assert CooldownHandler.is_unit_stunned(battle_unit)
+        assert StatusEffectHandler.is_unit_stunned(battle_unit)
 
 
 class TestReduceUnitCooldowns:

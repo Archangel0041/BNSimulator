@@ -7,10 +7,10 @@ Handles damage calculation, including crit multipliers, modifiers, armor penetra
 import math
 from typing import TYPE_CHECKING
 
-from ..battle import BattleState, BattleUnit
+from ..battle import BattleState, BattleUnit, Action
 from ..enums import BattleSide, DamageType
 from .battle_types import HitResult
-from ..models import Action, Position
+from ..models import Position
 from .armor_handler import ArmorHandler
 from .status_effect_handler import StatusEffectHandler
 
@@ -39,18 +39,23 @@ class DamageHandler:
                 final_hp_damage, final_armor_damage = DamageHandler.apply_multipliers_and_armor(
                     battle, action, hit_result, position, target_side
                 )
-                
+
+                # Get target unit
+                target_unit = battle.get_unit_at_position(position, target_side)
+                if target_unit is None:
+                    continue  # Unit died before damage could be applied
+
                 # Apply damage from this hit to the target
                 DamageHandler.apply_damage_to_unit(
-                    battle.get_unit_at_position(position, target_side), 
-                    final_hp_damage, 
+                    target_unit,
+                    final_hp_damage,
                     final_armor_damage
                 )
 
                 # Apply status effects for this hit
                 status_effect_base_damage = final_hp_damage + final_armor_damage
                 StatusEffectHandler.try_apply_status_effects_for_hit(
-                    battle, action, position, hit_result, status_effect_base_damage
+                    battle, action, position, hit_result, status_effect_base_damage, side
                 )
         
 

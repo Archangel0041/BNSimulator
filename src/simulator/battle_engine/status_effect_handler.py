@@ -171,7 +171,24 @@ class StatusEffectHandler:
         # Update unit's status effects list
         unit.status_effects = remaining_effects
 
-    
+    @staticmethod
+    def decay_stun_effects_for_side(battle: 'BattleState', side: 'BattleSide') -> None:
+        """
+        Decrement duration of stun/freeze status effects for all units on a side.
+
+        Args:
+            battle: The battle state
+            side: The side to decay stun effects for (BattleSide.PLAYER_TEAM or BattleSide.ENEMY_TEAM)
+        """
+        from ..enums import BattleSide
+
+        # Get the appropriate units dictionary
+        units = battle.player_units if side == BattleSide.PLAYER_TEAM else battle.enemy_units
+
+        # Decay stun effects for each unit
+        for unit in units.values():
+            StatusEffectHandler.decay_stun_effects(unit)
+
     @staticmethod
     def try_apply_status_effects_for_hit(
         battle: 'BattleState',

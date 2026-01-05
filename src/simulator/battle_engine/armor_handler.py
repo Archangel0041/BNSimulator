@@ -8,10 +8,9 @@ import math
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..battle import BattleUnit, BattleState
+    from ..battle import BattleUnit, BattleState, Action
     from ..enums import DamageType
     from .battle_types import HitResult
-    from ..models import Action
 
 
 class ArmorHandler:

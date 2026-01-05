@@ -49,20 +49,17 @@ class EnemyTurnExecutor:
         Returns:
             TurnResult indicating the outcome of the turn
         """
-        # Step 1: Make list of all alive units and abilities
+        # Step 1: Make list of all alive units and abilities (already filters stunned units)
         all_possible_actions = self._step_list_all_alive_units_and_abilities()
 
-        # Step 2: Filter all units which are stunned/frozen
-        filtered_actions = self._step_filter_stunned_units(all_possible_actions)
+        # Step 2: Filter abilities on cooldown
+        filtered_actions = self._step_filter_cooldown_abilities(all_possible_actions)
 
-        # Step 3: Filter abilities on cooldown
-        filtered_actions = self._step_filter_cooldown_abilities(filtered_actions)
-
-        # Step 4: Calculate valid targets for each ability
+        # Step 3: Calculate valid targets for each ability
         # (empty locations & targets that will not take damage are not valid)
         actions_with_targets = self._step_calculate_valid_targets(filtered_actions)
 
-        # Step 5: Filter abilities with no valid target
+        # Step 4: Filter abilities with no valid target
         valid_actions = self._step_filter_no_valid_targets(actions_with_targets)
 
         # No valid actions - skip turn
@@ -71,6 +68,8 @@ class EnemyTurnExecutor:
 
         # Step 6: Select action using AI policy
         action = self._step_select_action(valid_actions)
+        if action is None:
+            return TurnResult.NO_VALID_ACTIONS
 
         # Step 7: Calculate base damage range
         damage_min, damage_max = self._step_calculate_base_damage(action)
