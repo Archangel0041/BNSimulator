@@ -69,7 +69,7 @@ class EnemyTurnExecutor:
         # Step 6: Select action using AI policy
         action = self._step_select_action(valid_actions)
         if action is None:
-            return TurnResult.NO_VALID_ACTIONS
+            return TurnResult.PASSED
 
         # Step 7: Calculate base damage range
         damage_min, damage_max = self._step_calculate_base_damage(action)
