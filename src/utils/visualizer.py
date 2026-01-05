@@ -316,28 +316,29 @@ class BattleVisualizer:
         # Group by unit
         by_unit = {}
         for action in actions:
-            if action.unit_index not in by_unit:
-                by_unit[action.unit_index] = []
-            by_unit[action.unit_index].append(action)
+            if action.unit_position not in by_unit:
+                by_unit[action.unit_position] = []
+            by_unit[action.unit_position].append(action)
 
-        for unit_idx, unit_actions in by_unit.items():
-            unit = self.battle.current_side_units[unit_idx]
-            lines.append(f"\nUnit {unit_idx}: {unit.template.class_type.name} at ({unit.position.x}, {unit.position.y})")
+        for unit_pos, unit_actions in by_unit.items():
+            unit = self.battle.player_units.get(unit_pos)
+            if unit is None:
+                continue
+            lines.append(f"\nUnit at ({unit_pos.x},{unit_pos.y}): {unit.template.class_type.name}")
 
-            # Group by weapon
-            by_weapon = {}
+            # Group by ability
+            by_ability = {}
             for action in unit_actions:
-                if action.weapon_id not in by_weapon:
-                    by_weapon[action.weapon_id] = []
-                by_weapon[action.weapon_id].append(action)
+                if action.ability_id not in by_ability:
+                    by_ability[action.ability_id] = []
+                by_ability[action.ability_id].append(action)
 
-            for weapon_id, weapon_actions in by_weapon.items():
-                weapon = unit.template.weapons.get(weapon_id)
-                if weapon:
-                    # Get localized weapon name
-                    weapon_name = self._get_localized(weapon.name)
-                    lines.append(f"  Weapon {weapon_id}: {weapon_name}")
-                    targets = [f"({a.target_position.x},{a.target_position.y})" for a in weapon_actions]
+            for ability_id, ability_actions in by_ability.items():
+                ability = self.battle.data_loader.get_ability(ability_id)
+                if ability:
+                    ability_name = ability.name if ability else f"Ability {ability_id}"
+                    lines.append(f"  Ability {ability_id}: {ability_name}")
+                    targets = [f"({a.target_position.x},{a.target_position.y})" for a in ability_actions]
                     lines.append(f"    Targets: {', '.join(targets)}")
 
         return "\n".join(lines)
@@ -400,7 +401,8 @@ class InteractiveBattleSession:
                 elif command == 'l':
                     print(self.viz.show_legal_actions())
                 elif command == 'n':
-                    self.battle.end_turn()
+                    # Pass turn using execute_turn
+                    self.battle.execute_turn(None)
                     print("Turn ended.")
                     print(self.viz.render_grid())
                 elif command == 'r':
@@ -422,24 +424,40 @@ class InteractiveBattleSession:
         """Execute an action."""
         from src.simulator.battle import Action
         from src.simulator.models import Position
+        from src.simulator.battle_engine.battle_types import TurnResult
+
+        # Convert unit_idx to unit_position
+        unit_positions = list(self.battle.player_units.keys())
+        if unit_idx >= len(unit_positions):
+            print("Invalid unit index!")
+            return
+        
+        unit_pos = unit_positions[unit_idx]
+        unit = self.battle.player_units[unit_pos]
+        
+        # Get first ability from the weapon (for backward compatibility)
+        weapon = unit.template.weapons.get(weapon_id)
+        if weapon is None or not weapon.abilities:
+            print("Invalid weapon or no abilities!")
+            return
+        
+        ability_id = weapon.abilities[0]
 
         action = Action(
-            unit_index=unit_idx,
-            weapon_id=weapon_id,
+            unit_position=unit_pos,
+            ability_id=ability_id,
             target_position=Position(x, y)
         )
 
-        result = self.battle.execute_action(action)
-        if result.success:
-            print(f"Action executed!")
-            print(f"  Damage dealt: {result.damage_dealt}")
-            if result.kills:
-                print(f"  Kills: {result.kills}")
-            if result.status_applied:
-                print(f"  Status effects: {result.status_applied}")
-            self.battle.end_turn()
+        turn_result = self.battle.execute_turn(action)
+        if turn_result == TurnResult.SUCCESS:
+            print(f"Action executed successfully!")
+        elif turn_result == TurnResult.PASSED:
+            print(f"Turn passed")
+        elif turn_result == TurnResult.INVALID_ACTION:
+            print(f"Action failed: Invalid action")
         else:
-            print(f"Action failed: {result.message}")
+            print(f"Turn result: {turn_result}")
 
         print(self.viz.render_grid())
 
@@ -450,12 +468,28 @@ class InteractiveBattleSession:
         actions = self.battle.get_legal_actions()
         if not actions:
             print("No legal actions available!")
-            self.battle.end_turn()
+            self.battle.execute_turn(None)
             return
 
         action = random.choice(actions)
-        print(f"Random action: Unit {action.unit_index}, Weapon {action.weapon_id}, Target ({action.target_position.x}, {action.target_position.y})")
-        self._execute_action(action.unit_index, action.weapon_id, action.target_position.x, action.target_position.y)
+        # Convert unit_position to unit_idx for display
+        unit_positions = list(self.battle.player_units.keys())
+        unit_idx = unit_positions.index(action.unit_position) if action.unit_position in unit_positions else -1
+        
+        # Get weapon_id for display
+        unit = self.battle.player_units.get(action.unit_position)
+        weapon_id = -1
+        if unit:
+            weapon_id = self.battle.get_weapon_id_for_ability(unit, action.ability_id) or -1
+        
+        print(f"Random action: Unit {unit_idx} at {action.unit_position}, Ability {action.ability_id}, Target ({action.target_position.x}, {action.target_position.y})")
+        
+        # Execute directly using execute_turn
+        from src.simulator.battle_engine.battle_types import TurnResult
+        turn_result = self.battle.execute_turn(action)
+        if turn_result == TurnResult.SUCCESS:
+            print("Action executed successfully!")
+        print(self.viz.render_grid())
 
 
 def start_interactive_session(data_dir: str = "data", unit_ids: list[int] = None):

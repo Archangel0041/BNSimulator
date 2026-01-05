@@ -18,6 +18,29 @@ class StatusEffectHandler:
     """Handles status effect damage calculation, application, and decay."""
 
     @staticmethod
+    def is_unit_stunned(unit: 'BattleUnit') -> bool:
+        """
+        Check if a unit is stunned and cannot act.
+
+        A unit is stunned if it has a status effect with:
+        - effect_type == StatusEffectType.STUN
+        - stun_block_action == True
+
+        Args:
+            unit: The unit to check
+
+        Returns:
+            True if the unit is stunned and cannot act
+        """
+        from ..enums import StatusEffectType
+        
+        for status in unit.status_effects:
+            if (status.effect.effect_type == StatusEffectType.STUN and
+                    status.effect.stun_block_action):
+                return True
+        return False
+
+    @staticmethod
     def calculate_dot_damage(status: 'ActiveStatusEffect') -> float:
         """
         Calculate DOT damage for a single status effect.
@@ -188,12 +211,8 @@ class StatusEffectHandler:
         if target_unit is None:
             return
         
-        weapon = attacker.template.weapons.get(action.weapon_id)
-        if weapon is None or not weapon.abilities:
-            return
-        
-        ability_id = weapon.abilities[0]
-        ability = battle.data_loader.get_ability(ability_id)
+        # Get the ability directly
+        ability = battle.data_loader.get_ability(action.ability_id)
         if ability is None:
             return
         

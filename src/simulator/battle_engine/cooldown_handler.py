@@ -7,35 +7,12 @@ Handles all cooldown reduction logic.
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..battle import BattleState, BattleUnit
+    from ..battle import BattleState, BattleUnit, Action
     from ..enums import BattleSide
 
 
 class CooldownHandler:
     """Handles cooldown reduction for units."""
-
-    @staticmethod
-    def is_unit_stunned(unit: 'BattleUnit') -> bool:
-        """
-        Check if a unit is stunned and cannot act.
-
-        A unit is stunned if it has a status effect with:
-        - effect_type == StatusEffectType.STUN
-        - stun_block_action == True
-
-        Args:
-            unit: The unit to check
-
-        Returns:
-            True if the unit is stunned and cannot act
-        """
-        from ..enums import StatusEffectType
-        
-        for status in unit.status_effects:
-            if (status.effect.effect_type == StatusEffectType.STUN and
-                    status.effect.stun_block_action):
-                return True
-        return False
 
     @staticmethod
     def reduce_unit_cooldowns(unit: 'BattleUnit') -> None:
@@ -50,7 +27,8 @@ class CooldownHandler:
             unit: The unit whose cooldowns to reduce
         """
         # Only reduce cooldowns if unit is not stunned
-        if not CooldownHandler.is_unit_stunned(unit):
+        from .status_effect_handler import StatusEffectHandler
+        if not StatusEffectHandler.is_unit_stunned(unit):
             # Reduce ability-specific cooldowns
             for ability_id in list(unit.ability_cooldowns.keys()):
                 if unit.ability_cooldowns[ability_id] > 0:
@@ -89,3 +67,22 @@ class CooldownHandler:
         for unit in units.values():
             CooldownHandler.reduce_unit_cooldowns(unit)
 
+    @staticmethod
+    def update_cooldowns_for_unit(battle: 'BattleState', unit: 'BattleUnit', action: 'Action') -> None:
+        """
+        Update cooldowns for unit that has used an ability.
+        """
+        # Get the ability
+        ability = battle.data_loader.get_ability(action.ability_id)
+        if ability is None:
+            return
+        
+        # Find the weapon that contains this ability
+        weapon_id = battle.get_weapon_id_for_ability(unit, action.ability_id)
+        if weapon_id is None:
+            return
+        
+        unit.ability_cooldowns[action.ability_id] = ability.stats.ability_cooldown
+        if ability.stats.global_cooldown > 0:
+            unit.global_cooldowns[weapon_id] = ability.stats.global_cooldown
+        unit.ammo[weapon_id] = unit.ammo.get(weapon_id, 0) - ability.stats.ammo_required

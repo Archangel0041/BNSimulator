@@ -91,12 +91,8 @@ class DamageHandler:
         if attacker is None:
             return (0, 0)
         
-        weapon = attacker.template.weapons.get(action.weapon_id)
-        if weapon is None or not weapon.abilities:
-            return (0, 0)
-        
-        ability_id = weapon.abilities[0]
-        ability = battle.data_loader.get_ability(ability_id)
+        # Get the ability
+        ability = battle.data_loader.get_ability(action.ability_id)
         if ability is None:
             return (0, 0)
         

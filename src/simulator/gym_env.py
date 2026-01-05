@@ -139,13 +139,25 @@ class BattleEnv(gym.Env):
                 continue
             unit_idx = unit_positions.index(action.unit_position)
             
-            # Map weapon_id to weapon_idx (0-based)
+            # Map ability_id to ability_idx (0-based)
+            # We need to collect all abilities across all weapons for this unit
             unit = self.battle.player_units[action.unit_position]
-            weapon_ids = list(unit.template.weapons.keys())
-            if action.weapon_id in weapon_ids:
-                weapon_idx = weapon_ids.index(action.weapon_id)
+            all_ability_ids = []
+            for weapon in unit.template.weapons.values():
+                all_ability_ids.extend(weapon.abilities)
+            
+            if action.ability_id in all_ability_ids:
+                ability_idx = all_ability_ids.index(action.ability_id)
             else:
                 continue
+            
+            # For backward compatibility, we'll still encode weapon_idx
+            # Find which weapon contains this ability
+            weapon_id = self.battle.get_weapon_id_for_ability(unit, action.ability_id)
+            if weapon_id is None:
+                continue
+            weapon_ids = list(unit.template.weapons.keys())
+            weapon_idx = weapon_ids.index(weapon_id)
 
             target_idx = self._position_to_target_idx(action.target_position)
 
@@ -177,11 +189,19 @@ class BattleEnv(gym.Env):
             return None
 
         weapon_id = weapon_ids[weapon_idx]
+        weapon = unit.template.weapons[weapon_id]
+        
+        # Use first ability of the weapon (for backward compatibility)
+        # TODO: Could be enhanced to support multiple abilities per weapon
+        if not weapon.abilities:
+            return None
+        
+        ability_id = weapon.abilities[0]
         target_pos = self._target_idx_to_position(target_idx)
 
         return Action(
             unit_position=unit_pos,
-            weapon_id=weapon_id,
+            ability_id=ability_id,
             target_position=target_pos
         )
 
@@ -312,21 +332,21 @@ class BattleEnv(gym.Env):
                 legal_actions = self.battle.get_legal_actions()
                 is_legal = any(
                     a.unit_position == battle_action.unit_position and
-                    a.weapon_id == battle_action.weapon_id and
+                    a.ability_id == battle_action.ability_id and
                     a.target_position == battle_action.target_position
                     for a in legal_actions
                 )
                 if is_legal:
-                    self.battle.execute_action(battle_action)
+                    # Use execute_turn which handles turn switching internally
+                    self.battle.execute_turn(battle_action)
+                else:
+                    # Invalid action, pass turn
+                    self.battle.execute_turn(None)
 
-            self.battle.end_turn()
-
-        # Execute enemy turn (simple random policy)
-        while not self.battle.is_player_turn and self.battle.result == BattleResult.IN_PROGRESS:
-            enemy_action = self._get_random_enemy_action()
-            if enemy_action:
-                self.battle.execute_action(enemy_action)
-            self.battle.end_turn()
+        # Execute enemy turn using the new battle engine
+        # The enemy executor handles action selection internally
+        if not self.battle.is_player_turn and self.battle.result == BattleResult.IN_PROGRESS:
+            self.battle.execute_turn(None)  # Enemy executor selects action internally
 
         # Calculate reward
         reward = self._calculate_reward()

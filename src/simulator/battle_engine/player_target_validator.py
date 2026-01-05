@@ -41,31 +41,34 @@ class PlayerTargetValidator:
         if attacker is None:
             return False
 
-        # Get the weapon and ability
-        weapon = attacker.template.weapons.get(action.weapon_id)
-        if weapon is None or not weapon.abilities:
+        # Get the ability
+        ability = battle.data_loader.get_ability(action.ability_id)
+        if ability is None:
             return False
 
-        # Use first ability (could be extended to support multiple abilities per weapon)
-        ability_id = weapon.abilities[0]
-        ability = battle.data_loader.get_ability(ability_id)
-        if ability is None:
+        # Find the weapon that contains this ability
+        weapon_id = battle.get_weapon_id_for_ability(attacker, action.ability_id)
+        if weapon_id is None:
+            return False
+        
+        weapon = attacker.template.weapons.get(weapon_id)
+        if weapon is None:
             return False
 
         stats = ability.stats
         target_area = ability.stats.target_area
 
         # Check ability-specific cooldown
-        if attacker.ability_cooldowns.get(ability_id, 0) > 0:
+        if attacker.ability_cooldowns.get(action.ability_id, 0) > 0:
             return False
 
         # Check weapon-specific global cooldown
-        if attacker.global_cooldowns.get(action.weapon_id, 0) > 0:
+        if attacker.global_cooldowns.get(weapon_id, 0) > 0:
             return False
 
         # Check ammo
         if weapon.stats.ammo >= 0:  # -1 means unlimited ammo
-            current_ammo = attacker.ammo.get(action.weapon_id, 0)
+            current_ammo = attacker.ammo.get(weapon_id, 0)
             ammo_required = stats.ammo_required
             if current_ammo < ammo_required:
                 return False
@@ -74,7 +77,7 @@ class PlayerTargetValidator:
         if stats.charge_time > 0:
             # Each ability has its own charge_time and tracks when it became available
             # Check if this specific ability is available yet
-            ability_available_turn = attacker.ability_available_turn.get(ability_id)
+            ability_available_turn = attacker.ability_available_turn.get(action.ability_id)
             if ability_available_turn is None:
                 # Ability not initialized - shouldn't happen, but fail safe
                 return False

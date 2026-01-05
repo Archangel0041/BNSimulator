@@ -55,15 +55,15 @@ class PlayerTurnExecutor:
         action = self._step_get_player_action(action)
         if action is None:
             # No valid action available or player passed
-            return TurnResult.NO_VALID_ACTIONS
+            return TurnResult.PASSED
 
         # Step 2: Check if unit is stunned/frozen/disabled
-        if CooldownHandler.is_unit_stunned(self.battle.player_units.get(action.unit_position)):
-            return TurnResult.UNIT_CANNOT_ACT
+        if StatusEffectHandler.is_unit_stunned(self.battle.player_units.get(action.unit_position)):
+            return TurnResult.INVALID_ACTION
 
         # Step 3: Check if targeting location is valid
         if not self._step_is_target_valid(action):
-            return TurnResult.INVALID_TARGET
+            return TurnResult.INVALID_ACTION
 
         # Step 4: Calculate base damage range
         damage_min, damage_max = self._step_calculate_base_damage(action)
@@ -169,8 +169,12 @@ class PlayerTurnExecutor:
         if attacker is None:
             return (0, 0)
         
-        # Get the weapon
-        weapon = attacker.template.weapons.get(action.weapon_id)
+        # Find the weapon that contains this ability
+        weapon_id = self.battle.get_weapon_id_for_ability(attacker, action.ability_id)
+        if weapon_id is None:
+            return (0, 0)
+        
+        weapon = attacker.template.weapons.get(weapon_id)
         if weapon is None:
             return (0, 0)
         

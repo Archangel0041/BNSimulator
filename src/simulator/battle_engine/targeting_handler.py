@@ -57,15 +57,14 @@ class TargetingHandler:
         if attacker is None:
             return {}
         
-        weapon = attacker.template.weapons.get(action.weapon_id)
-        if weapon is None or not weapon.abilities:
-            return {}
-        
-        # Use first ability (could be extended to support multiple abilities per weapon)
-        ability_id = weapon.abilities[0]
-        ability = battle.data_loader.get_ability(ability_id)
+        # Get the ability directly
+        ability = battle.data_loader.get_ability(action.ability_id)
         if ability is None:
             return {}
+        
+        # Find the weapon that contains this ability (for weapon stats if needed)
+        weapon_id = battle.get_weapon_id_for_ability(attacker, action.ability_id)
+        weapon = attacker.template.weapons.get(weapon_id) if weapon_id is not None else None
         
         stats = ability.stats
         target_type = stats.target_area.target_type if stats.target_area else None
@@ -76,7 +75,7 @@ class TargetingHandler:
             if stats.target_area is not None:
                 import warnings
                 warnings.warn(
-                    f"Ability {ability_id} has target_area but no target_type specified. "
+                    f"Ability {action.ability_id} has target_area but no target_type specified. "
                     "Defaulting to TargetType.NONE."
                 )
             target_type = TargetType.NONE

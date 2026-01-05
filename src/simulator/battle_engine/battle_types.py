@@ -15,11 +15,9 @@ from ..enums import DamageType
 class TurnResult(Enum):
     """Result of executing a turn."""
     SUCCESS = "success"
+    PASSED = "passed"
     BATTLE_ENDED = "battle_ended"
-    UNIT_CANNOT_ACT = "unit_cannot_act"
-    INVALID_TARGET = "invalid_target"
-    ATTACK_MISSED = "attack_missed"
-    NO_VALID_ACTIONS = "no_valid_actions"
+    INVALID_ACTION = "invalid_action"
 
 
 class BattleResult(Enum):
@@ -76,8 +74,7 @@ class ActionCandidate:
     Used for filtering and target calculation.
     """
     unit_position: Position  # Position of the unit
-    ability_index: int
-    # Will be populated during target calculation
+    ability_id: int  # ID of the ability
     valid_targets: List[Position] = None
 
     def __post_init__(self):

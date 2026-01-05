@@ -67,7 +67,7 @@ class EnemyTurnExecutor:
 
         # No valid actions - skip turn
         if not valid_actions:
-            return TurnResult.NO_VALID_ACTIONS
+            return TurnResult.PASSED
 
         # Step 6: Select action using AI policy
         action = self._step_select_action(valid_actions)
@@ -115,204 +115,41 @@ class EnemyTurnExecutor:
         return TurnResult.SUCCESS
 
     # =========================================================================
-    # Step 1: Apply DOT to enemy units
-    # =========================================================================
-
-    def _step_apply_dot_to_enemy(self) -> None:
-        """
-        Step 1: Apply DOT to all enemy units.
-
-        Iterates through all enemy units and applies DOT damage from
-        active status effects.
-
-        Sub-steps for each unit:
-        1. Calculate base DOT damage for each valid DOT effect
-        2. Decay the status effect duration
-        3. Apply armor/modifiers to damage
-        4. Apply the final damage to the unit
-        """
-        for unit in self.battle.enemy_units.values():
-            # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
-            # (Must be done per-effect since each can have different damage type)
-            StatusEffectHandler.apply_dot_to_unit(unit)
-
-            # Sub-step 2: Decay DOT status effect durations and remove expired effects
-            # (Only DOT effects decay here; stun/freeze decay at end of turn)
-            StatusEffectHandler.decay_dot_effects(unit)
-
-    # =========================================================================
-    # Apply DOT to player units (opposing side)
-    # =========================================================================
-
-    def _step_apply_dot_to_player_units(self) -> None:
-        """
-        Apply DOT to all player units (opposing side that was attacked).
-
-        Iterates through all player units and applies DOT damage from
-        active status effects.
-
-        Sub-steps for each unit:
-        1. Calculate base DOT damage for each valid DOT effect
-        2. Decay the status effect duration
-        3. Apply armor/modifiers to damage
-        4. Apply the final damage to the unit
-        """
-        for unit in self.battle.player_units.values():
-            # Sub-step 1 & 3 & 4: Calculate and apply DOT damage for each effect
-            # (Must be done per-effect since each can have different damage type)
-            StatusEffectHandler.apply_dot_to_unit(unit)
-
-            # Sub-step 2: Decay DOT status effect durations and remove expired effects
-            # (Only DOT effects decay here; stun/freeze decay at end of turn)
-            StatusEffectHandler.decay_dot_effects(unit)
-
-    # =========================================================================
-    # Step 2: Check for dead enemy units (from DOT)
-    # =========================================================================
-
-    def _step_check_for_dead_enemy_units(self) -> None:
-        """
-        Step 2: Check for dead enemy units after DOT application.
-
-        Removes enemy units with HP <= 0 from the working copy.
-        """
-        from ..enums import BattleSide
-        DeathHandler.check_for_dead_units(self.battle, BattleSide.ENEMY_TEAM)
-
-    # =========================================================================
-    # Step 3: Check if all enemy units dead
-    # =========================================================================
-
-    def _step_check_all_enemy_units_dead(self) -> bool:
-        """
-        Step 2: Check if all enemy units are dead.
-
-        Returns:
-            True if all enemy units are dead (ignoring unimportant units)
-        """
-        from ..enums import BattleSide
-        return DeathHandler.check_all_units_dead(self.battle, BattleSide.ENEMY_TEAM)
-
-    # =========================================================================
-    # Collapse player front row (opposing side)
-    # =========================================================================
-
-    def _step_collapse_player_front_row(self) -> None:
-        """
-        Collapse 1 row if front row is empty (player side).
-
-        If row 0 (front row, y=0) has no alive units, move all units forward
-        by one row (decrease y by 1). Only collapses ONE row per turn.
-        Increments the player_rows_collapsed counter.
-        """
-        from ..enums import BattleSide
-        from .row_collapse_handler import RowCollapseHandler
-        RowCollapseHandler.collapse_front_row(self.battle, BattleSide.PLAYER_TEAM)
-
-    # =========================================================================
-    # Step 4: Collapse enemy front row
-    # =========================================================================
-
-    def _step_collapse_enemy_front_row(self) -> None:
-        """
-        Step 4: Collapse 1 row if front row is empty.
-
-        If row 0 (front row, y=0) has no alive units, move all units forward
-        by one row (decrease y by 1). Only collapses ONE row per turn.
-        Increments the enemy_rows_collapsed counter.
-        """
-        from ..enums import BattleSide
-        from .row_collapse_handler import RowCollapseHandler
-        RowCollapseHandler.collapse_front_row(self.battle, BattleSide.ENEMY_TEAM)
-
-    # =========================================================================
-    # Reduce player cooldowns (opposing side)
-    # =========================================================================
-
-    def _step_reduce_player_cooldowns(self) -> None:
-        """
-        Reduce cooldowns for non-stunned units (player side).
-
-        For each alive player unit that can act (not stunned):
-        - Decrement weapon cooldowns
-        - Decrement global cooldown
-        """
-        from ..enums import BattleSide
-        from .cooldown_handler import CooldownHandler
-        CooldownHandler.reduce_cooldowns_for_side(self.battle, BattleSide.PLAYER_TEAM)
-
-    # =========================================================================
-    # Step 5: Reduce enemy cooldowns
-    # =========================================================================
-
-    def _step_reduce_enemy_cooldowns(self) -> None:
-        """
-        Step 4: Reduce cooldowns for non-stunned units.
-
-        For each alive enemy unit that can act (not stunned):
-        - Decrement weapon cooldowns
-        - Decrement global cooldown
-        """
-        from ..enums import BattleSide
-        from .cooldown_handler import CooldownHandler
-        CooldownHandler.reduce_cooldowns_for_side(self.battle, BattleSide.ENEMY_TEAM)
-
-    # =========================================================================
-    # Step 19: Decay stun/freeze effects (enemy side)
-    # =========================================================================
-
-    def _step_decay_stun_effects_enemy(self) -> None:
-        """
-        Decay stun/freeze status effects for enemy units (after turn completes).
-
-        Stun/freeze effects should only decay at the end of the turn, not when
-        DOT ticks. This ensures that if a unit is stunned, it remains stunned
-        for the full turn and can't act that turn.
-        """
-        for unit in self.battle.enemy_units.values():
-            StatusEffectHandler.decay_stun_effects(unit)
-
-    # =========================================================================
     # Step 5: List all alive units and abilities
     # =========================================================================
 
     def _step_list_all_alive_units_and_abilities(self) -> List[ActionCandidate]:
         """
-        Step 5: Make list of all alive units and abilities.
+        Step 1: Make list of all alive units and abilities.
 
-        Creates a list of all possible actions from alive enemy units.
-
-        Returns:
-            List of ActionCandidate objects
-        """
-        # TODO: Implement action listing
-        return []
-
-    # =========================================================================
-    # Step 6: Filter stunned units
-    # =========================================================================
-
-    def _step_filter_stunned_units(
-        self, actions: List[ActionCandidate]
-    ) -> List[ActionCandidate]:
-        """
-        Step 6: Filter all units which are stunned/frozen.
-
-        Removes actions from units that cannot act due to status effects.
-
-        Args:
-            actions: List of action candidates
+        Creates a unique pairwise list for each unit that's alive, not stunned,
+        and its corresponding abilities.
 
         Returns:
-            Filtered list of action candidates
+            List of ActionCandidate objects (unit_position, ability_id pairs)
         """
-        from .cooldown_handler import CooldownHandler
-        filtered = []
-        for action_candidate in actions:
-            unit = self.battle.enemy_units.get(action_candidate.unit_position)
-            if unit is not None and not CooldownHandler.is_unit_stunned(unit):
-                filtered.append(action_candidate)
-        return filtered
+        from .status_effect_handler import StatusEffectHandler
+        
+        action_candidates = []
+        
+        # Iterate through all enemy units (dead units are already removed from dictionary)
+        for unit_position, unit in self.battle.enemy_units.items():
+            # Skip if unit is stunned
+            if StatusEffectHandler.is_unit_stunned(unit):
+                continue
+            
+            # Iterate through all weapons for this unit
+            for weapon_id, weapon in unit.template.weapons.items():
+                # Iterate through all abilities for this weapon
+                for ability_id in weapon.abilities:
+                    # Create an ActionCandidate for this unit+ability pair
+                    action_candidate = ActionCandidate(
+                        unit_position=unit_position,
+                        ability_id=ability_id
+                    )
+                    action_candidates.append(action_candidate)
+        
+        return action_candidates
 
     # =========================================================================
     # Step 7: Filter abilities on cooldown
@@ -322,10 +159,13 @@ class EnemyTurnExecutor:
         self, actions: List[ActionCandidate]
     ) -> List[ActionCandidate]:
         """
-        Step 7: Filter abilities on cooldown.
+        Step 3: Filter abilities on cooldown.
 
-        Removes actions for abilities that are still on cooldown or
-        have no ammo remaining.
+        Removes actions where:
+        - Ability is on cooldown (ability_cooldowns)
+        - Weapon global cooldown is active (global_cooldowns)
+        - Charge time not ready (ability_available_turn > current turn)
+        - Insufficient ammo (current_ammo < ammo_required)
 
         Args:
             actions: List of action candidates
@@ -333,8 +173,54 @@ class EnemyTurnExecutor:
         Returns:
             Filtered list of action candidates
         """
-        # TODO: Implement cooldown filtering
-        return actions
+        filtered = []
+        current_turn = self.battle.turn_number
+        
+        for action_candidate in actions:
+            unit = self.battle.enemy_units.get(action_candidate.unit_position)
+            if unit is None:
+                continue
+            
+            # Get ability directly
+            ability = self.battle.data_loader.get_ability(action_candidate.ability_id)
+            if ability is None:
+                continue
+            
+            stats = ability.stats
+            
+            # Find the weapon that contains this ability
+            weapon_id = self.battle.get_weapon_id_for_ability(unit, action_candidate.ability_id)
+            if weapon_id is None:
+                continue
+            
+            weapon = unit.template.weapons.get(weapon_id)
+            if weapon is None:
+                continue
+            
+            # Check ability cooldown
+            if action_candidate.ability_id in unit.ability_cooldowns:
+                if unit.ability_cooldowns[action_candidate.ability_id] > 0:
+                    continue  # Ability is on cooldown
+            
+            # Check weapon global cooldown
+            if weapon_id in unit.global_cooldowns:
+                if unit.global_cooldowns[weapon_id] > 0:
+                    continue  # Weapon global cooldown is active
+            
+            # Check charge time (ability_available_turn)
+            if action_candidate.ability_id in unit.ability_available_turn:
+                if unit.ability_available_turn[action_candidate.ability_id] > current_turn:
+                    continue  # Charge time not ready
+            
+            # Check ammo
+            current_ammo = unit.ammo.get(weapon_id, weapon.stats.ammo)
+            if current_ammo < stats.ammo_required:
+                continue  # Insufficient ammo
+            
+            # All checks passed, keep this action
+            filtered.append(action_candidate)
+        
+        return filtered
 
     # =========================================================================
     # Step 8: Calculate valid targets
@@ -344,7 +230,7 @@ class EnemyTurnExecutor:
         self, actions: List[ActionCandidate]
     ) -> List[ActionCandidate]:
         """
-        Step 8: Calculate valid targets for each ability.
+        Step 4: Calculate valid targets for each ability.
 
         For each action, calculates which positions are valid targets.
         Empty locations & targets that will not take damage are excluded.
@@ -355,7 +241,14 @@ class EnemyTurnExecutor:
         Returns:
             Action candidates with valid_targets populated
         """
-        # TODO: Implement target calculation
+        from .enemy_target_validator import EnemyTargetValidator
+        
+        # Calculate valid targets for each action candidate
+        for action_candidate in actions:
+            action_candidate.valid_targets = EnemyTargetValidator.calculate_valid_targets(
+                self.battle, action_candidate
+            )
+        
         return actions
 
     # =========================================================================
@@ -366,9 +259,11 @@ class EnemyTurnExecutor:
         self, actions: List[ActionCandidate]
     ) -> List['Action']:
         """
-        Step 9: Filter abilities with no valid target.
+        Step 5: Filter abilities with no valid target.
 
-        Converts ActionCandidates with valid targets into full Action objects.
+        Removes ActionCandidates with empty valid_targets.
+        Converts remaining ActionCandidates to Action objects by picking
+        a target from valid_targets list.
 
         Args:
             actions: List of action candidates with targets
@@ -376,8 +271,33 @@ class EnemyTurnExecutor:
         Returns:
             List of full Action objects ready for execution
         """
-        # TODO: Implement filtering and conversion to Action
-        return []
+        from ..battle import Action
+        
+        valid_actions = []
+        
+        for action_candidate in actions:
+            # Skip if no valid targets
+            if not action_candidate.valid_targets:
+                continue
+            
+            # Get the unit
+            unit = self.battle.enemy_units.get(action_candidate.unit_position)
+            if unit is None:
+                continue
+            
+            # Pick a target from valid_targets (for now, random selection)
+            # This could be enhanced with AI logic later
+            target_position = self.rng.choice(action_candidate.valid_targets)
+            
+            # Create Action object
+            action = Action(
+                unit_position=action_candidate.unit_position,
+                ability_id=action_candidate.ability_id,
+                target_position=target_position
+            )
+            valid_actions.append(action)
+        
+        return valid_actions
 
     # =========================================================================
     # Step 10: Select action
@@ -385,9 +305,10 @@ class EnemyTurnExecutor:
 
     def _step_select_action(self, valid_actions: List['Action']) -> 'Action':
         """
-        Select action using AI policy.
+        Step 6: Select action using AI policy.
 
-        Uses the configured AI policy to select which action to execute.
+        Picks 1 out of all available actions.
+        Uses the configured AI policy if available, otherwise selects randomly.
 
         Args:
             valid_actions: List of valid actions to choose from
@@ -395,9 +316,15 @@ class EnemyTurnExecutor:
         Returns:
             Selected action
         """
-        # TODO: Implement action selection
-        # For now, just return random action
-        return self.rng.choice(valid_actions) if valid_actions else None
+        if not valid_actions:
+            return None
+        
+        # Use AI policy if configured, otherwise random selection
+        if self.ai_policy is not None:
+            return self.ai_policy(valid_actions, self.battle)
+        else:
+            # Default: random selection
+            return self.rng.choice(valid_actions)
 
     # =========================================================================
     # Step 11: Calculate base damage
@@ -422,8 +349,12 @@ class EnemyTurnExecutor:
         if attacker is None:
             return (0, 0)
         
-        # Get the weapon
-        weapon = attacker.template.weapons.get(action.weapon_id)
+        # Find the weapon that contains this ability
+        weapon_id = self.battle.get_weapon_id_for_ability(attacker, action.ability_id)
+        if weapon_id is None:
+            return (0, 0)
+        
+        weapon = attacker.template.weapons.get(weapon_id)
         if weapon is None:
             return (0, 0)
         
@@ -440,58 +371,3 @@ class EnemyTurnExecutor:
         # Return min and max (damage roll will be calculated per target)
         return (damage_min, damage_max)
 
-
-    # =========================================================================
-    # Step 14: Check for dead player units (from damage)
-    # =========================================================================
-
-    def _step_check_for_dead_player_units(self) -> None:
-        """
-        Step 14: Check for dead player units after damage application.
-
-        Removes player units with HP <= 0 from the working copy.
-        """
-        from ..enums import BattleSide
-        DeathHandler.check_for_dead_units(self.battle, BattleSide.PLAYER_TEAM)
-
-    # =========================================================================
-    # Step 16: Apply status effects
-    # =========================================================================
-
-    def _step_apply_status_effects(self, action: 'Action', final_damage: float) -> None:
-        """
-        Step 15: Apply DOT status effects.
-
-        For each status effect in the ability:
-        - Check immunity
-        - Roll for application chance
-        - Add to target's status effects list
-        - Store source_damage for DOT calculation
-
-        Args:
-            action: The action being executed
-            final_damage: Final damage dealt (used for DOT calculation)
-        """
-        # TODO: Implement status effect application
-        pass
-
-
-    # =========================================================================
-    # Helper: Check if all player units dead
-    # =========================================================================
-
-    def _step_check_all_player_units_dead(self) -> bool:
-        """
-        Check if all player units are dead.
-
-        Returns:
-            True if all player units are dead (ignoring unimportant units)
-        """
-        from ..enums import BattleSide
-        return DeathHandler.check_all_units_dead(self.battle, BattleSide.PLAYER_TEAM)
-    
-    # =========================================================================
-    # Resistance calculation - MOVED TO ArmorHandler
-    # =========================================================================
-    # This functionality has been moved to ArmorHandler.get_armor_resistance and
-    # ArmorHandler.get_hp_resistance
