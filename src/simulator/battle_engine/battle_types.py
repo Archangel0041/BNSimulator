@@ -33,9 +33,11 @@ class BattleResult(Enum):
 @dataclass
 class HitResult:
     """Result of a hit/miss check."""
-    hit: bool
-    is_critical: bool
-    hit_chance: float
+    damage_roll: int  # Base damage roll (before crit multiplier)
+    modifier: float  # Percent modifier (e.g., 100.0 for base, 50.0 for 50% splash)
+    hit: bool  # Whether the hit connected
+    is_critical: bool  # Whether it was a critical hit
+    damage: int  # Final damage after crit multiplier (damage_roll * (1.5 if crit else 1.0))
 
 
 @dataclass
@@ -81,3 +83,13 @@ class ActionCandidate:
     def __post_init__(self):
         if self.valid_targets is None:
             self.valid_targets = []
+
+
+@dataclass
+class TargetHitInfo:
+    """
+    Information about a hit on a target position.
+    Contains position and modifier, but not damage/hit/crit (rolled later).
+    """
+    position: Position  # Target position
+    modifier: float  # Damage modifier (100.0 for base, e.g., 50.0 for 50% splash)

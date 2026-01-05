@@ -7,7 +7,7 @@ Handles target validation logic for player-side attacks.
 from typing import TYPE_CHECKING, List, Dict
 from ..battle import BattleState, BattleUnit, Action
 from ..models import Ability, Position
-from ..enums import TargetType, LineOfFire, AttackDirection, UnitBlocking
+from ..enums import TargetType, LineOfFire, AttackDirection, UnitBlocking, Side
 
 
 class PlayerTargetValidator:
@@ -92,7 +92,8 @@ class PlayerTargetValidator:
         # Check if target position has alive unit (only for NONE type)
         target_unit = None
         if target_type == TargetType.NONE:
-            target_unit = battle.get_unit_at_position(action.target_position)
+            # Check enemy side for target (player is attacking enemy)
+            target_unit = battle.get_unit_at_position(action.target_position, BattleSide.ENEMY_TEAM)
             if target_unit is None or target_unit.current_hp <= 0:
                 return False
 
@@ -259,7 +260,8 @@ class PlayerTargetValidator:
             True if target is the first valid target (no units in front of it)
         """
         # Check if target position has a unit
-        target_unit = battle.get_unit_at_position(target_pos)
+        # Check enemy side for target (player is attacking enemy)
+        target_unit = battle.get_unit_at_position(target_pos, BattleSide.ENEMY_TEAM)
         if target_unit is None:
             return False
 

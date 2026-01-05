@@ -6,14 +6,20 @@ Handles all enemy turn step execution with explicit, ordered steps.
 
 from typing import TYPE_CHECKING, Optional, List, Callable
 import random
+import math
 
 from .battle_types import (
     TurnResult, BattleResult, HitResult, DamageResult,
     Position, ActionCandidate
 )
+from ..enums import TargetType, BattleSide
 from .status_effect_handler import StatusEffectHandler
 from .death_handler import DeathHandler
+from .damage_handler import DamageHandler
+from .armor_handler import ArmorHandler
 from ..enums import DamageType
+from .cooldown_handler import CooldownHandler
+from .row_collapse_handler import RowCollapseHandler
 
 if TYPE_CHECKING:
     from ..battle import BattleState, BattleUnit, Action
@@ -66,58 +72,45 @@ class EnemyTurnExecutor:
         # Step 6: Select action using AI policy
         action = self._step_select_action(valid_actions)
 
-        # Step 7: Calculate base damage
-        base_damage = self._step_calculate_base_damage(action)
+        # Step 7: Calculate base damage range
+        damage_min, damage_max = self._step_calculate_base_damage(action)
 
-        # Step 8: Check for dodges/misses/etc
-        hit_result = self._step_check_hit(action)
-        if not hit_result.hit:
-            self._step_update_cooldown_and_ammo(action)
-            return TurnResult.ATTACK_MISSED
-
-        # Apply critical hit if rolled
-        if hit_result.is_critical:
-            base_damage *= 1.5
-
-        # Step 9: Apply modifiers & armor
-        final_damage = self._step_apply_modifiers_and_armor(action, base_damage)
-
-        # Step 10: Deal damage
-        self._step_deal_damage(action, final_damage)
+        # Step 8: Calculate all hits using TargetingHandler
+        # This handles targeting patterns, damage rolls, hit/crit checks, and groups base+splash
+        from ..enums import BattleSide
+        from .targeting_handler import TargetingHandler
+        hits_by_position = TargetingHandler.calculate_hits_by_position(
+            self.battle, action, damage_min, damage_max, BattleSide.ENEMY_TEAM
+        )
+        
+        # Step 9: Process all collected hits (apply damage, status effects, etc.)
+        DamageHandler.process_all_hits(self.battle, action, hits_by_position, BattleSide.ENEMY_TEAM) 
 
         # Step 11: Check for dead player units (from damage)
-        self._step_check_for_dead_player_units()
-
-        # Check if all player units dead -> end battle with loss
-        if self._step_check_all_player_units_dead():
-            self.battle.result = BattleResult.ENEMY_WIN
-            return TurnResult.BATTLE_ENDED
-
-        # Step 12: Apply DOT status effects
-        self._step_apply_status_effects(action, final_damage)
-
+        DeathHandler.check_for_dead_units(self.battle, BattleSide.PLAYER_TEAM)
+        
         # Step 13: Update cooldown and ammo
-        self._step_update_cooldown_and_ammo(action)
-
+        CooldownHandler.update_cooldowns_for_unit(self.battle, self.battle.enemy_units.get(action.unit_position), action)
+ 
         # Step 14: Apply DOT to player units (opposing side that was attacked)
-        self._step_apply_dot_to_player_units()
+        StatusEffectHandler.apply_dot_to_all_units_for_side(self.battle, BattleSide.PLAYER_TEAM)
 
         # Step 15: Check for dead player units (from DOT)
-        self._step_check_for_dead_player_units()
+        DeathHandler.check_for_dead_units(self.battle, BattleSide.PLAYER_TEAM)
 
         # Step 16: Check if all player units dead -> end battle with loss
-        if self._step_check_all_player_units_dead():
+        if DeathHandler.check_all_units_dead(self.battle, BattleSide.PLAYER_TEAM):
             self.battle.result = BattleResult.ENEMY_WIN
             return TurnResult.BATTLE_ENDED
 
         # Step 17: Collapse 1 row if no units on front row (player side)
-        self._step_collapse_player_front_row()
+        RowCollapseHandler.collapse_front_row(self.battle, BattleSide.PLAYER_TEAM)
 
         # Step 18: Reduce cooldowns (unit must not be stunned) (player side)
-        self._step_reduce_player_cooldowns()
+        CooldownHandler.reduce_cooldowns_for_side(self.battle, BattleSide.PLAYER_TEAM)
 
         # Step 19: Decay stun/freeze effects (enemy side) - after turn completes
-        self._step_decay_stun_effects_enemy()
+        StatusEffectHandler.decay_stun_effects_for_side(self.battle, BattleSide.ENEMY_TEAM)
 
         return TurnResult.SUCCESS
 
@@ -410,94 +403,43 @@ class EnemyTurnExecutor:
     # Step 11: Calculate base damage
     # =========================================================================
 
-    def _step_calculate_base_damage(self, action: 'Action') -> float:
+    def _step_calculate_base_damage(self, action: 'Action') -> tuple[int, int]:
         """
-        Step 10: Calculate base damage.
+        Step 7: Calculate base damage range.
 
-        Calculates damage including:
-        1. Base weapon damage roll
-        2. Attack vs Defense
-        3. Class modifiers
-        4. (Critical hit applied later in main function)
+        Calculates base damage range from weapon stats and unit power:
+        - damage_min = floor(base_damage_min * (1 + (2 * power / 100)))
+        - damage_max = floor(base_damage_max * (1 + (2 * power / 100)))
 
         Args:
             action: The action being executed
 
         Returns:
-            Base damage value
+            Tuple of (damage_min, damage_max) - both integers
         """
-        # TODO: Implement damage calculation
-        return 0.0
+        # Get the attacking unit
+        attacker = self.battle.enemy_units.get(action.unit_position)
+        if attacker is None:
+            return (0, 0)
+        
+        # Get the weapon
+        weapon = attacker.template.weapons.get(action.weapon_id)
+        if weapon is None:
+            return (0, 0)
+        
+        # Get unit power
+        power = attacker.template.stats.power
+        
+        # Calculate power multiplier: (1 + (2 * power / 100))
+        power_multiplier = 1.0 + (2.0 * power / 100.0)
+        
+        # Calculate damage range (both floored to integers)
+        damage_min = math.floor(weapon.stats.base_damage_min * power_multiplier)
+        damage_max = math.floor(weapon.stats.base_damage_max * power_multiplier)
+        
+        # Return min and max (damage roll will be calculated per target)
+        return (damage_min, damage_max)
 
-    # =========================================================================
-    # Step 12: Check for hit/miss
-    # =========================================================================
-
-    def _step_check_hit(self, action: 'Action') -> HitResult:
-        """
-        Step 11: Check for dodges/misses/etc.
-
-        Calculates hit chance based on:
-        - Base hit chance (80%)
-        - Attacker accuracy
-        - Defender dodge
-        - Clamped to 5-95% range
-
-        Also rolls for critical hit.
-
-        Args:
-            action: The action being executed
-
-        Returns:
-            HitResult with hit/miss and critical hit status
-        """
-        # TODO: Implement hit check
-        return HitResult(hit=True, is_critical=False, hit_chance=80.0)
-
-    # =========================================================================
-    # Step 13: Apply modifiers and armor
-    # =========================================================================
-
-    def _step_apply_modifiers_and_armor(
-        self, action: 'Action', base_damage: float
-    ) -> float:
-        """
-        Step 12: Apply modifiers & armor.
-
-        Applies:
-        - Type effectiveness modifiers
-        - AOE falloff
-        - Armor reduction
-        - Minimum damage (1)
-
-        Args:
-            action: The action being executed
-            base_damage: Base damage before modifiers
-
-        Returns:
-            Final damage after all modifiers
-        """
-        # TODO: Implement modifiers and armor
-        return base_damage
-
-    # =========================================================================
-    # Step 14: Deal damage
-    # =========================================================================
-
-    def _step_deal_damage(self, action: 'Action', damage: float) -> None:
-        """
-        Step 13: Deal damage.
-
-        Applies damage to:
-        - Primary target
-        - AOE targets (if applicable)
-
-        Args:
-            action: The action being executed
-            damage: Final damage to apply
-        """
-        # TODO: Implement damage application
-        pass
 
     # =========================================================================
     # Step 14: Check for dead player units (from damage)
@@ -533,21 +475,6 @@ class EnemyTurnExecutor:
         # TODO: Implement status effect application
         pass
 
-    # =========================================================================
-    # Step 17: Update cooldown and ammo
-    # =========================================================================
-
-    def _step_update_cooldown_and_ammo(self, action: 'Action') -> None:
-        """
-        Step 16: Update cooldown and ammo.
-
-        Sets weapon on cooldown and consumes ammo if applicable.
-
-        Args:
-            action: The action that was executed
-        """
-        # TODO: Implement cooldown and ammo update
-        pass
 
     # =========================================================================
     # Helper: Check if all player units dead
@@ -562,3 +489,9 @@ class EnemyTurnExecutor:
         """
         from ..enums import BattleSide
         return DeathHandler.check_all_units_dead(self.battle, BattleSide.PLAYER_TEAM)
+    
+    # =========================================================================
+    # Resistance calculation - MOVED TO ArmorHandler
+    # =========================================================================
+    # This functionality has been moved to ArmorHandler.get_armor_resistance and
+    # ArmorHandler.get_hp_resistance
