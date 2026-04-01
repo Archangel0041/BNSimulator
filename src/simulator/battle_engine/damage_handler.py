@@ -123,9 +123,8 @@ class DamageHandler:
         # Get damage type and armor piercing from ability
         damage_type = stats.damage_type
         ap_percent = stats.armor_piercing_percent  # e.g., 0.85 = 85% armor penetration
-        
+
         # Get damage type name for modifier lookup
-        # Map all damage types to their string names used in damage_mods dict
         dtype_name = {
             DamageType.PIERCING: "piercing",
             DamageType.COLD: "cold",
@@ -137,36 +136,49 @@ class DamageHandler:
             DamageType.MELEE: "melee",
             DamageType.PROJECTILE: "projectile",
             DamageType.SHELL: "shell",
-        }.get(damage_type, "piercing")  # Default to piercing if unknown type
-        
+        }.get(damage_type, "piercing")
+
         # Get resistances (check for status effect modifications like firemod)
         armor_resist = ArmorHandler.get_armor_resistance(target_unit, damage_type, dtype_name)
         hp_resist = ArmorHandler.get_hp_resistance(target_unit, damage_type, dtype_name)
-        
-        # Split damage: armor piercing goes to HP, rest goes to armor
-        ap_damage = math.floor(modified_damage * ap_percent)  # Damage that bypasses armor
-        armor_damage = modified_damage - ap_damage  # Damage that hits armor first
-        
-        # Apply HP resistance to armor-piercing damage
-        hp_damage_from_ap = ap_damage * hp_resist
-        
-        # Apply armor resistance to armor damage
-        armor_damage_after_resist = math.floor(armor_damage * armor_resist)
-        
-        # Armor can only absorb up to its current capacity
+
         armor_capacity = target_unit.current_armor
-        actual_armor_damage = min(armor_damage_after_resist, armor_capacity)
-        
-        # Remaining damage after armor is depleted goes to HP
-        remaining_damage = max(0, armor_damage_after_resist - armor_capacity)
-        hp_damage_from_armor_breakthrough = remaining_damage * hp_resist
-        
-        # Total HP damage (this is the "base damage" for status effects)
-        total_hp_damage = math.floor(hp_damage_from_ap + hp_damage_from_armor_breakthrough)
-        
-        # Apply minimum damage (1) to HP
-        total_hp_damage = max(1, total_hp_damage)
-        
+
+        # Check if armor is bypassed due to stun (Active armor units only)
+        # armor_def_style == 2 means Active armor
+        is_stunned = StatusEffectHandler.is_unit_stunned(target_unit)
+        bypass_armor = target_unit.template.stats.armor_def_style == 2 and is_stunned
+
+        # Split damage: piercing portion goes directly to HP, armorable portion hits armor
+        piercing_damage = math.floor(modified_damage * ap_percent)
+        armorable_damage = modified_damage - piercing_damage
+
+        # If bypass due to stun (Active armor), all damage goes to HP, armor untouched
+        if bypass_armor and armor_capacity > 0:
+            total_hp_damage = max(1, math.floor(modified_damage * hp_resist))
+            return total_hp_damage, 0
+
+        # If no armor, all damage goes straight to HP
+        if armor_capacity <= 0:
+            total_hp_damage = max(1, math.floor(modified_damage * hp_resist))
+            return total_hp_damage, 0
+
+        # Effective armor capacity: how much raw armorable damage the armor can absorb
+        # before being depleted. effectiveCapacity = floor(armorHp / armorMod)
+        effective_armor_capacity = math.floor(armor_capacity / armor_resist) if armor_resist > 0 else armor_capacity
+
+        if armorable_damage <= effective_armor_capacity:
+            # Armor absorbs all armorable damage
+            actual_armor_damage = math.floor(armorable_damage * armor_resist)
+            overflow = 0
+        else:
+            # Armor is fully depleted; overflow goes to HP
+            actual_armor_damage = armor_capacity
+            overflow = armorable_damage - effective_armor_capacity
+
+        # Apply HP resistance once to the combined HP portion (piercing + overflow)
+        total_hp_damage = max(1, math.floor((piercing_damage + overflow) * hp_resist))
+
         return total_hp_damage, actual_armor_damage
 
     @staticmethod

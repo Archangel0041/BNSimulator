@@ -478,11 +478,20 @@ class TargetingHandler:
         # Calculate crit chance (only if hit)
         # 1) critical_hit_percent from ability
         crit_chance = stats.critical_hit_percent
-        
+
         # 2) Critical chance from unit stats
         crit_chance += attacker.template.stats.critical
-        
-        # 3) Critical bonuses from ability based on target tags (including hierarchy)
+
+        # 3) Weapon base crit scaled by crit_from_weapon multiplier
+        weapon_id = battle.get_weapon_id_for_ability(attacker, action.ability_id)
+        if weapon_id is not None:
+            weapon = attacker.template.weapons.get(weapon_id)
+            if weapon is not None:
+                cfw = stats.crit_from_weapon
+                scaled_weapon_crit = math.floor(weapon.stats.base_crit_percent * cfw) if cfw != 1.0 else weapon.stats.base_crit_percent
+                crit_chance += scaled_weapon_crit
+
+        # 4) Critical bonuses from ability based on target tags (including hierarchy)
         tag_hierarchy = battle.data_loader.config.tag_hierarchy
         for bonus_tag, bonus_value in stats.critical_bonuses.items():
             # Expand the bonus tag to include all descendants
@@ -493,7 +502,7 @@ class TargetingHandler:
             # Check if target has any of these tags
             if any(tag in valid_tags for tag in target_unit.template.tags):
                 crit_chance += bonus_value
-        
+
         # Clamp crit chance to 0-100
         crit_chance = max(0.0, min(100.0, crit_chance))
         

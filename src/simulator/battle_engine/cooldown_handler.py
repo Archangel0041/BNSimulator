@@ -28,7 +28,11 @@ class CooldownHandler:
         """
         # Only reduce cooldowns if unit is not stunned
         from .status_effect_handler import StatusEffectHandler
-        if not StatusEffectHandler.is_unit_stunned(unit):
+        if StatusEffectHandler.is_unit_stunned(unit):
+            # Stunned: delay all charge-time thresholds by 1 so charge progress is frozen
+            for ability_id in unit.ability_available_turn:
+                unit.ability_available_turn[ability_id] += 1
+        else:
             # Reduce ability-specific cooldowns
             for ability_id in list(unit.ability_cooldowns.keys()):
                 if unit.ability_cooldowns[ability_id] > 0:
@@ -36,7 +40,7 @@ class CooldownHandler:
                     # Remove cooldown if it reaches 0
                     if unit.ability_cooldowns[ability_id] == 0:
                         del unit.ability_cooldowns[ability_id]
-            
+
             # Reduce weapon-specific global cooldowns
             for weapon_id in list(unit.global_cooldowns.keys()):
                 if unit.global_cooldowns[weapon_id] > 0:
