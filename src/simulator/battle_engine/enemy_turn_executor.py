@@ -333,9 +333,10 @@ class EnemyTurnExecutor:
         """
         Step 7: Calculate base damage range.
 
-        Calculates base damage range from weapon stats and unit power:
-        - damage_min = floor(base_damage_min * (1 + (2 * power / 100)))
-        - damage_max = floor(base_damage_max * (1 + (2 * power / 100)))
+        Matches bn_toolkit_2's calculateDamageAtRank formula:
+        1. scaled_base = floor(base_damage * damage_from_weapon)  [only floor if != 1]
+        2. power_contrib = floor(2 * damage_from_unit * power)    [only floor if != 1]
+        3. damage = floor(scaled_base * (1 + power_contrib / 100))
 
         Args:
             action: The action being executed
@@ -347,26 +348,35 @@ class EnemyTurnExecutor:
         attacker = self.battle.enemy_units.get(action.unit_position)
         if attacker is None:
             return (0, 0)
-        
+
         # Find the weapon that contains this ability
         weapon_id = self.battle.get_weapon_id_for_ability(attacker, action.ability_id)
         if weapon_id is None:
             return (0, 0)
-        
+
         weapon = attacker.template.weapons.get(weapon_id)
         if weapon is None:
             return (0, 0)
-        
-        # Get unit power
+
+        ability = self.battle.data_loader.get_ability(action.ability_id)
+        if ability is None:
+            return (0, 0)
+
+        stats = ability.stats
         power = attacker.template.stats.power
-        
-        # Calculate power multiplier: (1 + (2 * power / 100))
-        power_multiplier = 1.0 + (2.0 * power / 100.0)
-        
-        # Calculate damage range (both floored to integers)
-        damage_min = math.floor(weapon.stats.base_damage_min * power_multiplier)
-        damage_max = math.floor(weapon.stats.base_damage_max * power_multiplier)
-        
-        # Return min and max (damage roll will be calculated per target)
+
+        # Step 1: Apply damage_from_weapon multiplier (floor only if not 1)
+        dfw = stats.damage_from_weapon
+        scaled_min = math.floor(weapon.stats.base_damage_min * dfw) if dfw != 1.0 else weapon.stats.base_damage_min
+        scaled_max = math.floor(weapon.stats.base_damage_max * dfw) if dfw != 1.0 else weapon.stats.base_damage_max
+
+        # Step 2: Power contribution: floor(2 * damage_from_unit * power) if not 1
+        dfu = stats.damage_from_unit
+        power_contrib = math.floor(2 * dfu * power) if dfu != 1.0 else 2 * power
+
+        # Step 3: Final damage range
+        damage_min = math.floor(scaled_min * (1 + power_contrib / 100.0))
+        damage_max = math.floor(scaled_max * (1 + power_contrib / 100.0))
+
         return (damage_min, damage_max)
 
